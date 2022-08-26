@@ -1,13 +1,15 @@
 <template>
     <div>
-        <h1>Home</h1>
+        <HeroComp />
     </div>
 </template>
 
 <script>
+import HeroComp from '../sections/HeroComp.vue';
     export default {
-        name: 'HomePage'
-    }
+    name: "HomePage",
+    components: { HeroComp }
+}
 </script>
 
 <style lang="scss" scoped>
