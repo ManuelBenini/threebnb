@@ -126,9 +126,9 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\inyok\Documents\Programmazione\Boolean\Progetto finale\Repository\threebnb\resources\js\backend.js */"./resources/js/backend.js");
-__webpack_require__(/*! C:\Users\inyok\Documents\Programmazione\Boolean\Progetto finale\Repository\threebnb\resources\sass\admin\style.scss */"./resources/sass/admin/style.scss");
-module.exports = __webpack_require__(/*! C:\Users\inyok\Documents\Programmazione\Boolean\Progetto finale\Repository\threebnb\resources\sass\front\style.scss */"./resources/sass/front/style.scss");
+__webpack_require__(/*! C:\Users\croco\Desktop\THREEBNB\threebnb\resources\js\backend.js */"./resources/js/backend.js");
+__webpack_require__(/*! C:\Users\croco\Desktop\THREEBNB\threebnb\resources\sass\admin\style.scss */"./resources/sass/admin/style.scss");
+module.exports = __webpack_require__(/*! C:\Users\croco\Desktop\THREEBNB\threebnb\resources\sass\front\style.scss */"./resources/sass/front/style.scss");
 
 
 /***/ })

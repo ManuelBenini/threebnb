@@ -17791,7 +17791,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\inyok\Documents\Programmazione\Boolean\Progetto finale\Repository\threebnb\resources\js\frontend.js */"./resources/js/frontend.js");
+module.exports = __webpack_require__(/*! C:\Users\croco\Desktop\THREEBNB\threebnb\resources\js\frontend.js */"./resources/js/frontend.js");
 
 
 /***/ })

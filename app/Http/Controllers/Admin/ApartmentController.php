@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Apartment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -24,7 +25,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.apartments.create');
     }
 
     /**
@@ -35,7 +36,15 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $new_apartment = new Apartment();
+
+        $new_apartment->fill($data);
+
+        $new_apartment->save();
+
+        return redirect()->route('admin.apartments.show', $new_apartment);
     }
 
     /**
