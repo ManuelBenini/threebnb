@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Apartment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -14,7 +15,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::orderBy('id', 'DESC')->paginate(10);
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -80,6 +82,7 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->delete();
+        return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
     }
 }

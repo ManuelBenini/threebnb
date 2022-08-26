@@ -20,9 +20,9 @@ Route::middleware('auth')
     ->name('admin.')
     ->prefix('admin')
     ->group(function(){
-    Route::get('/', 'HomeController@index')->name('index');
-    // Route::resource('apartments', '');
-});
+        Route::get('/', 'HomeController@index')->name('index');
+        Route::resource('apartments', 'ApartmentController');
+    });
 
 Route::get('{any?}', function(){
      return view('guests.home');
