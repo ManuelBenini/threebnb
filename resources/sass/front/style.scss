@@ -4,7 +4,13 @@
 // Variabili
 @import './partials/vars';
 
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
 // Fonts
 body{
     font-family: 'Manrope', sans-serif;
+}
+
+a {
+    text-decoration: none;
 }

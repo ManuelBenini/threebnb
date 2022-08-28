@@ -12,4 +12,13 @@
 
 <style lang="scss" scoped>
 
+    a {
+        color: yellow;
+
+        &:hover {
+            color: red;
+            text-decoration: none;
+        }
+    }
+
 </style>

@@ -7,6 +7,8 @@
 
         <FooterComp/>
 
+        <CheckboxComp />
+
     </div>
 </template>
 
@@ -14,10 +16,11 @@
 
     import HeaderComp from './components/partials/HeaderComp.vue';
     import FooterComp from './components/partials/FooterComp.vue';
+import CheckboxComp from './components/sections/CheckboxComp.vue';
 
     export default {
         name: "App",
-        components: { HeaderComp, FooterComp }
+        components: { HeaderComp, FooterComp, CheckboxComp }
     }
 
 </script>
