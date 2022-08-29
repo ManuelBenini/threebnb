@@ -1,5 +1,10 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Variabili
+@import './partials/vars';
+
+// Fonts
+body{
+    font-family: 'Manrope', sans-serif;
+}
