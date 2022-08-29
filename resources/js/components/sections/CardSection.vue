@@ -3,7 +3,7 @@
 <template>
     <div class="custom-container">
 
-        <h2>Appartamenti in evidenza scelti per te!</h2>
+        <h2>Appartamenti in evidenza <span class="orange-text"> scelti per te!</span></h2>
 
         <div class="card-section">
 

@@ -4,17 +4,22 @@
 
         <CardSection />
 
+        <PartnerComp />
 
     </div>
 </template>
 
 <script>
+
 import HeroComp from '../sections/HeroComp.vue';
 import CardSection from '../sections/CardSection.vue';
-    export default {
+import PartnerComp from '../sections/PartnerComp.vue';
+
+export default {
     name: "HomePage",
-    components: { HeroComp, CardSection }
+    components: { HeroComp, CardSection, PartnerComp }
 }
+
 </script>
 
 <style lang="scss" scoped>
