@@ -2,6 +2,7 @@
 
 use App\Apartment;
 use Illuminate\Database\Seeder;
+use App\Apartment;
 
 class ApartmentSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class ApartmentSeeder extends Seeder
      */
     public function run()
     {
+            $new_apartment = new Apartment();
             $new_apartment = new Apartment();
             $new_apartment->title = 'blabla';
             $new_apartment->rooms = 2;
