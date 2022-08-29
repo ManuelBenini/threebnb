@@ -9277,3 +9277,12 @@ h3 {
 body {
   font-family: "Manrope", sans-serif;
 }
+
+.custom-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.orange-text {
+  color: #E7624A;
+}
