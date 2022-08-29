@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header class="header custom-container">
         <a href="/">
             <div class="logo-container">
                 <img src="../../../assets/logo-threebnb-senza-scritta.png" alt="">
@@ -68,8 +68,6 @@
     position: relative;
 
     height: 100px;
-    width: 90%;
-    margin: 0 auto;
 
     margin-top: 10px;
     // border: 1px dashed black;

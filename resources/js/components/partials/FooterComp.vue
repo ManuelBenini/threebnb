@@ -18,6 +18,8 @@
     background-color: #F7F7F7;
     height: 80px;
 
+    border-top: 1px solid #dee2e6;
+
     .text-area{
         display: flex;
         justify-content: center;

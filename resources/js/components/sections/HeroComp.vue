@@ -1,6 +1,6 @@
 <template>
     <div class="hero-section">
-        <div class="call-to-action-area">
+        <div class="custom-container">
             <div class="call-to-action">
                 <h1>Trova il bnb <br> piu adatto alle <br> tue esigenze</h1>
                 <router-link class="button" to="ricerca">Esplora</router-link>
@@ -31,7 +31,7 @@
     margin-top: -110px;
     padding-top: 270px;
 
-    .call-to-action-area{
+    .custom-container{
         width: 90%;
         margin: 0 auto;
 
