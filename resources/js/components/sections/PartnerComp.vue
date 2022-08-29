@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row partner-section">
             <div class="col-12 text-center mb-3">
-                <h2>I nostri <span class="orange-text">sponsor</span></h2>
+                <h2>I nostri <span class="orange-text">partner</span></h2>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
                 <img class="partner-icon" src="../../../assets/airbnb.png" alt="">
@@ -16,7 +16,6 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
                 <img class="partner-icon" src="../../../assets/booking.png" alt="">
             </div>
-
         </div>
     </div>
 </template>
