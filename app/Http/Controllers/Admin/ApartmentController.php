@@ -14,7 +14,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::orderBy('id', 'DESC')->paginate(10);
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -24,7 +25,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.apartments.create');
     }
 
     /**
@@ -35,7 +36,15 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $new_apartment = new Apartment();
+
+        $new_apartment->fill($data);
+
+        $new_apartment->save();
+
+        return redirect()->route('admin.apartments.show', $new_apartment);
     }
 
     /**
@@ -95,7 +104,8 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->delete();
+        return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
     }
 
     private function req($arr){
