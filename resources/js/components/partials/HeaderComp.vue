@@ -1,8 +1,10 @@
 <template>
     <header class="header">
-        <div class="logo-container">
-            <img src="../../../assets/logo-threebnb-senza-scritta.png" alt="">
-        </div>
+        <a href="/">
+            <div class="logo-container">
+                <img src="../../../assets/logo-threebnb-senza-scritta.png" alt="">
+            </div>
+        </a>
 
         <div
           @click="showMenuLink"
@@ -25,14 +27,11 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="">Accedi</a>
-                    </li>
-                    <li>
-                        <a href="">Registrati</a>
+                        <a href="/admin">Sezione admin</a>
                     </li>
                     <hr>
                     <li>
-                        <a href="">Trova una stanza</a>
+                        <a href="/ricerca">Trova una stanza</a>
                     </li>
                 </ul>
             </nav>
@@ -78,11 +77,12 @@
     // Logo:
     .logo-container{
 
-        width: 70px;
+        width: 50px;
         // border: 1px dashed black;
 
         img{
             width: 100%;
+            cursor: pointer;
         }
     }
 
@@ -128,7 +128,7 @@
         top: 100px;
 
         width: 200px;
-        height: 150px;
+        height: 125px;
         border: 1px solid #dee2e6;
         border-radius: 10px;
 
@@ -139,7 +139,6 @@
 
         nav{
             ul{
-
 
                 li{
                     // border: 1px dashed black;

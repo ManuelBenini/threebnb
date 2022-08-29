@@ -3,7 +3,7 @@
         <div class="call-to-action-area">
             <div class="call-to-action">
                 <h1>Trova il bnb <br> piu adatto alle <br> tue esigenze</h1>
-                <button>Esplora</button>
+                <router-link class="button" to="ricerca">Esplora</router-link>
             </div>
         </div>
     </div>
@@ -21,10 +21,12 @@
 
 .hero-section{
     height: 700px;
+    width: 100%;
 
-    background-image: url('../../../assets/cover2.jpeg');
+    background-image: url('../../../assets/hero-section-background.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 
     margin-top: -110px;
     padding-top: 270px;
@@ -40,14 +42,13 @@
             h1{
                 color: white;
                 font-size: 53px;
+                margin-bottom: 20px;
             }
 
-            button{
+            .button{
 
                 width: 120px;
-
-                margin-top: 10px;
-                padding: 0px 5px ;
+                padding: 8px 20px ;
 
                 border-radius: 30px;
                 border: 1px solid $colore-primario;
@@ -57,6 +58,10 @@
                 background-color: $colore-primario;
 
                 cursor: pointer;
+
+                &:hover{
+                    text-decoration: none;
+                }
 
             }
 
