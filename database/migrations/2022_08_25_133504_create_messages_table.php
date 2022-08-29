@@ -15,6 +15,10 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('apartment_id')->nullable();
+            $table->foreign('apartment_id')->references('id')->on('apartments');
+
             $table->text('text');
             $table->string('email')->unique();
             $table->timestamps();
@@ -28,6 +32,13 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
+        // Schema::table('posts', function (Blueprint $table) {
+        //     $table->dropForeign(['category_id']);
+
+        //     $table->dropColumn('category_id');
+        // });
+
         Schema::dropIfExists('messages');
+
     }
 }

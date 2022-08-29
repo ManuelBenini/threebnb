@@ -15,6 +15,10 @@ class CreateApartmentsTable extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->string('title');
             $table->unsignedTinyInteger('rooms');
             $table->unsignedTinyInteger('beds');
