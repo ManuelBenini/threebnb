@@ -7,7 +7,7 @@
         </div>
 
         <div>
-            
+            <div class="row mt-4">
                 <!--Colonna host e proprietà-->
                 <div id="szdettagli" class="col-md-6 p-3">
 
@@ -20,7 +20,8 @@
                     <div id="descrizione" class="pt-2">
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat, veniam. Dolore consectetur delectus dicta illo eaque id quisquam officiis facilis enim perspiciatis. Eum quos exercitationem repellendus odio in nulla pariatur amet a eius repudiandae, nobis fuga iste, voluptatum facere modi earum magnam saepe? Consectetur officia voluptate, temporibus eligendi sequi modi.</p>
                     </div>
-                <div id="servizi" class="pt-2">
+
+                    <div id="servizi" class="pt-2">
                         <ul>
                             <li>Servizio</li>
                             <li>Servizio</li>
@@ -32,15 +33,23 @@
                     </div>
 
                 </div>
+
+                <!--Colonna form-->
+               <ContactsForm/>
+
+            </div>
         </div>
+
             
     </div>
 </template>
 
 <script>
+import ContactsForm from '../elements/ContactsForm.vue';
     export default {
-        name: 'ApartmentDetails'
-    }
+    name: "ApartmentDetails",
+    components: { ContactsForm }
+}
 </script>
 
 <style lang="scss" scoped>
