@@ -12,7 +12,6 @@ class ApartmentSeeder extends Seeder
      */
     public function run()
     {
-        {
             $new_apartment = new Apartment();
             $new_apartment->title = 'blabla';
             $new_apartment->rooms = 2;
@@ -26,7 +25,5 @@ class ApartmentSeeder extends Seeder
             $new_apartment->image_original_name = 'nome originale';
             $new_apartment->visible = 1;
             $new_apartment->save();
-
-        }
     }
 }
