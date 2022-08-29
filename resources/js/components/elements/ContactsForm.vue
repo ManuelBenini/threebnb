@@ -32,4 +32,13 @@
 
 <style lang="scss" scoped>
 
+button{
+    background-color: #EB594E;
+    font-weight: 500;
+    border: none;
+    &:hover{
+        background-color: #a33a33;
+    }
+}
+
 </style>

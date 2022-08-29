@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mappa">
-            <img src="" alt="" class="rounded" id="mappa">
+            <img src="https://ps.w.org/wp-store-locator/assets/banner-772x250.jpg?rev=830722" alt="Mappa" class="rounded" id="mappa">
         </div>
     </div>
 </template>
@@ -15,16 +15,17 @@
 <style lang="scss" scoped>
 
 .mappa{
-    height: 500px;
-    background-color: red;
+    height: 300px;
+    background-color: blue;
     border-radius: 30px;
     overflow: hidden;
 }
 
 img{
-    background-color: blue;
-    height: 100%;
-    width: 100%;
+    background-color: #EB594E;
+    min-width: 100%;
+    min-height: 100%;
+    filter: grayscale(100%);
 }
 
 </style>
