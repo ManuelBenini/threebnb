@@ -4,12 +4,20 @@
 // Variabili
 @import './partials/vars';
 
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
 // Fonts
 body{
     font-family: 'Manrope', sans-serif;
 }
 
+
 //Global
+
+ul {
+    list-style: none;
+}
 
 .custom-container{
     width: 90%;
