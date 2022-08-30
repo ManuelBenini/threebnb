@@ -32,11 +32,7 @@ class CreateApartmentServiceTable extends Migration
      */
     public function down()
     {
-        Schema::table('apartment_service', function (Blueprint $table) {
-            $table->dropForeign(['apartment_id', 'service_id']);
-
-            $table->dropColumn(['apartment_id','service_id']);
-        });
+        
 
         Schema::dropIfExists('apartment_service');
     }

@@ -33,9 +33,9 @@ class FormApartmentRequest extends FormRequest
                 'address' => 'required',
                 // 'latitude' => 'required|numeric',
                 // 'longitude' => 'required|numeric',
-                'image' => 'required|max:255',
+                'image' => 'required|max:10000|image',
                 // 'image_original_name' => 'required|min:3|max:255',
-                // 'visible' => 'required',
+                'visible' => 'required',
 
         ];
     }
@@ -61,9 +61,11 @@ class FormApartmentRequest extends FormRequest
 
             'address.required' => 'Campo obbligatorio',
 
-            'img.required' => 'Campo obbligatorio',
-            'img.max' => 'Raggiunto numero massimo di caratteri',
-
+            'image.required' => 'Campo obbligatorio',
+            'image.max' => 'Caricare immagine che pesi meno di 10MB',
+            'image.image' => 'Il file che hai caricato non è un\'immagine',
+            // 'image.uploaded' => 'Il file non è stato caricato correttamente',
+            
             'visible.required' => 'Seleziona',
         ];
     }

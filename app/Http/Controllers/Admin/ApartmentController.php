@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Apartment;
+use App\Service;
 use App\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 use App\Http\Requests\FormApartmentRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -26,7 +28,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        $services = Service::all();
+
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -39,11 +43,25 @@ class ApartmentController extends Controller
     {
         $data = $request->all();
 
+        $coordinates = Apartment::coordinates('coordinate');
+
+        $data['latitude'] = $coordinates['latitude'];
+        $data['longitude'] = $coordinates['longitude'];
+        if(array_key_exists( 'image', $data)){
+            $data['image_original_name'] =
+            $request->file('image')->getClientOriginalName();
+            $data['image'] = Storage::put('uploads',$data['image']);
+        };
+
         $new_apartment = new Apartment();
 
         $new_apartment->fill($data);
 
         $new_apartment->save();
+
+        if(array_key_exists('services', $data)){
+            $new_apartment->services()->attach($data['services']);
+        };
 
         return redirect()->route('admin.apartments.show', $new_apartment);
     }
@@ -77,6 +95,7 @@ class ApartmentController extends Controller
         } else {
             abort(404, 'Errore 404 | Pagina non trovata');
         }
+        
     }
 
     /**
@@ -90,6 +109,13 @@ class ApartmentController extends Controller
     {
 
          $data = $request->all();
+         if(array_key_exists( 'image', $data)){
+            if($apartment->image){
+            Storage::delete($apartment->image);
+            }
+            $data['image_original_name'] =
+            $request->file('image')->getClientOriginalName();
+        };
 
          $apartment->fill($data);
 
@@ -110,4 +136,5 @@ class ApartmentController extends Controller
         $apartment->delete();
         return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
     }
+
 }

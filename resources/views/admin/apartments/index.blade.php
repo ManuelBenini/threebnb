@@ -25,6 +25,7 @@
             <th scope="col">Indirizzo</th>
             <th scope="col">Latitudine</th>
             <th scope="col">Longitudine</th>
+            <th scope="col">Servizi</th>
             <th scope="col">Visibile in pagina pubblica</th>
             <th scope="col">Azioni</th>
             </tr>
@@ -43,7 +44,20 @@
                     <td>{{$apartment->address}}</td>
                     <td>{{$apartment->latitude}}</td>
                     <td>{{$apartment->longitude}}</td>
-                    <td>{{$apartment->visible}}</td>
+                    <td>
+                        <ul>
+                          @foreach ($apartment->services as $service)
+                           <li>{{$service->name}}</li>
+                          @endforeach
+                        </ul>
+                      </td>
+                    <td>
+                        @if ($apartment->visible == 1)
+                        Si
+                        @else 
+                            No    
+                        @endif   
+                    </td>
 
                     <td>
                         <a class="btn btn-success" href="{{route('admin.apartments.show', $apartment)}}">Mostra</a>
