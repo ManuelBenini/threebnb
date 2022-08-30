@@ -3,7 +3,7 @@
 <template>
     <div class="custom-container">
 
-        <h2>Appartamenti in evidenza <span class="orange-text"> scelti per te!</span></h2>
+        <h2>Appartamenti <span class="orange-text"> {{message}}</span></h2>
 
         <div class="card-section">
 
@@ -33,8 +33,15 @@
 <script>
 import CardComp from '../elements/CardComp.vue';
     export default {
-    name: "CardSection",
-    components: { CardComp }
+        name: "CardSection",
+        components: { CardComp },
+
+        props:{
+            message:{
+                type: String,
+                Required: true
+            }
+        }
 }
 </script>
 

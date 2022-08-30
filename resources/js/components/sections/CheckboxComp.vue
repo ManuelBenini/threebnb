@@ -1,14 +1,12 @@
 <template>
     <div>
-        <div class="container-fluid">
+        <div class="container-fluid checkbox-area">
             <div class="row">
-                <div class="col col-lg-12 col-sm-10">
+                <div class="col">
 
                     <h1 class="text-center">Cerca il tuo BnB ideale</h1>
 
                     <div class="checkbox flex-wrap">
-
-
 
                         <form action="inserire-percorso">
                             <label v-for="(search, index) in advancedSearch" :key="`search${index}`" >
@@ -27,89 +25,119 @@
                     </div>
 
                     <div class="search">
-                        <button class="align-items-center" type="">Ricerca</button>
+
+                        <ButtonComp
+                            callToAction="Ricerca"
+                            stile="arancione"
+                        />
+
                     </div>
 
                 </div>
 
             </div>
         </div>
+
+        <div>
+            <CardSection
+                message="in evidenza"
+                />
+        </div>
+
+        <div>
+            <CardSection
+                message="in base alle tue ricerche"
+                />
+        </div>
+
     </div>
 </template>
 
 <script>
+import ButtonComp from '../elements/ButtonComp.vue';
+import CardSection from './CardSection.vue';
+
     export default {
-        name: 'CheckboxComp',
+        name: "CheckboxComp",
+
         data() {
             return {
                 clicked: false,
                 advancedSearch: [
                     {
-                        name: 'Wi-Fi',
-                        href: '#',
-                        icon: 'fa-solid fa-wifi',
+                        name: "Wi-Fi",
+                        href: "#",
+                        icon: "fa-solid fa-wifi",
                         click: false
                     },
                     {
-                        name: 'Posto Macchina',
-                        href: '#',
-                        icon: 'fa-solid fa-square-parking',
+                        name: "Posto Macchina",
+                        href: "#",
+                        icon: "fa-solid fa-square-parking",
                         click: false
                     },
                     {
-                        name: 'Piscina',
-                        href: '#',
-                        icon: 'fa-solid fa-person-swimming',
+                        name: "Piscina",
+                        href: "#",
+                        icon: "fa-solid fa-person-swimming",
                         click: false
                     },
                     {
-                        name: 'Portineria',
-                        href: '#',
-                        icon: 'fa-solid fa-bell-concierge',
+                        name: "Portineria",
+                        href: "#",
+                        icon: "fa-solid fa-bell-concierge",
                         click: false
                     },
                     {
-                        name: 'Sauna',
-                        href: '#',
-                        icon: 'fa-solid fa-hot-tub-person',
+                        name: "Vista Mare",
+                        href: "#",
+                        icon: "fa-solid fa-house-flood-water",
                         click: false
                     },
                     {
-                        name: 'Vista Mare',
-                        href: '#',
-                        icon: 'fa-solid fa-house-flood-water',
+                        name: "Sauna",
+                        href: "#",
+                        icon: "fa-solid fa-hot-tub-person",
+                        click: false
+                    },
+
+                    {
+                        name: "Camino",
+                        href: "#",
+                        icon: "fa-solid fa-fire",
                         click: false
                     },
                     {
-                        name: 'Aria Condizionata',
-                        href: '#',
-                        icon: 'fa-regular fa-snowflake',
+                        name: "Idromassaggio",
+                        href: "#",
+                        icon: "fa-solid fa-bath",
                         click: false
                     },
                     {
-                        name: 'Camino',
-                        href: '#',
-                        icon: 'fa-solid fa-fire',
-                        click: false
-                    },
-                    {
-                        name: 'Idromassaggio',
-                        href: '#',
-                        icon: 'fa-solid fa-bath',
+                        name: "Aria Condizionata",
+                        href: "#",
+                        icon: "fa-regular fa-snowflake",
                         click: false
                     },
                 ]
-            }
+            };
         },
-        methods: {
-        }
+        methods: {},
+        components: { ButtonComp, CardSection }
     }
 </script>
 
 <style lang="scss" scoped>
-    ul {
-        list-style: none;
+
+    .checkbox-area{
+        padding-bottom: 60px;
     }
+
+    h1{
+        font-size: 48px;
+        margin-top: 20px;
+    }
+
     li {
         margin: 0 2px;
         text-align: center;
@@ -119,6 +147,9 @@
         transition: color .2s ease-in-out;
         font-size: 18px;
         border-bottom: 2px solid transparent;
+
+        cursor: pointer;
+
         &:hover {
             transition: color .2s ease-in-out;
             text-decoration: none;
@@ -127,34 +158,43 @@
             color: #000000;
         }
     }
+
     p {
         margin-bottom: 2px;
     }
-    .checkbox, .search {
+
+    .checkbox{
+        width: 50%;
+        margin: 0 auto;
+        margin-top: 40px;
+        margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 740px) {
+
+        .checkbox{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+    }
+
+    .checkbox, form, .search {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
     }
+
     input[type=checkbox] {
         transform: scale(1.5);
     }
+
     input:checked + label{
         color: red;
     }
-    button {
-        border: none;
-        padding: 10px 55px;
-        border-radius: 10px;
-        background-color: #191DFF;
-        color: #FFFFFF;
-        font-size: 18px;
-        font-weight: 200;
-        transition: .3s ease-in-out;
-        &:hover {
-            background-color: #0048ff;
-            font-weight: 600;
-            transition: color .2s ease-in;
-        }
-    }
+
     .selected {
         color: #000000;
         transition: .2s ease-in-out;

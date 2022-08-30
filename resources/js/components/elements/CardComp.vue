@@ -19,13 +19,13 @@
         props:{
 
             title: {
-            type: String,
-            required: true
+                type: String,
+                required: true
             },
 
             previewText: {
-            type: String,
-            required: true
+                type: String,
+                required: true
             },
 
 

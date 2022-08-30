@@ -2,7 +2,9 @@
     <div>
         <HeroComp />
 
-        <CardSection />
+        <CardSection
+            message="scelti per te!"
+            />
 
         <PartnerComp />
 
