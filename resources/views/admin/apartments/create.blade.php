@@ -53,9 +53,9 @@
         <label for="visible">Disponibile</label>
         <div class="mb-3">
           <label for="visible">SI</label>
-          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1">
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
           <label for="visible">NO</label>
-          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0">
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{old('visible', []) ? '' : 'checked' }}>
           @error('visible')
             <p class="error-msg">{{$message}}</p>
           @enderror
@@ -67,10 +67,10 @@
           <div class="mr-5">
             <label for="service{{ $loop->iteration }}" class="mr-3">{{ $service->name }}</label>
             <input type="checkbox" class="form-control 
-                   @error('address') is-invalid @enderror" 
+                   @error('service') is-invalid @enderror" 
                    id="service{{$loop->iteration}}" 
                    name="services[]" 
-                   value="{{ old('service->id') }}" 
+                   value="{{$service->id}}"
                    @if(in_array($service->id, old('services',[]))) checked @endif>
           </div>
           @endforeach
@@ -81,7 +81,7 @@
 
         <label for="immagine">Immagine</label>
         <div class="mb-3">
-          <input type="file" accept="image/*" class="@error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}">
+          <input type="file" accept="image/*" class="@error('image') is-invalid @enderror" id="image" name="image" value="{{ old('file') }}">
           @error('image')
             <p class="error-msg">{{$message}}</p>
           @enderror
