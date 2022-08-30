@@ -32,11 +32,11 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        // Schema::table('posts', function (Blueprint $table) {
-        //     $table->dropForeign(['category_id']);
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
 
-        //     $table->dropColumn('category_id');
-        // });
+            $table->dropColumn('category_id');
+        });
 
         Schema::dropIfExists('messages');
 

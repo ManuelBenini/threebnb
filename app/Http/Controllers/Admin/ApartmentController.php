@@ -55,7 +55,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        if($apartment){
+            return view('admin.apartments.show', compact('apartment'));
+        } else {
+            abort(404, 'Errore 404 | Pagina non trovata');
+        }
     }
 
     /**
