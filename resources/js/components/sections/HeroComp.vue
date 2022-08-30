@@ -39,7 +39,7 @@
 
             h1{
                 color: white;
-                font-size: 53px;
+                font-size: 47px;
                 margin-bottom: 20px;
             }
 

@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
 
-    margin: 30px 0;
+    margin: 80px 0 120px 0;
 
     .partner-logo-container{
 
