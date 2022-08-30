@@ -1,26 +1,49 @@
 <template>
     <div>
+
+        <h1 class="text-center">Cerca il tuo BnB ideale</h1>
+
         <div class="container-fluid checkbox-area">
             <div class="row">
                 <div class="col">
 
-                    <h1 class="text-center">Cerca il tuo BnB ideale</h1>
 
                     <div class="checkbox flex-wrap">
 
-                        <form action="inserire-percorso">
-                            <label v-for="(search, index) in advancedSearch" :key="`search${index}`" >
-                                <ul>
-                                    <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                        <a :href="search.href"></a>
-                                        <input @click="search.click = !search.click" class="mr-2" type="checkbox">
-                                        <i :class="search.icon"></i>
-                                        <p>{{ search.name }}</p>
-                                    </li>
-                                </ul>
+                        <div class="col-6 service-list-1">
 
-                            </label>
-                        </form>
+                            <form action="inserire-percorso">
+                                <label v-for="(search, index) in advancedSearchList1" :key="`search${index}`" >
+                                    <ul>
+                                        <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                            <a :href="search.href"></a>
+                                            <input @click="search.click = !search.click" class="mr-2" type="checkbox">
+                                            <i :class="search.icon"></i>
+                                            <p>{{ search.name }}</p>
+                                        </li>
+                                    </ul>
+
+                                </label>
+                            </form>
+
+                        </div>
+
+                        <div class="col-6 service-list-2">
+
+                            <form action="inserire-percorso">
+                                <label v-for="(search, index) in advancedSearchList2" :key="`search${index}`" >
+                                    <ul>
+                                        <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                            <a :href="search.href"></a>
+                                            <input @click="search.click = !search.click" class="mr-2" type="checkbox">
+                                            <i :class="search.icon"></i>
+                                            <p>{{ search.name }}</p>
+                                        </li>
+                                    </ul>
+
+                                </label>
+                            </form>
+                        </div>
 
                     </div>
 
@@ -63,37 +86,60 @@ import CardSection from './CardSection.vue';
         data() {
             return {
                 clicked: false,
-                advancedSearch: [
+
+                advancedSearchList1: [
                     {
                         name: "Wi-Fi",
                         href: "#",
                         icon: "fa-solid fa-wifi",
                         click: false
                     },
+
                     {
                         name: "Posto Macchina",
                         href: "#",
                         icon: "fa-solid fa-square-parking",
                         click: false
                     },
+
                     {
                         name: "Piscina",
                         href: "#",
                         icon: "fa-solid fa-person-swimming",
                         click: false
                     },
+
                     {
                         name: "Portineria",
                         href: "#",
                         icon: "fa-solid fa-bell-concierge",
                         click: false
                     },
+
                     {
-                        name: "Vista Mare",
+                        name: "Idromassaggio",
                         href: "#",
-                        icon: "fa-solid fa-house-flood-water",
+                        icon: "fa-solid fa-bath",
                         click: false
                     },
+                ],
+
+                advancedSearchList2: [
+                    {
+                        name: "Camino",
+                        href: "#",
+                        icon: "fa-solid fa-fire",
+                        click: false
+                    },
+
+
+                    {
+                        name: "Aria Condizionata",
+                        href: "#",
+                        icon: "fa-regular fa-snowflake",
+                        click: false
+                    },
+
                     {
                         name: "Sauna",
                         href: "#",
@@ -102,23 +148,19 @@ import CardSection from './CardSection.vue';
                     },
 
                     {
-                        name: "Camino",
+                        name: "Vista Mare",
                         href: "#",
-                        icon: "fa-solid fa-fire",
+                        icon: "fa-solid fa-house-flood-water",
                         click: false
                     },
+
                     {
-                        name: "Idromassaggio",
+                        name: "Palestra",
                         href: "#",
-                        icon: "fa-solid fa-bath",
+                        icon: "fa-solid fa-dumbbell",
                         click: false
                     },
-                    {
-                        name: "Aria Condizionata",
-                        href: "#",
-                        icon: "fa-regular fa-snowflake",
-                        click: false
-                    },
+
                 ]
             };
         },
@@ -129,17 +171,12 @@ import CardSection from './CardSection.vue';
 
 <style lang="scss" scoped>
 
-    .checkbox-area{
-        padding-bottom: 60px;
-    }
-
     h1{
         font-size: 48px;
         margin-top: 20px;
     }
 
     li {
-        margin: 0 2px;
         text-align: center;
         text-decoration: none;
         text-transform: none;
@@ -147,7 +184,6 @@ import CardSection from './CardSection.vue';
         transition: color .2s ease-in-out;
         font-size: 18px;
         border-bottom: 2px solid transparent;
-
         cursor: pointer;
 
         &:hover {
@@ -163,22 +199,15 @@ import CardSection from './CardSection.vue';
         margin-bottom: 2px;
     }
 
+    .checkbox-area{
+        padding-bottom: 60px;
+    }
+
     .checkbox{
         width: 50%;
         margin: 0 auto;
         margin-top: 40px;
         margin-bottom: 10px;
-    }
-
-    @media screen and (max-width: 740px) {
-
-        .checkbox{
-            width: 90%;
-            margin: 0 auto;
-            margin-top: 40px;
-            margin-bottom: 10px;
-        }
-
     }
 
     .checkbox, form, .search {
@@ -191,8 +220,8 @@ import CardSection from './CardSection.vue';
         transform: scale(1.5);
     }
 
-    input:checked + label{
-        color: red;
+    .service-list-2 {
+        justify-content: space-between;
     }
 
     .selected {
@@ -203,4 +232,59 @@ import CardSection from './CardSection.vue';
     .no-selected {
         color: #979797;
     }
+
+    @media screen and (max-width: 1681px) {
+        .service-list-1 li {
+            margin: 0 4px;
+        }
+
+        .service-list-2 li {
+            margin: 0 10px;
+        }
+    }
+    @media screen and (max-width: 1463px) {
+        .service-list-1 li {
+            margin: 0 17px;
+        }
+
+        .service-list-2 li {
+            margin: 0 13px;
+        }
+    }
+
+    @media screen and (max-width: 1263px) {
+        .service-list-1 li {
+            margin: 0 17px;
+        }
+
+        .service-list-2 li {
+            margin: 0 13px;
+        }
+    }
+
+    @media screen and (max-width: 740px) {
+        .checkbox{
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        h1 {
+            margin: 0 40px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        h1 {
+            margin: 0 40px;
+        }
+
+        ul {
+            padding: 0;
+        }
+    }
 </style>
+
