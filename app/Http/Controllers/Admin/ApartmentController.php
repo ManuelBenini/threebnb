@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
 use App\Http\Requests\FormApartmentRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -47,11 +46,9 @@ class ApartmentController extends Controller
 
         $data['latitude'] = $coordinates['latitude'];
         $data['longitude'] = $coordinates['longitude'];
-        if(array_key_exists( 'image', $data)){
-            $data['image_original_name'] =
-            $request->file('image')->getClientOriginalName();
-            $data['image'] = Storage::put('uploads',$data['image']);
-        };
+
+        $data['image_original_name'] = $request->file('image')->getClientOriginalName();
+        $data['image'] = Storage::put('uploads',$data['image']);
 
         $new_apartment = new Apartment();
 
@@ -95,7 +92,7 @@ class ApartmentController extends Controller
         } else {
             abort(404, 'Errore 404 | Pagina non trovata');
         }
-        
+
     }
 
     /**
