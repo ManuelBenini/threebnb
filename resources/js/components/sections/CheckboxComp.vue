@@ -3,6 +3,21 @@
 
         <h1 class="text-center">Cerca il tuo BnB ideale</h1>
 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-center search-app">
+                        <form action="">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione...">
+                            <input class="input-numb" type="number" placeholder="N° stanze">
+                            <input class="input-numb" type="number" placeholder="N° letti">
+                            <input class="input-km" type="number" placeholder="Distanza max (km)">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid checkbox-area">
             <div class="row">
                 <div class="col">
@@ -171,10 +186,64 @@ import CardSection from './CardSection.vue';
 
 <style lang="scss" scoped>
 
+    @import '../../../sass/front/partials/vars';
+
     h1{
         font-size: 48px;
         margin-top: 20px;
     }
+
+    // SEARCH APP
+
+    .search-app form {
+        border: 1px solid #979797;
+        padding: 12px 12px;
+        border-radius: 35px;
+
+
+    }
+
+    .search-app input{
+        padding: 0px 10px;
+        width: 300px;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .search-app button {
+        background-color: $colore-primario;
+        padding: 10px 10px;
+        padding: 8px 13px;
+        border: none;
+        border-radius: 50%;
+
+        i {
+            color: #FFFFFF;
+        }
+    }
+
+    form .input-numb {
+        width: 100px;
+
+    }
+
+    form .input-km {
+        width: 160px;
+    }
+
+    form .input-city, form .input-numb {
+        border-right: 1px solid #979797;
+        align-content: center;
+
+    }
+
+    // /SEARCH APP
+
+
+    // CHECKBOX AREA
 
     li {
         text-align: center;
@@ -199,6 +268,10 @@ import CardSection from './CardSection.vue';
         margin-bottom: 2px;
     }
 
+    input[type=checkbox] {
+        transform: scale(1.5);
+    }
+
     .checkbox-area{
         padding-bottom: 60px;
     }
@@ -216,10 +289,6 @@ import CardSection from './CardSection.vue';
         justify-content: center;
     }
 
-    input[type=checkbox] {
-        transform: scale(1.5);
-    }
-
     .service-list-2 {
         justify-content: space-between;
     }
@@ -232,6 +301,11 @@ import CardSection from './CardSection.vue';
     .no-selected {
         color: #979797;
     }
+
+    // /CHECKBOX AREA
+
+
+    // MEDIA QUERY
 
     @media screen and (max-width: 1681px) {
         .service-list-1 li {
@@ -269,6 +343,8 @@ import CardSection from './CardSection.vue';
             margin-top: 40px;
             margin-bottom: 10px;
         }
+
+
     }
 
     @media screen and (max-width: 500px){
@@ -276,6 +352,26 @@ import CardSection from './CardSection.vue';
             margin: 0 40px;
         }
     }
+
+    @media screen and (max-width: 455px){
+        form .input-city, form .input-numb {
+            border-right: none;
+            text-align: center;
+            // border-bottom: 1px solid #979797;
+        }
+
+        form .input-numb {
+            border-right: 1px solid #979797;
+        }
+    }
+
+
+    @media screen and (max-width: 415px){
+        form input {
+            flex-direction: column;
+        }
+    }
+
 
     @media screen and (max-width: 400px) {
         h1 {
@@ -286,5 +382,8 @@ import CardSection from './CardSection.vue';
             padding: 0;
         }
     }
+
+    // /MEDIA QUERY
+
 </style>
 
