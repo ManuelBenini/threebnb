@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('apartment_id')->nullable();
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
 
             $table->text('text');
             $table->string('email')->unique();
@@ -32,10 +32,10 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['apartment_id']);
 
-            $table->dropColumn('category_id');
+            $table->dropColumn('apartment_id');
         });
 
         Schema::dropIfExists('messages');
