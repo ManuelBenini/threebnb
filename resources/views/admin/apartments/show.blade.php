@@ -23,7 +23,7 @@
         <tbody>
             <tr class="{{$apartment->visible === 1 ? 'table-success' : ''}}" >
               <td>{{$apartment->id}}</td>
-              <td> <img src="{{ asset('storage/' . $apartment->image) }}"> </td>
+              <td> <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}"> </td>
               <td>{{$apartment->image_original_name}}</td>
               <td>{{$apartment->title}}</td>
               <td>{{$apartment->rooms}}</td>
@@ -33,21 +33,29 @@
               <td>{{$apartment->address}}</td>
               <td>{{$apartment->latitude}}</td>
               <td>{{$apartment->longitude}}</td>
+
+                <td>
+                    <ul>
+                        @foreach ($apartment->services as $service)
+                        <li>{{$service->name}}</li>
+                        @endforeach
+                    </ul>
+                </td>
+
+                <td>
+                    @if (count($apartment->sponsorships) != 0)
+                        @foreach ($apartment->sponsorships as $sponsorship)
+                            {{$sponsorship->name}}
+                        @endforeach
+                    @else
+                        Nessuna sponsorizzazione
+                    @endif
+                </td>
+
               <td>
-                <ul>
-                  @foreach ($apartment->services as $service)
-                   <li>{{$service->name}}</li>
-                  @endforeach
-                </ul>
+                {{$apartment->visible == 1 ? 'Si' : 'No'}}
               </td>
-              <td>{{$apartment->sponsorships}}</td>
-              <td>
-                @if ($apartment->visible == 1)
-                    Si
-                @else 
-                    No    
-                @endif
-              </td>
+
               <td>
                 {{-- Modifica --}}
                 <a class="btn btn-success" href="{{route('admin.apartments.edit', $apartment)}}">Cambia</a>
