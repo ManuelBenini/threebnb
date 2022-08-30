@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Apartment;
+use App\Service;
 use App\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 use App\Http\Requests\FormApartmentRequest;
@@ -26,7 +27,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        $services = Service::all();
+
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -38,6 +41,12 @@ class ApartmentController extends Controller
     public function store(FormApartmentRequest $request)
     {
         $data = $request->all();
+
+        $coordinates = Apartment::coordinates('coordinate');
+
+        $data['latitude'] = $coordinates['latitude'];
+        $data['longitude'] = $coordinates['longitude'];
+        $data['image_original_name'] = 'Immagine di prova';
 
         $new_apartment = new Apartment();
 
@@ -110,4 +119,5 @@ class ApartmentController extends Controller
         $apartment->delete();
         return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
     }
+
 }

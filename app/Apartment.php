@@ -39,4 +39,13 @@ class Apartment extends Model
     public function views(){
         return $this->hasMany('App\View');
     }
+
+    public static function coordinates($indirizzo){
+        $coordinates = [
+            'latitude' => 12.345678,        
+            'longitude' => 123.4567789
+        ];
+
+        return $coordinates;
+    }
 }
