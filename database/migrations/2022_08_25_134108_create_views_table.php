@@ -17,7 +17,7 @@ class CreateViewsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('apartment_id')->nullable();
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
 
             $table->string('ip', 15);
             $table->timestamps();
@@ -31,6 +31,12 @@ class CreateViewsTable extends Migration
      */
     public function down()
     {
+        Schema::table('views', function (Blueprint $table) {
+            $table->dropForeign(['apartment_id']);
+
+            $table->dropColumn('apartment_id');
+        });
+
         Schema::dropIfExists('views');
     }
 }

@@ -107,6 +107,7 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        $apartment->messages()->delete();
         $apartment->delete();
         return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
     }

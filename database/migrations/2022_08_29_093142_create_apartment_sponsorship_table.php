@@ -32,6 +32,12 @@ class CreateApartmentSponsorshipTable extends Migration
      */
     public function down()
     {
+        Schema::table('apartment_sponsorship', function (Blueprint $table) {
+            $table->dropForeign(['apartment_id', 'sponsorship_id']);
+
+            $table->dropColumn(['apartment_id','sponsorship_id']);
+        });
+
         Schema::dropIfExists('apartment_sponsorship');
     }
 }
