@@ -32,8 +32,6 @@
     padding-top: 270px;
 
     .custom-container{
-        width: 90%;
-        margin: 0 auto;
 
         .call-to-action{
 

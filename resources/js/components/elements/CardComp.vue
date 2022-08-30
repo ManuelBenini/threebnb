@@ -45,7 +45,7 @@
     flex-direction: column;
 
     margin-top: 20px;
-    margin-right: 40px;
+    // margin-right: 40px;
 
     border-radius: 10px;
 
