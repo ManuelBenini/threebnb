@@ -87,8 +87,10 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
 
+        $services = Service::all();
+
         if($apartment){
-            return view('admin.apartments.edit', compact('apartment'));
+            return view('admin.apartments.edit', compact('apartment', 'services'));
         } else {
             abort(404, 'Errore 404 | Pagina non trovata');
         }
@@ -110,15 +112,19 @@ class ApartmentController extends Controller
             if($apartment->image){
             Storage::delete($apartment->image);
             }
-            $data['image_original_name'] =
-            $request->file('image')->getClientOriginalName();
+            $data['image_original_name'] = $request->file('image')->getClientOriginalName();
+            $data['image'] = Storage::put('uploads',$data['image']);
         };
 
-         $apartment->fill($data);
+        $apartment->fill($data);
 
-         $apartment->update();
+        $apartment->update();
 
-         return redirect()->route('admin.apartments.index', $apartment);
+        if(array_key_exists('services', $data)){
+            $apartment->services()->sync($data['services']);
+        };
+
+        return redirect()->route('admin.apartments.index', $apartment);
     }
 
     /**
