@@ -2,8 +2,7 @@
     <div class="container">
        
         <ApartmentDetails/>
-         <MapComp/>
-        
+        <MapComp/>
     </div>
 </template>
 
