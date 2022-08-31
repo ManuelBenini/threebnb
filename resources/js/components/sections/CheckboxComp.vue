@@ -379,8 +379,12 @@ import CardSection from './CardSection.vue';
             border-right: none;
         }
 
-        form .input-numb, form .input-km {
-            width: 33%;
+        form .input-numb {
+            width: 50%;
+        }
+
+        form .input-km {
+            width: 100%;
         }
     }
 
@@ -406,7 +410,7 @@ import CardSection from './CardSection.vue';
             border-right: 1px solid #979797;
         }
         form .input-km {
-            width: 30%;
+            width: 100%;
         }
     }
 
