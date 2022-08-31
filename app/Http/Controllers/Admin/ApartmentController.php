@@ -124,7 +124,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($data['services']);
         };
 
-        return redirect()->route('admin.apartments.index', $apartment);
+        return redirect()->route('admin.apartments.show', $apartment);
     }
 
     /**

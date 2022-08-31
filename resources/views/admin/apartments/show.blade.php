@@ -58,7 +58,7 @@
 
               <td>
                 {{-- Modifica --}}
-                <a class="btn btn-success" href="{{route('admin.apartments.edit', $apartment)}}">Cambia</a>
+                <a class="btn btn-success" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
 
                 {{-- Cancella --}}
                 <form class="d-inline"
