@@ -13,13 +13,13 @@ class ApartmentSponsorshipSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 50; $i++) { 
-            $apartment = Apartment::inRandomOrder()->first();
-            $sponsorship = Sponsorship::inRandomOrder()->first();
+        $apartment_counter = count(Apartment::all());
 
-            if(!$apartment->sponsorships->contains($sponsorship)){
-                $apartment->sponsorships()->attach($sponsorship);
-            }
+        for ($i=1; $i <= $apartment_counter; $i++) {
+            $apartment = Apartment::where('id', '=', $i)->first();
+            $sponsorship = Sponsorship::inRandomOrder()->first()->id;
+
+            $apartment->sponsorships()->attach($sponsorship);
         }
     }
 }

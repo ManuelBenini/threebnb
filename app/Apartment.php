@@ -42,7 +42,7 @@ class Apartment extends Model
 
     public static function coordinates($indirizzo){
         $coordinates = [
-            'latitude' => 12.345678,        
+            'latitude' => 12.345678,
             'longitude' => 123.4567789
         ];
 
