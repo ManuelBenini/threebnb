@@ -62,9 +62,9 @@
         </div>
 
         <label for="service" class="form-label">Servizi</label>
-        <div class="mb-3 d-flex">
+        <div class="mb-3 d-flex justify-content-between">
           @foreach ($services as $service)
-          <div class="mr-5">
+          <div>
             <label for="service{{ $loop->iteration }}" class="mr-3">{{ $service->name }}</label>
             <input type="checkbox" class="form-control
                    @error('service') is-invalid @enderror"
