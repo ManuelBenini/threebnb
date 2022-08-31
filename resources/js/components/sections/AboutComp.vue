@@ -25,9 +25,38 @@
                 </div>
             </div>
 
-            <div class="img-container text-center">
+            <div
+                v-if="showButton"
+                class="arrow-container">
+
+                <i
+                    @click="counter = counter - 1"
+                    :class="this.counter < 1 ? 'hide' : ''"
+                    class="previous fa-solid fa-arrow-left-long">
+                </i>
+
+            </div>
+
+
+            <div
+                @mouseover = mouseIsHover
+                @mouseleave = mouseNotHover
+                class="img-container text-center">
                 <img :src="about[counter].img" :alt="about[counter].title">
             </div>
+
+            <div
+                v-if="showButton"
+                class="arrow-container">
+
+                <i
+                    @click="counter = counter + 1"
+                    v-if="counter <= 1"
+                    class="next fa-solid fa-arrow-right-long">
+                </i>
+
+            </div>
+
 
         </div>
 
@@ -41,11 +70,12 @@ export default {
 
     data(){
         return{
+            showButton: false,
             counter: 0,
             about:[
                 {
                     title: "Chi siamo",
-                    text: "Siamo la piattaforma su cui puoi fare affidamento per trovare il tuo bnb ideale. Crediamo nella capacità di fare la differenza, per questo tutti i nostri bnb sono realizzati con materie prime ecosostenibili e ad impatto zero.",
+                    text: "Siamo la piattaforma su cui puoi fare affidamento per trovare il tuo bnb ideale. Crediamo nella capacità di fare la differenza, per questo tutti i nostri bnb sono realizzati con materie prime ecosostenibili e ad impatto zero. Desideriamo fare la differenza.",
                     img: "https://images.contentstack.io/v3/assets/bltfa2cefdbe7482368/bltcfe32ad33e97bbed/5f5a61332d8d464b43a53626/DenverFeature_1200x630.jpg"
                 },
                 {
@@ -55,10 +85,19 @@ export default {
                 },
                 {
                     title: "La nostra missione",
-                    text: "Vogliamo rivoluzionare il mondo travel permettendo a chiunque di viaggiare. Siamo riusciti nel nostro intento garantendo a tutti i nostri iscritti appartamenti economici, moderni e vicino alla natura.",
+                    text: "Vogliamo rivoluzionare il mondo travel permettendo a chiunque di viaggiare. Siamo riusciti nel nostro intento garantendo a tutti i nostri iscritti appartamenti economici, moderni e vicino alla natura. Prendi parte al nostro movimento!",
                     img: "https://images.contentstack.io/v3/assets/bltfa2cefdbe7482368/blte6275d47f2e91243/5f5fcf575e85ad4dee18eb0f/Miamifeature_1200x630.jpg"
                 },
             ]
+        }
+    },
+
+    methods:{
+        mouseIsHover(){
+            this.showButton = true;
+        },
+        mouseNotHover(){
+            this.showButton = false;
         }
     }
 }
@@ -72,79 +111,202 @@ export default {
 
     margin: 80px 0;
 
-    .about-text{
+    .custom-container{
 
-        margin-right: 80px;
-        margin-bottom: 30px;
+        display: flex;
 
-        p{
-            margin: 20px 0;
-            font-size: 20px;
-        }
+        .about-text{
 
-        .slider{
+            margin-right: 80px;
+            margin-bottom: 30px;
 
-            display: flex;
-            justify-content: center;
+            p{
+                margin: 20px 0;
+                font-size: 20px;
+            }
 
-            padding: 5px;
-            border-radius: 30px;
+            .slider{
 
-            width: 120px;
+                display: flex;
+                justify-content: center;
 
-            background-color: $colore-primario;
+                padding: 5px;
+                border-radius: 30px;
 
-            text-align: center;
+                width: 120px;
+                margin-top: 30px;
 
-            cursor: pointer;
+                background-color: $colore-primario;
 
-            span{
-                display: block;
-
-                width: 25px;
-                color: white;
                 text-align: center;
-                margin-right: 10px;
 
-                border-radius: 50%;
-                margin-right: 5px;
+                cursor: pointer;
 
+                span{
+                    display: block;
+
+                    width: 25px;
+                    color: white;
+                    text-align: center;
+                    margin-right: 10px;
+
+                    border-radius: 50%;
+                    margin-right: 5px;
+
+                }
+
+                .active{
+                    background-color: #3D3D3D;
+
+                }
             }
-
-            .active{
-                background-color: #3D3D3D;
-
-            }
         }
-    }
 
-
-
-    .img-container{
-        width: 500px;
-        height: 250px;
-
-        img{
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            margin-left: 20px;
-        }
-    }
-
-    @media screen and (max-width: 560px) {
-
-        .about-us-section{
-            margin: 20px 0;
-        }
         .img-container{
-            width: 300px;
-            height: 150px;
+
+            width: 690px;
+            height: 345px;
+
+
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius: 20px;
+                margin-left: 20px;
+            }
         }
 
-        p{
-            font-size: 18px;
+        .arrow-container{
+
+            position: relative;
+            width: 0px;
+
+            .next,
+            .previous{
+
+                position: relative;
+                z-index: 9999;
+
+                border: 1px solid black;
+                border-radius: 50%;
+
+                width: 30px;
+                height: 30px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                cursor: pointer;
+                background-color: white;
+                // background-color: rgba(0,0,0, 0.4);
+                // color: white;
+
+            }
+
+            .previous{
+                top: 105px;
+                right: -40px;
+            }
+
+            .next{
+                top: 105px;
+                right: 25px;
+            }
+
+            .hide{
+                display: none;
+            }
         }
+
+
+        @media screen and (max-width: 560px) {
+
+            .about-us-section{
+                margin: 20px 0;
+            }
+
+            .about-text{
+                margin-right: 0px;
+            }
+
+
+            .img-container{
+                width: 290px;
+                height: 145px;
+            }
+
+            p{
+                font-size: 18px;
+            }
+
+            .arrow-container{
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 561px) and (max-width: 800px) {
+
+            .img-container{
+                width: 400px;
+                height: 200px;
+            }
+
+        }
+
+        @media screen and (min-width: 992px) and (max-width: 1087px) {
+
+            .img-container{
+                width: 420px;
+                height: 210px;
+            }
+
+        }
+
+        @media screen and (min-width: 1088px) and (max-width: 1198px) {
+
+            .img-container{
+                width: 500px;
+                height: 250px;
+            }
+
+        }
+
+        @media screen and (min-width: 1199px) and (max-width: 1257px) {
+
+            .img-container{
+                width: 560px;
+                height: 280px;
+            }
+
+        }
+
+        @media screen and (min-width: 1258px) and (max-width: 1440px) {
+
+            .img-container{
+                width: 590px;
+                height: 295px;
+            }
+
+        }
+        @media screen and (min-width: 1407px) and (max-width: 1679px) {
+
+            .img-container{
+                width: 670px;
+                height: 335px;
+            }
+
+        }
+        @media screen and (min-width: 1680px) {
+
+            .img-container{
+                width: 815px;
+                height: 405px;
+            }
+
+        }
+
+
     }
 
 }
