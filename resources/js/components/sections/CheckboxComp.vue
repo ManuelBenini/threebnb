@@ -1,26 +1,75 @@
 <template>
     <div>
+
+        <h1 class="text-center">Cerca il tuo BnB ideale</h1>
+
+        <!-- SEARCH APP -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-center search-app">
+                        <form action="">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione...">
+                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
+                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
+                            <input class="input-km" type="number" value="20" placeholder="Distanza max (km)">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /SEARCH APP -->
+
+
+        <!-- CHECKBOX AREA -->
         <div class="container-fluid checkbox-area">
             <div class="row">
                 <div class="col">
 
-                    <h1 class="text-center">Cerca il tuo BnB ideale</h1>
 
                     <div class="checkbox flex-wrap">
 
-                        <form action="inserire-percorso">
-                            <label v-for="(search, index) in advancedSearch" :key="`search${index}`" >
-                                <ul>
-                                    <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                        <a :href="search.href"></a>
-                                        <input @click="search.click = !search.click" class="mr-2" type="checkbox">
-                                        <i :class="search.icon"></i>
-                                        <p>{{ search.name }}</p>
-                                    </li>
-                                </ul>
+                        <div class="col-6 service-list-1">
 
-                            </label>
-                        </form>
+                            <form action="inserire-percorso">
+                                <label v-for="(search, index) in advancedSearchList1" :key="`search${index}`" >
+                                    <div class="card-service">
+
+                                        <ul>
+                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                                <a :href="search.href"></a>
+                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
+                                                <i class :class="search.icon"></i>
+                                                <p>{{ search.name }}</p>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                </label>
+                            </form>
+
+                        </div>
+
+                        <div class="col-6 service-list-2">
+
+                            <form action="inserire-percorso">
+                                <label v-for="(search, index) in advancedSearchList2" :key="`search${index}`" >
+                                    <div class="card-service">
+
+                                        <ul>
+                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                                <a :href="search.href"></a>
+                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
+                                                <i :class="search.icon"></i>
+                                                <p>{{ search.name }}</p>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </label>
+                            </form>
+                        </div>
 
                     </div>
 
@@ -37,6 +86,7 @@
 
             </div>
         </div>
+        <!-- CHECKBOX AREA -->
 
         <div>
             <CardSection
@@ -63,37 +113,60 @@ import CardSection from './CardSection.vue';
         data() {
             return {
                 clicked: false,
-                advancedSearch: [
+
+                advancedSearchList1: [
                     {
                         name: "Wi-Fi",
                         href: "#",
                         icon: "fa-solid fa-wifi",
                         click: false
                     },
+
                     {
                         name: "Posto Macchina",
                         href: "#",
                         icon: "fa-solid fa-square-parking",
                         click: false
                     },
+
                     {
                         name: "Piscina",
                         href: "#",
                         icon: "fa-solid fa-person-swimming",
                         click: false
                     },
+
                     {
                         name: "Portineria",
                         href: "#",
                         icon: "fa-solid fa-bell-concierge",
                         click: false
                     },
+
                     {
-                        name: "Vista Mare",
+                        name: "Idromassaggio",
                         href: "#",
-                        icon: "fa-solid fa-house-flood-water",
+                        icon: "fa-solid fa-bath",
                         click: false
                     },
+                ],
+
+                advancedSearchList2: [
+                    {
+                        name: "Camino",
+                        href: "#",
+                        icon: "fa-solid fa-fire",
+                        click: false
+                    },
+
+
+                    {
+                        name: "Aria Condizionata",
+                        href: "#",
+                        icon: "fa-regular fa-snowflake",
+                        click: false
+                    },
+
                     {
                         name: "Sauna",
                         href: "#",
@@ -102,23 +175,19 @@ import CardSection from './CardSection.vue';
                     },
 
                     {
-                        name: "Camino",
+                        name: "Vista Mare",
                         href: "#",
-                        icon: "fa-solid fa-fire",
+                        icon: "fa-solid fa-house-flood-water",
                         click: false
                     },
+
                     {
-                        name: "Idromassaggio",
+                        name: "BBQ",
                         href: "#",
-                        icon: "fa-solid fa-bath",
+                        icon: "fa-solid fa-bacon",
                         click: false
                     },
-                    {
-                        name: "Aria Condizionata",
-                        href: "#",
-                        icon: "fa-regular fa-snowflake",
-                        click: false
-                    },
+
                 ]
             };
         },
@@ -129,17 +198,79 @@ import CardSection from './CardSection.vue';
 
 <style lang="scss" scoped>
 
-    .checkbox-area{
-        padding-bottom: 60px;
-    }
+    @import '../../../sass/front/partials/vars';
 
     h1{
         font-size: 48px;
         margin-top: 20px;
     }
 
+    .col-6 {
+        padding: 0px 10px;
+    }
+
+    // SEARCH APP
+
+    .search-app form {
+        border: 1px solid #979797;
+        padding: 12px 12px;
+        border-radius: 35px;
+    }
+
+    .search-app input{
+        padding: 0px 10px;
+        width: 300px;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .search-app button {
+        background-color: $colore-primario;
+        padding: 10px 10px;
+        padding: 8px 13px;
+        border: none;
+        border-radius: 50%;
+
+        i {
+            color: #FFFFFF;
+        }
+    }
+
+    form .input-city, form .input-numb, form .input-km {
+        margin: auto;
+    }
+
+    form .input-city, form .input-numb {
+        border-right: 1px solid #979797;
+        align-content: center;
+    }
+
+    form .input-numb {
+        width: 110px;
+        text-align: center;
+
+    }
+
+    form .input-km {
+        width: 170px;
+        text-align: center;
+    }
+
+
+    // /SEARCH APP
+
+
+    // CHECKBOX AREA
+
+    ul {
+        padding: 0;
+        margin: 0px 10px;
+    }
+
     li {
-        margin: 0 2px;
         text-align: center;
         text-decoration: none;
         text-transform: none;
@@ -147,7 +278,6 @@ import CardSection from './CardSection.vue';
         transition: color .2s ease-in-out;
         font-size: 18px;
         border-bottom: 2px solid transparent;
-
         cursor: pointer;
 
         &:hover {
@@ -163,22 +293,23 @@ import CardSection from './CardSection.vue';
         margin-bottom: 2px;
     }
 
+    input[type=checkbox] {
+        transform: scale(1.5);
+    }
+
+    .card-service {
+        width: 110px;
+    }
+
+    .checkbox-area{
+        padding-bottom: 60px;
+    }
+
     .checkbox{
         width: 50%;
         margin: 0 auto;
         margin-top: 40px;
         margin-bottom: 10px;
-    }
-
-    @media screen and (max-width: 740px) {
-
-        .checkbox{
-            width: 90%;
-            margin: 0 auto;
-            margin-top: 40px;
-            margin-bottom: 10px;
-        }
-
     }
 
     .checkbox, form, .search {
@@ -187,12 +318,8 @@ import CardSection from './CardSection.vue';
         justify-content: center;
     }
 
-    input[type=checkbox] {
-        transform: scale(1.5);
-    }
-
-    input:checked + label{
-        color: red;
+    .service-list-2 {
+        justify-content: space-between;
     }
 
     .selected {
@@ -200,7 +327,105 @@ import CardSection from './CardSection.vue';
         transition: .2s ease-in-out;
         border-bottom: 2px solid #979797
     }
+
     .no-selected {
         color: #979797;
     }
+
+    // /CHECKBOX AREA
+
+
+    // MEDIA QUERY
+
+    @media screen and (max-width: 1681px) {
+        .service-list-1 li {
+            margin: 0 4px;
+        }
+    }
+
+    @media screen and (max-width: 1486px) {
+        .card-service {
+            width: 108px;
+        }
+    }
+
+    @media screen and (max-width: 745px) {
+        .checkbox{
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        .card-service {
+            width: 135px;
+        }
+
+        form .input-city {
+            width: 100%;
+            text-align: center;
+            border-right: none;
+        }
+
+        form .input-numb, form .input-km {
+            width: 33%;
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        h1 {
+            margin: 0 40px;
+        }
+    }
+
+    @media screen and (max-width: 465px){
+        form .input-city {
+            border-right: none;
+        }
+    }
+
+    @media screen and (max-width: 455px){
+        form .input-city, form .input-numb, form .input-km {
+            border-right: none;
+            text-align: center;
+        }
+
+        form .input-numb {
+            border-right: 1px solid #979797;
+        }
+        form .input-km {
+            width: 30%;
+        }
+    }
+
+    @media screen and (max-width: 415px){
+        form input {
+            flex-direction: column;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        h1 {
+            margin: 0 40px;
+        }
+
+        form .input-city, form .input-numb, form .input-km {
+            margin: auto;
+            padding: 5px 0px;
+            border-right: none;
+            width: 250px;
+        }
+
+        form .input-city, form .input-numb {
+            border-bottom: 1px solid #979797;
+        }
+
+        .search-app form {
+            flex-direction: column;
+        }
+    }
+
+    // /MEDIA QUERY
+
 </style>
+
