@@ -12,7 +12,10 @@
                             <input class="input-city" type="text" placeholder="Inserisci la tua destinazione...">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
-                            <input class="input-km" type="number" value="20" placeholder="Distanza max (km)">
+                            <div class="distance">
+                                <label class="text-center" for="distance">20 km</label>
+                                <input class="input-km" type="number" placeholder="Distanza max (km)">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -205,6 +208,10 @@ import CardSection from './CardSection.vue';
         margin-top: 20px;
     }
 
+    label {
+        margin: 0;
+    }
+
     .col-6 {
         padding: 0px 10px;
     }
@@ -237,6 +244,11 @@ import CardSection from './CardSection.vue';
         i {
             color: #FFFFFF;
         }
+    }
+
+    .distance {
+        display: flex;
+        flex-direction: column;
     }
 
     form .input-city, form .input-numb, form .input-km {
