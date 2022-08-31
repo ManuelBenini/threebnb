@@ -2,18 +2,8 @@
 @section('content')
 <div class="container">
 
-    @if ($errors->any())
-    <div class="alert alert-danger" role="alert">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-      </div>
-    @endif
-
     <h1>Modifica: {{$apartment->title}}</h1>
-    <form action="{{route('admin.apartments.update', $apartment)}}" method="post">
+    <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -38,9 +28,9 @@
         <div class="mb-3">
           <label
           for="rooms"
-          class="form-label">Quante stanze</label>
+          class="form-label">Stanze</label>
           <input
-          type="text"
+          type="number"
           class="form-control
           @error('rooms') is-invalid @enderror" id="rooms"
           name="rooms"
@@ -55,9 +45,9 @@
         <div class="mb-3">
             <label
             for="beds"
-            class="form-label">Quanti letti?</label>
+            class="form-label">Letti</label>
             <input
-            type="text"
+            type="number"
             class="form-control @error('beds') is-invalid @enderror"
             id="beds"
             name="beds"
@@ -72,9 +62,9 @@
         <div class="mb-3">
             <label
             for="bathrooms"
-            class="form-label">Quante bagni?</label>
+            class="form-label">Bagni</label>
             <input
-            type="text"
+            type="number"
             class="form-control @error('bathrooms') is-invalid @enderror"
             id="bathrooms"
             name="bathrooms"
@@ -89,9 +79,9 @@
         <div class="mb-3">
             <label
             for="sqm"
-            class="form-label">Metri quadri?</label>
+            class="form-label">Metri quadri</label>
             <input
-            type="text"
+            type="number"
             class="form-control
             @error('sqm') is-invalid @enderror" id="sqm" name="sqm"
             value="{{ old('sqm', $apartment->sqm) }}">
@@ -118,14 +108,48 @@
             @enderror
         </div>
 
-        {{-- Immmagine --}}
+        {{-- Disponibilità --}}
+        <label for="visible">Disponibile</label>
         <div class="mb-3">
-            <label for="image" class="form-label">Immagine</label>
-            <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $apartment->image) }}">
+          <label for="visible">SI</label>
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
+          <label for="visible">NO</label>
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{old('visible', []) ? '' : 'checked' }}>
+          @error('visible')
+            <p class="error-msg">{{$message}}</p>
+          @enderror
+        </div>
 
-            @error('image')
-              <p class="error-msg">{{$message}}</p>
-            @enderror
+        {{-- Servizi --}}
+        <label for="service" class="form-label">Servizi</label>
+        <div class="mb-3 d-flex justify-content-between">
+          @foreach ($services as $service)
+          <div>
+            <label for="service{{ $loop->iteration }}" class="mr-3">{{ $service->name }}</label>
+            <input type="checkbox" class="form-control
+                   @error('service') is-invalid @enderror"
+                   id="service{{$loop->iteration}}"
+                   name="services[]"
+                   value="{{$service->id}}"
+                   @if (!$errors->any() && $apartment->services->contains($service->id))
+                        checked
+                   @elseif ($errors->any() && in_array($service->id, old('services', [])))
+                        checked
+                   @endif>
+          </div>
+          @endforeach
+          @error('service')
+            <p class="error-msg">{{$message}}</p>
+          @enderror
+        </div>
+
+        {{-- Immmagine --}}
+        <label for="image">Immagine</label>
+        <div class="mb-3">
+          <input type="file" accept="image/*" class="@error('image') is-invalid @enderror" id="image" name="image">
+          @error('image')
+            <p class="error-msg">{{$message}}</p>
+          @enderror
         </div>
 
         {{-- <select class="form-select my-2" name="visible" aria-label=".form-select-lg example">

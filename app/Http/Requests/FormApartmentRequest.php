@@ -25,16 +25,13 @@ class FormApartmentRequest extends FormRequest
     {
         return [
 
-                'title' => 'required|min:3|max:255',
-                'rooms' => 'required|numeric',
-                'beds' => 'required|numeric',
-                'bathrooms' => 'required|numeric',
-                'sqm' => 'required|numeric',
-                'address' => 'required',
-                // 'latitude' => 'required|numeric',
-                // 'longitude' => 'required|numeric',
+                'title' => 'required|min:5|max:255',
+                'rooms' => 'required|numeric|min:1',
+                'beds' => 'required|numeric|min:1',
+                'bathrooms' => 'required|numeric|min:1',
+                'sqm' => 'required|numeric|min:5',
+                'address' => 'required|min:5|max:255',
                 'image' => 'required|max:10000|image',
-                // 'image_original_name' => 'required|min:3|max:255',
                 'visible' => 'required',
 
         ];
@@ -44,27 +41,32 @@ class FormApartmentRequest extends FormRequest
     {
         return [
             'title.required' => 'Campo obbligatorio',
-            'title.min' => 'Minimo 3 caratteri',
-            'title.max' => 'Raggiunto numero massimo di caratteri',
+            'title.min' => 'Minimo 5 caratteri',
+            'title.max' => 'Massimo 255 caratteri',
 
             'rooms.required' => 'Campo obbligatorio',
             'rooms.numeric' => 'Inserisci il numero delle stanze',
+            'rooms.min' => 'Minimo 1 stanza',
 
             'beds.required' => 'Campo obbligatorio',
             'beds.numeric' => 'Inserisci il numero dei letti',
+            'beds.min' => 'Minimo 1 letto',
 
             'bathrooms.required' => 'Campo obbligatorio',
             'bathrooms.numeric' => 'Inserisci il numero di bagni',
+            'bathrooms.min' => 'Minimo 1 bagno',
 
             'sqm.required' => 'Campo obbligatorio',
             'sqm.numeric' => 'Inserisci la grandezza',
+            'sqm.min' => 'Minimo 5 metri quadri',
 
             'address.required' => 'Campo obbligatorio',
+            'address.min' => 'Minimo 5 caratteri',
+            'address.max' => 'Massimo 255 caratteri',
 
-            'image.required' => 'Campo obbligatorio',
+            'image.required' => 'Obbligatorio caricare un\'immagine',
             'image.max' => 'Caricare immagine che pesi meno di 10MB',
             'image.image' => 'Il file che hai caricato non è un\'immagine',
-            // 'image.uploaded' => 'Il file non è stato caricato correttamente',
             
             'visible.required' => 'Seleziona',
         ];
