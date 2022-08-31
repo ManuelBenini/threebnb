@@ -3,21 +3,25 @@
 
         <h1 class="text-center">Cerca il tuo BnB ideale</h1>
 
+        <!-- SEARCH APP -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
                             <input class="input-city" type="text" placeholder="Inserisci la tua destinazione...">
-                            <input class="input-numb" type="number" placeholder="N° stanze">
-                            <input class="input-numb" type="number" placeholder="N° letti">
-                            <input class="input-km" type="number" placeholder="Distanza max (km)">
+                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
+                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
+                            <input class="input-km" type="number" value="20" placeholder="Distanza max (km)">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- /SEARCH APP -->
 
+
+        <!-- CHECKBOX AREA -->
         <div class="container-fluid checkbox-area">
             <div class="row">
                 <div class="col">
@@ -29,14 +33,18 @@
 
                             <form action="inserire-percorso">
                                 <label v-for="(search, index) in advancedSearchList1" :key="`search${index}`" >
-                                    <ul>
-                                        <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                            <a :href="search.href"></a>
-                                            <input @click="search.click = !search.click" class="mr-2" type="checkbox">
-                                            <i :class="search.icon"></i>
-                                            <p>{{ search.name }}</p>
-                                        </li>
-                                    </ul>
+                                    <div class="card-service">
+
+                                        <ul>
+                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                                <a :href="search.href"></a>
+                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
+                                                <i class :class="search.icon"></i>
+                                                <p>{{ search.name }}</p>
+                                            </li>
+                                        </ul>
+
+                                    </div>
 
                                 </label>
                             </form>
@@ -47,15 +55,18 @@
 
                             <form action="inserire-percorso">
                                 <label v-for="(search, index) in advancedSearchList2" :key="`search${index}`" >
-                                    <ul>
-                                        <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                            <a :href="search.href"></a>
-                                            <input @click="search.click = !search.click" class="mr-2" type="checkbox">
-                                            <i :class="search.icon"></i>
-                                            <p>{{ search.name }}</p>
-                                        </li>
-                                    </ul>
+                                    <div class="card-service">
 
+                                        <ul>
+                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
+                                                <a :href="search.href"></a>
+                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
+                                                <i :class="search.icon"></i>
+                                                <p>{{ search.name }}</p>
+                                            </li>
+                                        </ul>
+
+                                    </div>
                                 </label>
                             </form>
                         </div>
@@ -75,6 +86,7 @@
 
             </div>
         </div>
+        <!-- CHECKBOX AREA -->
 
         <div>
             <CardSection
@@ -170,9 +182,9 @@ import CardSection from './CardSection.vue';
                     },
 
                     {
-                        name: "Palestra",
+                        name: "BBQ",
                         href: "#",
-                        icon: "fa-solid fa-dumbbell",
+                        icon: "fa-solid fa-bacon",
                         click: false
                     },
 
@@ -193,14 +205,16 @@ import CardSection from './CardSection.vue';
         margin-top: 20px;
     }
 
+    .col-6 {
+        padding: 0px 10px;
+    }
+
     // SEARCH APP
 
     .search-app form {
         border: 1px solid #979797;
         padding: 12px 12px;
         border-radius: 35px;
-
-
     }
 
     .search-app input{
@@ -225,25 +239,36 @@ import CardSection from './CardSection.vue';
         }
     }
 
-    form .input-numb {
-        width: 100px;
-
-    }
-
-    form .input-km {
-        width: 160px;
+    form .input-city, form .input-numb, form .input-km {
+        margin: auto;
     }
 
     form .input-city, form .input-numb {
         border-right: 1px solid #979797;
         align-content: center;
+    }
+
+    form .input-numb {
+        width: 110px;
+        text-align: center;
 
     }
+
+    form .input-km {
+        width: 170px;
+        text-align: center;
+    }
+
 
     // /SEARCH APP
 
 
     // CHECKBOX AREA
+
+    ul {
+        padding: 0;
+        margin: 0px 10px;
+    }
 
     li {
         text-align: center;
@@ -272,6 +297,10 @@ import CardSection from './CardSection.vue';
         transform: scale(1.5);
     }
 
+    .card-service {
+        width: 110px;
+    }
+
     .checkbox-area{
         padding-bottom: 60px;
     }
@@ -298,6 +327,7 @@ import CardSection from './CardSection.vue';
         transition: .2s ease-in-out;
         border-bottom: 2px solid #979797
     }
+
     .no-selected {
         color: #979797;
     }
@@ -311,40 +341,35 @@ import CardSection from './CardSection.vue';
         .service-list-1 li {
             margin: 0 4px;
         }
-
-        .service-list-2 li {
-            margin: 0 10px;
-        }
     }
-    @media screen and (max-width: 1463px) {
-        .service-list-1 li {
-            margin: 0 17px;
-        }
 
-        .service-list-2 li {
-            margin: 0 13px;
+    @media screen and (max-width: 1486px) {
+        .card-service {
+            width: 108px;
         }
     }
 
-    @media screen and (max-width: 1263px) {
-        .service-list-1 li {
-            margin: 0 17px;
-        }
-
-        .service-list-2 li {
-            margin: 0 13px;
-        }
-    }
-
-    @media screen and (max-width: 740px) {
+    @media screen and (max-width: 745px) {
         .checkbox{
-            width: 80%;
+            width: 70%;
             margin: 0 auto;
             margin-top: 40px;
             margin-bottom: 10px;
         }
 
+        .card-service {
+            width: 135px;
+        }
 
+        form .input-city {
+            width: 100%;
+            text-align: center;
+            border-right: none;
+        }
+
+        form .input-numb, form .input-km {
+            width: 33%;
+        }
     }
 
     @media screen and (max-width: 500px){
@@ -353,18 +378,25 @@ import CardSection from './CardSection.vue';
         }
     }
 
+    @media screen and (max-width: 465px){
+        form .input-city {
+            border-right: none;
+        }
+    }
+
     @media screen and (max-width: 455px){
-        form .input-city, form .input-numb {
+        form .input-city, form .input-numb, form .input-km {
             border-right: none;
             text-align: center;
-            // border-bottom: 1px solid #979797;
         }
 
         form .input-numb {
             border-right: 1px solid #979797;
         }
+        form .input-km {
+            width: 30%;
+        }
     }
-
 
     @media screen and (max-width: 415px){
         form input {
@@ -372,14 +404,24 @@ import CardSection from './CardSection.vue';
         }
     }
 
-
     @media screen and (max-width: 400px) {
         h1 {
             margin: 0 40px;
         }
 
-        ul {
-            padding: 0;
+        form .input-city, form .input-numb, form .input-km {
+            margin: auto;
+            padding: 5px 0px;
+            border-right: none;
+            width: 250px;
+        }
+
+        form .input-city, form .input-numb {
+            border-bottom: 1px solid #979797;
+        }
+
+        .search-app form {
+            flex-direction: column;
         }
     }
 
