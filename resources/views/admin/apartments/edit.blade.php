@@ -112,9 +112,10 @@
         <label for="visible">&#42;Disponibile</label>
         <div class="mb-3">
           <label for="visible">SI</label>
-          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{($apartment->visible === 1) ? 'checked' : '' }}>
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{(old('visible', $apartment->visible)) ? 'checked' : '' }}>
+
           <label for="visible">NO</label>
-          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{($apartment->visible === 0) ? 'checked' : '' }}>
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{!(old('visible', $apartment->visible)) ? 'checked' : '' }}>
           @error('visible')
             <p class="error-msg">{{$message}}</p>
           @enderror
@@ -138,10 +139,10 @@
                    @endif>
           </div>
           @endforeach
-          @error('services')
-            <p class="error-msg">{{$message}}</p>
-          @enderror
         </div>
+        @error('services')
+          <p class="error-msg">{{$message}}</p>
+        @enderror
 
         {{-- Immmagine --}}
         <label for="image">&#42;Immagine</label>

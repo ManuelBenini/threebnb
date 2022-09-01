@@ -67,7 +67,7 @@
           <label for="visible">SI</label>
           <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
           <label for="visible">NO</label>
-          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{old('visible', []) ? '' : 'checked' }}>
+          <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{!old('visible', []) ? 'checked' : '' }}>
           @error('visible')
             <p class="error-msg">{{$message}}</p>
           @enderror
@@ -87,10 +87,10 @@
                    @if(in_array($service->id, old('services',[]))) checked @endif>
           </div>
           @endforeach
-          @error('services')
-            <p class="error-msg">{{$message}}</p>
-          @enderror
         </div>
+        @error('services')
+          <p class="error-msg">{{$message}}</p>
+        @enderror
 
         {{-- Immagine --}}
         <label for="image">&#42;Immagine</label>

@@ -68,6 +68,7 @@ class FormApartmentRequest extends FormRequest
             'image.required' => '*Obbligatorio caricare un\'immagine',
             'image.max' => 'Caricare immagine che pesi meno di 10MB',
             'image.image' => 'Il file che hai caricato non è un\'immagine',
+
             'services.required_without_all' =>'*Seleziona almeno un servizio',
 
             'visible.required' => '*Seleziona',
