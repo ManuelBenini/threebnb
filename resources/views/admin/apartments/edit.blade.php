@@ -11,7 +11,7 @@
         <div class="mb-3">
           <label
           for="title"
-          class="form-label">Titolo</label>
+          class="form-label">&#42;Titolo</label>
           <input
           type="text"
           class="form-control
@@ -28,7 +28,7 @@
         <div class="mb-3">
           <label
           for="rooms"
-          class="form-label">Stanze</label>
+          class="form-label">&#42;Stanze</label>
           <input
           type="number"
           class="form-control
@@ -45,7 +45,7 @@
         <div class="mb-3">
             <label
             for="beds"
-            class="form-label">Letti</label>
+            class="form-label">&#42;Letti</label>
             <input
             type="number"
             class="form-control @error('beds') is-invalid @enderror"
@@ -62,7 +62,7 @@
         <div class="mb-3">
             <label
             for="bathrooms"
-            class="form-label">Bagni</label>
+            class="form-label">&#42;Bagni</label>
             <input
             type="number"
             class="form-control @error('bathrooms') is-invalid @enderror"
@@ -79,7 +79,7 @@
         <div class="mb-3">
             <label
             for="sqm"
-            class="form-label">Metri quadri</label>
+            class="form-label">&#42;Metri quadri</label>
             <input
             type="number"
             class="form-control
@@ -95,7 +95,7 @@
         <div class="mb-3">
             <label
             for="address"
-            class="form-label">Indirizzo</label>
+            class="form-label">&#42;Indirizzo</label>
             <input
             type="text"
             class="form-control @error('address') is-invalid @enderror"
@@ -109,7 +109,7 @@
         </div>
 
         {{-- Disponibilità --}}
-        <label for="visible">Disponibile</label>
+        <label for="visible">&#42;Disponibile</label>
         <div class="mb-3">
           <label for="visible">SI</label>
           <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
@@ -121,7 +121,7 @@
         </div>
 
         {{-- Servizi --}}
-        <label for="service" class="form-label">Servizi</label>
+        <label for="service" class="form-label">&#42;Servizi</label>
         <div class="mb-3 d-flex justify-content-between">
           @foreach ($services as $service)
           <div>
@@ -144,7 +144,7 @@
         </div>
 
         {{-- Immmagine --}}
-        <label for="image">Immagine</label>
+        <label for="image">&#42;Immagine</label>
         <div class="mb-3">
           <input type="file" accept="image/*" class="@error('image') is-invalid @enderror" id="image" name="image">
           @error('image')

@@ -9,7 +9,7 @@
 
         {{-- Titolo --}}
         <div class="mb-3">
-          <label for="title" class="form-label">Titolo</label>
+          <label for="title" class="form-label">&#42;Titolo</label>
           <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}">
           @error('title')
             <p class="error-msg">{{$message}}</p>
@@ -18,7 +18,7 @@
 
         {{-- Stanze --}}
         <div class="mb-3">
-          <label for="rooms" class="form-label">Stanze</label>
+          <label for="rooms" class="form-label">&#42;Stanze</label>
           <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" value="{{ old('rooms') }}">
           @error('rooms')
             <p class="error-msg">{{$message}}</p>
@@ -27,7 +27,7 @@
 
         {{-- Letti --}}
         <div class="mb-3">
-          <label for="beds" class="form-label">Letti</label>
+          <label for="beds" class="form-label">&#42;Letti</label>
           <input type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') }}">
           @error('beds')
             <p class="error-msg">{{$message}}</p>
@@ -36,7 +36,7 @@
 
         {{-- Bagni --}}
         <div class="mb-3">
-          <label for="bathrooms" class="form-label">Bagni</label>
+          <label for="bathrooms" class="form-label">&#42;Bagni</label>
           <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms" value="{{ old('bathrooms') }}">
           @error('bathrooms')
             <p class="error-msg">{{$message}}</p>
@@ -45,7 +45,7 @@
 
         {{-- Metri quadri --}}
         <div class="mb-3">
-          <label for="sqm" class="form-label">Metri quadri</label>
+          <label for="sqm" class="form-label">&#42;Metri quadri</label>
           <input type="number" class="form-control @error('sqm') is-invalid @enderror" id="sqm" name="sqm" value="{{ old('sqm') }}">
           @error('sqm')
             <p class="error-msg">{{$message}}</p>
@@ -54,7 +54,7 @@
 
         {{-- Indirizzo --}}
         <div class="mb-3">
-          <label for="address" class="form-label">Indirizzo</label>
+          <label for="address" class="form-label">&#42;Indirizzo</label>
           <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
           @error('address')
             <p class="error-msg">{{$message}}</p>
@@ -62,7 +62,7 @@
         </div>
 
         {{-- Disponibilità --}}
-        <label for="visible">Disponibile</label>
+        <label for="visible">&#42;Disponibile</label>
         <div class="mb-3">
           <label for="visible">SI</label>
           <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
@@ -74,7 +74,7 @@
         </div>
 
         {{-- Servizi --}}
-        <label for="service" class="form-label">Servizi</label>
+        <label for="service" class="form-label">&#42;Servizi</label>
         <div class="mb-3 d-flex justify-content-between">
           @foreach ($services as $service)
           <div>
@@ -93,7 +93,7 @@
         </div>
 
         {{-- Immagine --}}
-        <label for="image">Immagine</label>
+        <label for="image">&#42;Immagine</label>
         <div class="mb-3">
           <input type="file" accept="image/*" class="@error('image') is-invalid @enderror" id="image" name="image">
           @error('image')
