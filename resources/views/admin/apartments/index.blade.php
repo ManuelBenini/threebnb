@@ -6,9 +6,9 @@
     <h1>Lista appartamenti</h1>
 
     @if (session('delete_success'))
-        <div class="alert alert-danger d-flex justify-content-between" role="danger">
+        <div class="alert alert-success d-flex justify-content-between" role="success">
             {{session('delete_success')}}
-            <a class="btn btn-danger" href="{{route('admin.apartments.index')}}">X</a>
+            <a class="btn btn-success" href="{{route('admin.apartments.index')}}">X</a>
         </div>
     @endif
 
@@ -54,9 +54,9 @@
                     <td>
                         @if ($apartment->visible == 1)
                         Si
-                        @else 
-                            No    
-                        @endif   
+                        @else
+                            No
+                        @endif
                     </td>
 
                     <td>
