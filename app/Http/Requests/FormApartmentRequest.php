@@ -32,6 +32,7 @@ class FormApartmentRequest extends FormRequest
                 'sqm' => 'required|numeric|min:5',
                 'address' => 'required|min:5|max:255',
                 'image' => 'required|max:10000|image',
+                'services' =>'required_without_all',
                 'visible' => 'required',
 
         ];
@@ -67,6 +68,7 @@ class FormApartmentRequest extends FormRequest
             'image.required' => '*Obbligatorio caricare un\'immagine',
             'image.max' => 'Caricare immagine che pesi meno di 10MB',
             'image.image' => 'Il file che hai caricato non è un\'immagine',
+            'services.required_without_all' =>'*Seleziona almeno un servizio',
 
             'visible.required' => '*Seleziona',
         ];

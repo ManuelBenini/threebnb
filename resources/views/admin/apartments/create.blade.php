@@ -87,7 +87,7 @@
                    @if(in_array($service->id, old('services',[]))) checked @endif>
           </div>
           @endforeach
-          @error('service')
+          @error('services')
             <p class="error-msg">{{$message}}</p>
           @enderror
         </div>
