@@ -9,9 +9,10 @@
 <script>
 import CheckboxComp from '../sections/CheckboxComp.vue';
 
+
     export default {
     name: "SearchPage",
-    components: { CheckboxComp }
+    components: { CheckboxComp}
 }
 </script>
 
