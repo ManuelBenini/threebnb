@@ -15,7 +15,7 @@ class ApartmentSponsorshipSeeder extends Seeder
     {
         $apartment_counter = count(Apartment::all());
 
-        for ($i=1; $i <= $apartment_counter; $i++) {
+        for ($i=5; $i <= $apartment_counter; $i++) {
             $apartment = Apartment::where('id', '=', $i)->first();
             $sponsorship = Sponsorship::inRandomOrder()->first()->id;
 
