@@ -9,7 +9,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione...">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="parameters.address" @keyup="userSearchApi">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
                             <div class="distance">
@@ -109,12 +109,19 @@
 <script>
 import ButtonComp from '../elements/ButtonComp.vue';
 import CardSection from './CardSection.vue';
+import {apiUrl} from '../../data/apiConfig';
 
     export default {
         name: "CheckboxComp",
 
         data() {
             return {
+                apiUrl,
+                tomtomKey: 'GywRczhR7X2ioGGs4sIx5AWlCc9yk7Zi',
+                parameters:{
+                    address: ''
+                },
+
                 clicked: false,
 
                 advancedSearchList1: [
@@ -194,7 +201,19 @@ import CardSection from './CardSection.vue';
                 ]
             };
         },
-        methods: {},
+        methods: {
+            userSearchApi(){
+                axios.get(this.apiUrl + this.parameters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+                    .then(res => {
+                        console.log(res.data)
+                    })
+            }
+        },
+
+        mounted(){
+            console.log(this.apiUrl);
+        },
+
         components: { ButtonComp, CardSection }
     }
 </script>
