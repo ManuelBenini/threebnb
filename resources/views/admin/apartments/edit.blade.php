@@ -3,7 +3,7 @@
 <div class="container">
 
     <h1>Modifica: {{$apartment->title}}</h1>
-    <form action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data">
+    <form id="apartmentEditForm" action="{{route('admin.apartments.update', $apartment)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -22,6 +22,8 @@
           @error('title')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-title" class="text-danger"></p>
         </div>
 
         {{-- Stanze --}}
@@ -39,6 +41,8 @@
           @error('rooms')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-rooms" class="text-danger"></p>
         </div>
 
         {{-- Letti --}}
@@ -56,6 +60,8 @@
             @error('beds')
               <p class="error-msg">{{$message}}</p>
             @enderror
+
+            <p id="error-beds" class="text-danger"></p>
         </div>
 
         {{-- Bagni --}}
@@ -73,6 +79,8 @@
             @error('bathrooms')
               <p class="error-msg">{{$message}}</p>
             @enderror
+
+            <p id="error-bathrooms" class="text-danger"></p>
         </div>
 
         {{-- SQM --}}
@@ -89,6 +97,8 @@
             @error('sqm')
               <p class="error-msg">{{$message}}</p>
             @enderror
+
+            <p id="error-sqm" class="text-danger"></p>
         </div>
 
         {{-- Indirizzo --}}
@@ -106,6 +116,8 @@
             @error('address')
               <p class="error-msg">{{$message}}</p>
             @enderror
+
+            <p id="error-address" class="text-danger"></p>
         </div>
 
         {{-- Disponibilità --}}
@@ -140,9 +152,12 @@
           </div>
           @endforeach
         </div>
-        @error('services')
+        
+        @error('service')
           <p class="error-msg">{{$message}}</p>
         @enderror
+
+        <p id="error-services" class="text-danger"></p>
 
         {{-- Immmagine --}}
         <label for="image">&#42;Immagine</label>
@@ -151,12 +166,10 @@
           @error('image')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-image" class="text-danger"></p>
         </div>
 
-        {{-- <select class="form-select my-2" name="visible" aria-label=".form-select-lg example">
-            <option value="1">Visible</option>
-            <option value="0">-</option>
-        </select> --}}
         <button type="submit" class="btn btn-primary">Modifica</button>
       </form>
 </div>

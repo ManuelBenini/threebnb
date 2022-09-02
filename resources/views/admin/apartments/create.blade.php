@@ -4,16 +4,18 @@
 
 <div class="container">
 
-    <form action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
+    <form id="apartmentCreateForm" action="{{route('admin.apartments.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         {{-- Titolo --}}
         <div class="mb-3">
-          <label for="title" class="form-label">&#42;Titolo</label>
+          <label for="title" class="form-label">Titolo riepilogativo</label>
           <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}">
           @error('title')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-title" class="text-danger"></p>
         </div>
 
         {{-- Stanze --}}
@@ -23,6 +25,8 @@
           @error('rooms')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-rooms" class="text-danger"></p>
         </div>
 
         {{-- Letti --}}
@@ -32,6 +36,8 @@
           @error('beds')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-beds" class="text-danger"></p>
         </div>
 
         {{-- Bagni --}}
@@ -41,6 +47,8 @@
           @error('bathrooms')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-bathrooms" class="text-danger"></p>
         </div>
 
         {{-- Metri quadri --}}
@@ -50,6 +58,8 @@
           @error('sqm')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-sqm" class="text-danger"></p>
         </div>
 
         {{-- Indirizzo --}}
@@ -59,13 +69,17 @@
           @error('address')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-address" class="text-danger"></p>
         </div>
 
         {{-- Disponibilità --}}
         <label for="visible">&#42;Disponibile</label>
         <div class="mb-3">
+
           <label for="visible">SI</label>
           <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="1" {{old('visible', []) ? 'checked' : '' }}>
+
           <label for="visible">NO</label>
           <input type="radio" class="@error('visible') is-invalid @enderror" id="visible" name="visible" value="0" {{!old('visible', []) ? 'checked' : '' }}>
           @error('visible')
@@ -87,10 +101,13 @@
                    @if(in_array($service->id, old('services',[]))) checked @endif>
           </div>
           @endforeach
+          
         </div>
         @error('services')
           <p class="error-msg">{{$message}}</p>
         @enderror
+        
+        <p id="error-services" class="text-danger"></p>
 
         {{-- Immagine --}}
         <label for="image">&#42;Immagine</label>
@@ -99,9 +116,12 @@
           @error('image')
             <p class="error-msg">{{$message}}</p>
           @enderror
+
+          <p id="error-image" class="text-danger"></p>
         </div>
+
         <button type="submit" class="btn btn-primary">Crea</button>
-      </form>
+    </form>
 </div>
 
 @endsection
