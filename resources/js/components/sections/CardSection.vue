@@ -5,23 +5,24 @@
 
         <h2>Appartamenti <span class="orange-text"> {{message}}</span></h2>
 
-        <div class="card-section">
+        <div class="card-section" v-if="sponsored">
+
 
             <CardComp
-            title="Surprising stay next door"
-            previewText="Find unique spaces nearby that turn any trip into an andventure"
+            v-for="(apartment,index) in this.sponsoredNearbyApartments"
+            :key="`apartment${index}`"
+            :apartment="apartment"
             />
+
+        </div>
+
+        <div class="card-section" v-if="!sponsored">
+
+
             <CardComp
-            title="Surprising stay next door"
-            previewText="Find unique spaces nearby that turn any trip into an andventure"
-            />
-            <CardComp
-            title="Surprising stay next door"
-            previewText="Find unique spaces nearby that turn any trip into an andventure"
-            />
-            <CardComp
-            title="Surprising stay next door"
-            previewText="Find unique spaces nearby that turn any trip into an andventure"
+            v-for="(apartment,index) in this.nearbyApartments"
+            :key="`apartment${index}`"
+            :apartment="apartment"
             />
 
         </div>
@@ -40,7 +41,23 @@ import CardComp from '../elements/CardComp.vue';
             message:{
                 type: String,
                 Required: true
+            },
+            nearbyApartments:{
+                type: Array,
+                Required: true
+            },
+            sponsoredNearbyApartments:{
+                type: Array,
+                Required: true
+            },
+            sponsored:{
+                type: Boolean,
+                Required: true
             }
+        },
+
+        mounted(){
+            console.log(this.sponsoredNearbyApartments, 'app sponsorizzati');
         }
 }
 </script>

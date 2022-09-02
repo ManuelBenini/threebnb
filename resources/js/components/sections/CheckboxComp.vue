@@ -81,7 +81,7 @@
                         <ButtonComp
                             callToAction="Ricerca"
                             stile="arancione"
-                            @click.native="apartmentsPush"
+                            @click.native="apartmentEmit(); sponsoredApartmentEmit()"
                         />
 
                     </div>
@@ -91,18 +91,6 @@
             </div>
         </div>
         <!-- CHECKBOX AREA -->
-
-        <div>
-            <CardSection
-                message="in evidenza"
-                />
-        </div>
-
-        <div>
-            <CardSection
-                message="in base alle tue ricerche"
-                />
-        </div>
 
     </div>
 </template>
@@ -121,9 +109,10 @@ import haversine from 'haversine-distance';
                 apiUrlTomTom,
                 apiUrlDatabase,
                 position: [],
-                tomtomKey: 'GywRczhR7X2ioGGs4sIx5AWlCc9yk7Zi',
+                tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
 
                 apartments: [],
+                sponsoredApartments: [],
                 posizione: {
                     apartment: {},
                     user: {}
@@ -132,6 +121,7 @@ import haversine from 'haversine-distance';
                 radius: 2000000,
 
                 nearbyApartments: [],
+                sponsoredNearbyApartments: [],
 
                 parameters:{
                     address: ''
@@ -234,25 +224,54 @@ import haversine from 'haversine-distance';
             },
 
             apartmentsPush(){
-                this.apartments.forEach(apartment => {
+                this.distanceCalculator(this.apartments);
+                this.distanceCalculator(this.sponsoredApartments);
+                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
+                console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
+            },
+
+            getSponsoredApartments(){
+                axios.get(this.apiUrlDatabase + 'sponsoredApartments')
+                    .then(res => {
+                        this.sponsoredApartments = res.data;
+                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
+                    })
+            },
+
+            distanceCalculator(array){
+                array.forEach(apartment => {
                     this.posizione.apartment = {
-                        latitude: apartment.latitude, 
+                        latitude: apartment.latitude,
                         longitude: apartment.longitude,
-                        };
+                    };
 
                     const distance = haversine(this.posizione.apartment, this.posizione.user);
                     console.log(distance);
+
                     if(distance < this.radius){
-                        this.nearbyApartments.push(apartment);
+                        if(array === this.apartments){
+                            this.nearbyApartments.push(apartment);
+                        }
+                        if(array === this.sponsoredApartments){
+                            this.sponsoredNearbyApartments.push(apartment);
+                        }
                     }
                 });
-                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI'); 
-            }
+            },
+
+            apartmentEmit(){
+                this.apartmentsPush();
+                this.$emit('apartments', this.nearbyApartments);
+            },
+            sponsoredApartmentEmit(){
+                this.$emit('sponsoredApartments', this.sponsoredNearbyApartments);
+            },
         },
 
         mounted(){
             console.log(this.apiUrlDatabase);
             this.apartmentsList();
+            this.getSponsoredApartments();
         },
 
         components: { ButtonComp, CardSection }

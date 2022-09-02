@@ -18,5 +18,6 @@ Route::namespace('Api')
     ->prefix('apartments')
     ->group(function(){
     Route::get('/', 'PageController@getApartments');
+    Route::get('/sponsoredApartments', 'PageController@getSponsoredApartments');
     Route::get('/dettaglio-appartamento/?id={id}', 'PageController@show');
 });

@@ -1,12 +1,11 @@
 <template>
     <div class="card">
         <div class="bg-image">
-            <img src="../../../assets/hero-section-background.jpeg" alt="">
+            <img :src="apartment.image" alt="">
         </div>
 
         <div class="post-data">
-            <h2>{{ title }}</h2>
-            <p>{{ previewText }}</p>
+            <h2>{{ apartment.title }}</h2>
         </div>
 
     </div>
@@ -17,18 +16,10 @@
         name: 'CardComp',
 
         props:{
-
-            title: {
-                type: String,
+            apartment:{
+                type: Object,
                 required: true
-            },
-
-            previewText: {
-                type: String,
-                required: true
-            },
-
-
+            }
         },
 
 
