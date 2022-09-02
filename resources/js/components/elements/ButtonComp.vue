@@ -51,11 +51,12 @@
         background-color: blue;
     }
 
+    .giallo {
+        background-color: rgb(202, 202, 0);
+    }
+
     .verde{
         background-color: green;
     }
-
-
-
 
 </style>

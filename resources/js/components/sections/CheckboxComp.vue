@@ -110,6 +110,8 @@
 import ButtonComp from '../elements/ButtonComp.vue';
 import CardSection from './CardSection.vue';
 
+
+
     export default {
         name: "CheckboxComp",
 
