@@ -120,7 +120,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Crea</button>
-      </form>
+    </form>
 </div>
 
 @endsection
