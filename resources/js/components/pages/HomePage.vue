@@ -8,6 +8,32 @@
             message="scelti per te!"
         />
 
+        <div class="btn-container" v-if="showPagination">
+
+            <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
+            <button
+                :disabled = "pagination.current === 1"
+                @click="getSponsoredApartments(pagination.current - 1)">
+                &lt;&lt;
+            </button>
+
+            <button
+                v-for="i in pagination.last"
+                :key="`btn${i}`"
+                @click="getSponsoredApartments(i)"
+                :disabled = "pagination.current === i" >
+                {{i}}
+            </button>
+
+            <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
+            <button
+                :disabled = "pagination.current === pagination.last"
+                @click="getSponsoredApartments(pagination.current + 1)">
+                >>
+            </button>
+
+        </div>
+
         <PartnerComp />
 
         <AboutComp />
@@ -30,22 +56,38 @@ export default {
     data(){
         return{
             apiUrlDatabase,
-            sponsoredApartments: []
+            sponsoredApartments: [],
+            pagination: {
+                current: null,
+                last: null,
+            },
+            showPagination: false
         }
     },
 
     methods:{
-        getSponsoredApartments(){
-            axios.get(this.apiUrlDatabase + 'sponsoredApartments')
+        getSponsoredApartments(page){
+            axios.get(this.apiUrlDatabase + 'sponsoredApartments/' + '?page=' + page)
                 .then(res => {
-                    this.sponsoredApartments = res.data;
+                    this.sponsoredApartments = res.data.data;
                     console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
+
+                    console.log(this.sponsoredApartments);
+
+                    this.pagination = {
+                        current: res.data.current_page,
+                        last: res.data.last_page
+                    }
+
+                    if(this.pagination.current != this.pagination.last){
+                        this.showPagination = true;
+                    }
                 })
         },
     },
 
     mounted(){
-        this.getSponsoredApartments()
+        this.getSponsoredApartments(1)
     }
 }
 

@@ -230,11 +230,22 @@ import haversine from 'haversine-distance';
                 console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
             },
 
-            getSponsoredApartments(){
-                axios.get(this.apiUrlDatabase + 'sponsoredApartments')
+            getSponsoredApartments(page){
+                axios.get(this.apiUrlDatabase + 'sponsoredApartments/' + '?page=' + page)
                     .then(res => {
-                        this.sponsoredApartments = res.data;
+                        this.sponsoredApartments = res.data.data;
                         console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
+
+                        console.log(this.sponsoredApartments);
+
+                        this.pagination = {
+                            current: res.data.current_page,
+                            last: res.data.last_page
+                        }
+
+                        if(this.pagination.current != this.pagination.last){
+                            this.showPagination = true;
+                        }
                     })
             },
 

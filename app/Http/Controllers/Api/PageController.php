@@ -12,7 +12,7 @@ use App\User;
 class PageController extends Controller
 {
     public function getApartments(){
-        $apartments = Apartment::all();
+        $apartments = Apartment::paginate(4);
         return response()->json($apartments);
     }
 
@@ -22,7 +22,7 @@ class PageController extends Controller
     }
 
     public function getSponsoredApartments(){
-        $sponsoredApartment = Apartment::has('sponsorships')->get();
+        $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
 
         return response()->json($sponsoredApartment);
     }
