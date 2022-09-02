@@ -9,7 +9,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="parameters.address" @keyup="userSearchApi">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="parameters.address" @keyup.enter="userSearchApi">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
                             <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
                             <div class="distance">
@@ -81,6 +81,7 @@
                         <ButtonComp
                             callToAction="Ricerca"
                             stile="arancione"
+                            @click.native="apartmentsPush"
                         />
 
                     </div>
@@ -109,15 +110,29 @@
 <script>
 import ButtonComp from '../elements/ButtonComp.vue';
 import CardSection from './CardSection.vue';
-import {apiUrl} from '../../data/apiConfig';
+import {apiUrlTomTom, apiUrlDatabase} from '../../data/apiConfig';
+import haversine from 'haversine-distance';
 
     export default {
         name: "CheckboxComp",
 
         data() {
             return {
-                apiUrl,
+                apiUrlTomTom,
+                apiUrlDatabase,
+                position: [],
                 tomtomKey: 'GywRczhR7X2ioGGs4sIx5AWlCc9yk7Zi',
+
+                apartments: [],
+                posizione: {
+                    apartment: {},
+                    user: {}
+                },
+
+                radius: 2000000,
+
+                nearbyApartments: [],
+
                 parameters:{
                     address: ''
                 },
@@ -203,15 +218,41 @@ import {apiUrl} from '../../data/apiConfig';
         },
         methods: {
             userSearchApi(){
-                axios.get(this.apiUrl + this.parameters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+                axios.get(this.apiUrlTomTom + this.parameters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
-                        console.log(res.data)
+                        console.log(res.data.results[0].position);
+                        this.posizione.user = res.data.results[0].position;
                     })
+            },
+
+            apartmentsList(){
+                axios.get(this.apiUrlDatabase)
+                    .then(res => {
+                        this.apartments = res.data;
+                        console.log(this.apartments)
+                    })
+            },
+
+            apartmentsPush(){
+                this.apartments.forEach(apartment => {
+                    this.posizione.apartment = {
+                        latitude: apartment.latitude, 
+                        longitude: apartment.longitude,
+                        };
+
+                    const distance = haversine(this.posizione.apartment, this.posizione.user);
+                    console.log(distance);
+                    if(distance < this.radius){
+                        this.nearbyApartments.push(apartment);
+                    }
+                });
+                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI'); 
             }
         },
 
         mounted(){
-            console.log(this.apiUrl);
+            console.log(this.apiUrlDatabase);
+            this.apartmentsList();
         },
 
         components: { ButtonComp, CardSection }

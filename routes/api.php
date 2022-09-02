@@ -17,11 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')
     ->prefix('apartments')
     ->group(function(){
-    Route::get('/', 'PageController@index');
+    Route::get('/', 'PageController@getApartments');
     Route::get('/dettaglio-appartamento/?id={id}', 'PageController@show');
-    Route::get('/search/{radius}', 'PageController@search');
-    // Route::get('/sqm={sqm}', 'PageController@sqm');
-    // Route::get('/post-per-categoria/{slug}', 'PageController@getPostByCategory');
-    // Route::get('/post-per-tag/{slug}', 'PageController@getPostByTag');
-    // Route::get('/post-cat-tag/{catSlug}/{tagSlug}', 'PageController@getPostsByCatTag');
 });
