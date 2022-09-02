@@ -28,5 +28,33 @@ class ApartmentSeeder extends Seeder
             $new_apartment->visible = $faker->boolean();
             $new_apartment->save();
         }
+
+        $new_apartment = new Apartment();
+            $new_apartment->title = 'Appartamento sulla spiaggia';
+            $new_apartment->rooms = 5;
+            $new_apartment->beds = 4;
+            $new_apartment->bathrooms = 2; 
+            $new_apartment->sqm = 120;
+            $new_apartment->address = 'Via Cesare Battisti Bagheria';
+            $new_apartment->latitude = 38.07549 ;
+            $new_apartment->longitude = 13.50441;
+            $new_apartment->image = $faker->imageUrl(400, 400, 'houses', true);
+            $new_apartment->image_original_name = $faker->city();
+            $new_apartment->visible = 1;
+            $new_apartment->save();
+
+        $new_apartment = new Apartment();
+            $new_apartment->title = 'Appartamento sui monti';
+            $new_apartment->rooms = 6;
+            $new_apartment->beds = 3;
+            $new_apartment->bathrooms = 1; 
+            $new_apartment->sqm = 120;
+            $new_apartment->address = 'Via Alessandro Lamarmora Trieste';
+            $new_apartment->latitude = 44.35024;
+            $new_apartment->longitude = 9.22786;
+            $new_apartment->image = $faker->imageUrl(400, 400, 'houses', true);
+            $new_apartment->image_original_name = $faker->city();
+            $new_apartment->visible = 1;
+            $new_apartment->save();
     }
 }
