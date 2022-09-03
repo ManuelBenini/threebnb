@@ -5,6 +5,7 @@ use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormApartmentRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -43,6 +44,8 @@ class ApartmentController extends Controller
         $data = $request->all();
 
         $coordinates = Apartment::coordinates('coordinate');
+
+        $data['user_id'] = Auth::id();
 
         $data['latitude'] = $coordinates['latitude'];
         $data['longitude'] = $coordinates['longitude'];
