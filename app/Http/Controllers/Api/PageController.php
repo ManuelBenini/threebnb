@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Service;
 use App\Sponsorship;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -25,5 +26,13 @@ class PageController extends Controller
         $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
 
         return response()->json($sponsoredApartment);
+    }
+
+    public function getUserApartments(){
+        // $userID = Auth::id();
+
+        $userApartments = Apartment::where('user_id' , '=' , 1)->get();
+
+        return response()->json($userApartments);
     }
 }

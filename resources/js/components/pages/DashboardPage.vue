@@ -72,6 +72,7 @@
     import ButtonComp from '../elements/ButtonComp.vue';
     import HeaderComp from '../partials/HeaderComp.vue';
     import FooterComp from '../partials/FooterComp.vue';
+    import {apiUrlDatabase} from '../../data/apiConfig';
 
 
     export default {
@@ -107,9 +108,25 @@
                     title: "Sec",
                     image:"https://cdn.lionard.com/wmcdnorigin/110/254323.jpg",
                 },
-            ]
+            ],
+            userApartments: [],
+            apiUrlDatabase,
         }
     },
+
+    methods:{
+        getUserApartments(){
+            axios.get(this.apiUrlDatabase + 'userApartments')
+                .then(res => {
+                    this.userApartments = res.data;
+                    console.log(this.userApartments)
+                })
+        }
+    },
+
+    mounted(){
+        this.getUserApartments();
+    }
 
 }
 
