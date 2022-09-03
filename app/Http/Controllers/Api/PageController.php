@@ -27,12 +27,4 @@ class PageController extends Controller
 
         return response()->json($sponsoredApartment);
     }
-
-    public function getUserApartments(){
-        // $userID = Auth::id();
-
-        $userApartments = Apartment::where('user_id' , '=' , 1)->get();
-
-        return response()->json($userApartments);
-    }
 }
