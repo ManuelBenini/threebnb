@@ -223,6 +223,21 @@ import haversine from 'haversine-distance';
                     })
             },
 
+            // getServices(){
+            //     this.servicesList(1, this.servicesList1);
+            //     this.servicesList(2, this.servicesList2);
+
+            //     console.log(this.servicesList1, 'prima lista');
+            //     console.log(this.servicesList2, 'seconda lista');
+            // },
+
+            // servicesList(page, array){
+            //     axios.get(this.apiUrlDatabase + 'services/?page=' + page)
+            //         .then(res => {
+            //             array = res.data.data;
+            //         })
+            // },
+
             apartmentsPush(){
                 this.distanceCalculator(this.apartments);
                 this.distanceCalculator(this.sponsoredApartments);

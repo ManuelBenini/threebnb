@@ -27,4 +27,10 @@ class PageController extends Controller
 
         return response()->json($sponsoredApartment);
     }
+
+    // public function getServices(){
+    //     $services = Service::select('name')->paginate(5);
+
+    //     return response()->json($services);
+    // }
 }
