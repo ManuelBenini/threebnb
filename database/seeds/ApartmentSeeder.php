@@ -3,6 +3,7 @@
 use App\Apartment;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use App\User;
 
 class ApartmentSeeder extends Seeder
 {
@@ -29,11 +30,12 @@ class ApartmentSeeder extends Seeder
             $new_apartment->save();
         }
 
-        $new_apartment = new Apartment();
+            $new_apartment = new Apartment();
+            $new_apartment->user_id = User::inRandomOrder()->first()->id;
             $new_apartment->title = 'Appartamento sulla spiaggia';
             $new_apartment->rooms = 5;
             $new_apartment->beds = 4;
-            $new_apartment->bathrooms = 2; 
+            $new_apartment->bathrooms = 2;
             $new_apartment->sqm = 120;
             $new_apartment->address = 'Via Cesare Battisti Bagheria';
             $new_apartment->latitude = 38.07549 ;
@@ -43,11 +45,12 @@ class ApartmentSeeder extends Seeder
             $new_apartment->visible = 1;
             $new_apartment->save();
 
-        $new_apartment = new Apartment();
+            $new_apartment = new Apartment();
+            $new_apartment->user_id = User::inRandomOrder()->first()->id;
             $new_apartment->title = 'Appartamento sui monti';
             $new_apartment->rooms = 6;
             $new_apartment->beds = 3;
-            $new_apartment->bathrooms = 1; 
+            $new_apartment->bathrooms = 1;
             $new_apartment->sqm = 120;
             $new_apartment->address = 'Via Alessandro Lamarmora Trieste';
             $new_apartment->latitude = 44.35024;
