@@ -12,20 +12,32 @@ use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
+
     public function getApartments(){
-        $apartments = Apartment::paginate(4);
+        $apartments = Apartment::all();
         return response()->json($apartments);
+    }
+
+    public function getApartmentsPaginate(){
+        $apartments = Apartment::paginate(8);
+        return response()->json($apartments);
+    }
+
+    public function getSponsoredApartments(){
+        $sponsoredApartment = Apartment::has('sponsorships')->get();
+
+        return response()->json($sponsoredApartment);
+    }
+
+    public function getSponsoredApartmentsPaginate(){
+        $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
+
+        return response()->json($sponsoredApartment);
     }
 
     public function show($id){
         $apartment = Apartment::find($id);
         return response()->json($apartment);
-    }
-
-    public function getSponsoredApartments(){
-        $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
-
-        return response()->json($sponsoredApartment);
     }
 
     // public function getServices(){

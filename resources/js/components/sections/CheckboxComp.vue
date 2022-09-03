@@ -9,12 +9,12 @@
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="parameters.address" @keyup.enter="userSearchApi">
-                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
-                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="address" @keydown.tab="addressSearchApi()" @keyup.enter="addressSearchApi()">
+                            <input v-model="rooms" class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
+                            <input v-model="beds" class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
                             <div class="distance">
-                                <label class="text-center" for="distance">20 km</label>
-                                <input class="input-km" type="number" placeholder="Distanza max (km)">
+                                <label class="text-center" for="distance">Distanza (km)</label>
+                                <input v-model="radius" class="input-km" type="number" placeholder="Distanza max (km)">
                             </div>
                         </form>
                     </div>
@@ -35,7 +35,7 @@
                         <div class="col-6 service-list-1">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in advancedSearchList1" :key="`search${index}`" >
+                                <label v-for="(search, index) in servicesList1" :key="`search${index}`" >
                                     <div class="card-service">
 
                                         <ul>
@@ -57,7 +57,7 @@
                         <div class="col-6 service-list-2">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in advancedSearchList2" :key="`search${index}`" >
+                                <label v-for="(search, index) in servicesList2" :key="`search${index}`" >
                                     <div class="card-service">
 
                                         <ul>
@@ -92,6 +92,23 @@
         </div>
         <!-- CHECKBOX AREA -->
 
+        <!-- IMPAGINAZIONE -->
+        <!-- <div class="btn-container" v-if="showPagination">
+
+            <button
+                :disabled = "nearbyApartments.length <= 4"
+                @click="getSponsoredApartments(pagination.current - 1)">
+                &lt;&lt;
+            </button>
+
+            <button
+                :disabled = "pagination.current === pagination.last"
+                @click="getSponsoredApartments(pagination.current + 1)">
+                >>
+            </button>
+
+        </div> -->
+
     </div>
 </template>
 
@@ -106,30 +123,35 @@ import haversine from 'haversine-distance';
 
         data() {
             return {
+
+                // ApiUrl e coordinate
                 apiUrlTomTom,
                 apiUrlDatabase,
-                position: [],
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
-
-                apartments: [],
-                sponsoredApartments: [],
-                posizione: {
+                position: {
                     apartment: {},
                     user: {}
                 },
+                // pagination: {
+                //     start: null,
+                //     last: null,
+                // },
+                showPagination: false,
 
-                radius: 2000000,
-
+                // Appartamenti
+                apartments: [],
                 nearbyApartments: [],
+
+                sponsoredApartments: [],
                 sponsoredNearbyApartments: [],
 
-                parameters:{
-                    address: ''
-                },
+                // Filtri ricerca
+                radius: 20,
+                address: '',
+                rooms: '',
+                beds: '',
 
-                clicked: false,
-
-                advancedSearchList1: [
+                servicesList1: [
                     {
                         name: "Wi-Fi",
                         href: "#",
@@ -166,7 +188,7 @@ import haversine from 'haversine-distance';
                     },
                 ],
 
-                advancedSearchList2: [
+                servicesList2: [
                     {
                         name: "Camino",
                         href: "#",
@@ -207,19 +229,27 @@ import haversine from 'haversine-distance';
             };
         },
         methods: {
-            userSearchApi(){
-                axios.get(this.apiUrlTomTom + this.parameters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+            addressSearchApi(){
+                axios.get(this.apiUrlTomTom + this.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
-                        console.log(res.data.results[0].position);
-                        this.posizione.user = res.data.results[0].position;
+                        this.position.user = res.data.results[0].position;
+                        console.log(this.position.user);
                     })
             },
 
-            apartmentsList(){
+            getApartments(){
                 axios.get(this.apiUrlDatabase)
                     .then(res => {
                         this.apartments = res.data;
-                        console.log(this.apartments)
+                        console.log(this.apartments, 'tutti gli appartamenti')
+                    })
+            },
+
+            getSponsoredApartments(){
+                axios.get(this.apiUrlDatabase + 'sponsored/')
+                    .then(res => {
+                        this.sponsoredApartments = res.data;
+                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
                     })
             },
 
@@ -238,43 +268,17 @@ import haversine from 'haversine-distance';
             //         })
             // },
 
-            apartmentsPush(){
-                this.distanceCalculator(this.apartments);
-                this.distanceCalculator(this.sponsoredApartments);
-                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
-                console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
-            },
-
-            getSponsoredApartments(page){
-                axios.get(this.apiUrlDatabase + 'sponsoredApartments/' + '?page=' + page)
-                    .then(res => {
-                        this.sponsoredApartments = res.data.data;
-                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
-
-                        console.log(this.sponsoredApartments);
-
-                        this.pagination = {
-                            current: res.data.current_page,
-                            last: res.data.last_page
-                        }
-
-                        if(this.pagination.current != this.pagination.last){
-                            this.showPagination = true;
-                        }
-                    })
-            },
-
             distanceCalculator(array){
                 array.forEach(apartment => {
-                    this.posizione.apartment = {
+                    this.position.apartment = {
                         latitude: apartment.latitude,
                         longitude: apartment.longitude,
                     };
 
-                    const distance = haversine(this.posizione.apartment, this.posizione.user);
-                    console.log(distance);
+                    const distance = haversine(this.position.apartment, this.position.user);
+                    console.log((distance / 1000).toFixed(), 'distanza app da indirizzo');
 
-                    if(distance < this.radius){
+                    if((distance / 1000).toFixed() < this.radius){
                         if(array === this.apartments){
                             this.nearbyApartments.push(apartment);
                         }
@@ -285,18 +289,41 @@ import haversine from 'haversine-distance';
                 });
             },
 
+            apartmentsPush(){
+                this.nearbyApartments = [];
+                this.sponsoredNearbyApartments = [];
+
+                this.distanceCalculator(this.apartments);
+                this.distanceCalculator(this.sponsoredApartments);
+                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
+                console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
+            },
+
+            // apartmentsPagination(array){
+            //     this.pagination = {
+            //         start: array.slice(0,4),
+            //         last: array.slice(array.length - 4, array.length)
+            //     };
+
+            //     if(this.pagination.start != this.pagination.last){
+            //         this.showPagination = true;
+            //     }
+            // },
+
             apartmentEmit(){
                 this.apartmentsPush();
                 this.$emit('apartments', this.nearbyApartments);
+                // this.apartmentsPagination(this.nearbyApartments);
             },
             sponsoredApartmentEmit(){
                 this.$emit('sponsoredApartments', this.sponsoredNearbyApartments);
+                // this.apartmentsPagination(this.sponsoredNearbyApartments);
             },
         },
 
         mounted(){
-            console.log(this.apiUrlDatabase);
-            this.apartmentsList();
+            // console.log(this.apiUrlDatabase);
+            this.getApartments();
             this.getSponsoredApartments();
         },
 
