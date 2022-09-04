@@ -9,7 +9,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="address" @keydown.tab="addressSearchApi()" @keyup.enter="addressSearchApi()">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="address" @keyup="addressSearchApi()">
                             <input v-model="rooms" class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
                             <input v-model="beds" class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
                             <div class="distance">
@@ -40,7 +40,7 @@
 
                                         <ul>
                                             <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
-                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
                                                 <i :class="service.icon"></i>
                                                 <p>{{ service.name }}</p>
                                             </li>
@@ -61,7 +61,7 @@
 
                                         <ul>
                                             <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
-                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
                                                 <i :class="service.icon"></i>
                                                 <p>{{ service.name }}</p>
                                             </li>
@@ -77,6 +77,7 @@
                     <div class="search">
 
                         <ButtonComp
+                            :disabled="address.length < 3"
                             callToAction="Ricerca"
                             stile="arancione"
                             @click.native="apartmentEmit(); sponsoredApartmentEmit()"
@@ -111,10 +112,10 @@
 </template>
 
 <script>
-import ButtonComp from '../elements/ButtonComp.vue';
-import CardSection from './CardSection.vue';
-import {apiUrlTomTom, apiUrlDatabase} from '../../data/apiConfig';
-import haversine from 'haversine-distance';
+    import ButtonComp from '../elements/ButtonComp.vue';
+    import CardSection from './CardSection.vue';
+    import {apiUrlTomTom, apiUrlDatabase} from '../../data/apiConfig';
+    import haversine from 'haversine-distance';
 
     export default {
         name: "CheckboxComp",
@@ -148,6 +149,7 @@ import haversine from 'haversine-distance';
                 address: '',
                 rooms: '',
                 beds: '',
+                selectedServices: [],
 
                 // Servizi
                 servicesList1: [],
@@ -225,13 +227,14 @@ import haversine from 'haversine-distance';
                     const distance = haversine(this.position.apartment, this.position.user);
                     console.log((distance / 1000).toFixed(), 'distanza app da indirizzo');
 
-                    if((distance / 1000).toFixed() < this.radius){
+                    if((distance / 1000).toFixed() < parseInt(this.radius)){
                         if(array === this.apartments){
                             this.nearbyApartments.push(apartment);
                         }
                         if(array === this.sponsoredApartments){
                             this.sponsoredNearbyApartments.push(apartment);
                         }
+                        console.log('distanza scelta', parseInt(this.radius));
                     }
                 });
             },
@@ -259,12 +262,134 @@ import haversine from 'haversine-distance';
 
             apartmentEmit(){
                 this.apartmentsPush();
-                this.$emit('apartments', this.nearbyApartments);
+                this.$emit('apartments', this.apartmentsWithRooms);
                 // this.apartmentsPagination(this.nearbyApartments);
+                console.log(this.apartmentsWithRooms, 'computed');
+                console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
             },
             sponsoredApartmentEmit(){
                 this.$emit('sponsoredApartments', this.sponsoredNearbyApartments);
                 // this.apartmentsPagination(this.sponsoredNearbyApartments);
+            },
+        },
+
+        computed:{
+            apartmentsWithRooms(){
+                let apartmentsWithRooms = this.nearbyApartments;
+
+                if(this.rooms > 0){
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
+                }
+
+                if(this.beds > 0){
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.beds >= this.beds);
+                }
+
+                if(this.selectedServices.length !== 0){
+                    apartmentsWithRooms = [];
+
+                    // let c = 0;
+
+                    // this.nearbyApartments.forEach(apartment => {
+                    //     let serviceIncluded = true
+
+                    //     apartment.services.forEach(service => {
+                    //         if(c <= this.selectedServices.length){
+
+                    //             if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                    //                 serviceIncluded = true
+                    //                 validService++
+                    //                 console.log(validService, 'servizi validi');
+                    //             }
+                    //             else{
+                    //                 serviceIncluded = false
+                    //             }
+
+                    //             c++
+
+                    //         }
+
+                    //     });
+
+                    //     apartmentsWithRooms = apartment.services.filter(service => this.selectedServices.includes(service.id));
+
+                    //     apartmentsWithRooms = this.nearbyApartments.map(services => services.filter(service => service.id === 1));
+
+                    //     apartmentsWithRooms = this.nearbyApartments.filter(apartment =>{
+                    //         return apartment.services.filter(service => service.id === 1);
+                    //     })
+
+                    //     console.log(this.selectedServices.length, 'lunghezza array');
+
+                    //     console.log(c, 'log di C');
+
+                    //     if(serviceIncluded && validService == this.selectedServices.length){
+                    //         apartmentsWithRooms.push(apartment)
+                    //     }
+
+                    // });
+
+                    // apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.services.some(service => service.id == 1))
+
+                    // apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.services.some(service => {
+                    //     let serviceIncluded = true
+
+                    //     if(c < this.selectedServices.length){
+
+                    //         if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                    //             serviceIncluded = true
+                    //             validService++
+                    //             console.log(validService, 'servizi validi');
+                    //         }
+                    //         else{
+                    //             serviceIncluded = false
+                    //         }
+
+                    //         c++
+
+                    //         console.log(this.selectedServices.length, 'lunghezza array');
+
+                    //         console.log(c, 'log di C');
+
+                    //     }
+
+                    //     if(serviceIncluded && validService == this.selectedServices.length){
+                    //         return true
+                    //     }else{
+                    //         return false
+                    //     }
+
+                    // }));
+
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => {
+                        let validService = 0;
+
+                        return apartment.services.some(service => {
+                            let serviceIncluded = true
+
+                            if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                                serviceIncluded = true
+                                validService++
+                                console.log(validService, 'servizi validi');
+                            }
+                            else{
+                                serviceIncluded = false
+                            }
+
+                            console.log(this.selectedServices.length, 'lunghezza array');
+
+                            if(serviceIncluded && validService == this.selectedServices.length){
+                                return true
+                            }else{
+                                return false
+                            }
+
+                        })
+                    });
+
+                }
+
+                return apartmentsWithRooms;
             },
         },
 
