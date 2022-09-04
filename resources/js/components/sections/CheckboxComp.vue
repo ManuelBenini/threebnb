@@ -35,15 +35,14 @@
                         <div class="col-6 service-list-1">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in servicesList1" :key="`search${index}`" >
+                                <label v-for="(service, index) in servicesList1" :key="`service${index}`" >
                                     <div class="card-service">
 
                                         <ul>
-                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                                <a :href="search.href"></a>
-                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
-                                                <i class :class="search.icon"></i>
-                                                <p>{{ search.name }}</p>
+                                            <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox">
+                                                <i :class="service.icon"></i>
+                                                <p>{{ service.name }}</p>
                                             </li>
                                         </ul>
 
@@ -57,15 +56,14 @@
                         <div class="col-6 service-list-2">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in servicesList2" :key="`search${index}`" >
+                                <label v-for="(service, index) in servicesList2" :key="`service${index}`" >
                                     <div class="card-service">
 
                                         <ul>
-                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                                <a :href="search.href"></a>
-                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
-                                                <i :class="search.icon"></i>
-                                                <p>{{ search.name }}</p>
+                                            <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox">
+                                                <i :class="service.icon"></i>
+                                                <p>{{ service.name }}</p>
                                             </li>
                                         </ul>
 
@@ -151,81 +149,9 @@ import haversine from 'haversine-distance';
                 rooms: '',
                 beds: '',
 
-                servicesList1: [
-                    {
-                        name: "Wi-Fi",
-                        href: "#",
-                        icon: "fa-solid fa-wifi",
-                        click: false
-                    },
-
-                    {
-                        name: "Posto Macchina",
-                        href: "#",
-                        icon: "fa-solid fa-square-parking",
-                        click: false
-                    },
-
-                    {
-                        name: "Piscina",
-                        href: "#",
-                        icon: "fa-solid fa-person-swimming",
-                        click: false
-                    },
-
-                    {
-                        name: "Portineria",
-                        href: "#",
-                        icon: "fa-solid fa-bell-concierge",
-                        click: false
-                    },
-
-                    {
-                        name: "Idromassaggio",
-                        href: "#",
-                        icon: "fa-solid fa-bath",
-                        click: false
-                    },
-                ],
-
-                servicesList2: [
-                    {
-                        name: "Camino",
-                        href: "#",
-                        icon: "fa-solid fa-fire",
-                        click: false
-                    },
-
-
-                    {
-                        name: "Aria Condizionata",
-                        href: "#",
-                        icon: "fa-regular fa-snowflake",
-                        click: false
-                    },
-
-                    {
-                        name: "Sauna",
-                        href: "#",
-                        icon: "fa-solid fa-hot-tub-person",
-                        click: false
-                    },
-
-                    {
-                        name: "Vista Mare",
-                        href: "#",
-                        icon: "fa-solid fa-house-flood-water",
-                        click: false
-                    },
-
-                    {
-                        name: "BBQ",
-                        href: "#",
-                        icon: "fa-solid fa-bacon",
-                        click: false
-                    },
-
-                ]
+                // Servizi
+                servicesList1: [],
+                servicesList2: []
             };
         },
         methods: {
@@ -253,20 +179,41 @@ import haversine from 'haversine-distance';
                     })
             },
 
-            // getServices(){
-            //     this.servicesList(1, this.servicesList1);
-            //     this.servicesList(2, this.servicesList2);
+            getServices(){
+                this.firstServicesList(1);
+                this.secondServicesList(2);
+            },
 
-            //     console.log(this.servicesList1, 'prima lista');
-            //     console.log(this.servicesList2, 'seconda lista');
-            // },
-
-            // servicesList(page, array){
-            //     axios.get(this.apiUrlDatabase + 'services/?page=' + page)
-            //         .then(res => {
-            //             array = res.data.data;
-            //         })
-            // },
+            firstServicesList(page){
+                axios.get(this.apiUrlDatabase + 'services/?page=' + page)
+                    .then(res => {
+                        res.data.data.forEach(service => {
+                            service ={
+                                id: service.id,
+                                name: service.name,
+                                icon: service.icon,
+                                click: false
+                            }
+                            this.servicesList1.push(service)
+                        });
+                        console.log(this.servicesList1, 'prima lista');
+                    })
+            },
+            secondServicesList(page){
+                axios.get(this.apiUrlDatabase + 'services/?page=' + page)
+                    .then(res => {
+                        res.data.data.forEach(service => {
+                            service ={
+                                id: service.id,
+                                name: service.name,
+                                icon: service.icon,
+                                click: false
+                            }
+                            this.servicesList2.push(service)
+                        });
+                        console.log(this.servicesList2, 'seconda lista');
+                    })
+            },
 
             distanceCalculator(array){
                 array.forEach(apartment => {
@@ -323,6 +270,7 @@ import haversine from 'haversine-distance';
 
         mounted(){
             // console.log(this.apiUrlDatabase);
+            this.getServices();
             this.getApartments();
             this.getSponsoredApartments();
         },

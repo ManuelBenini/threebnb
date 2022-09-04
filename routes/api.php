@@ -21,6 +21,6 @@ Route::namespace('Api')
     Route::get('/paginate', 'PageController@getApartmentsPaginate');
     Route::get('/sponsored', 'PageController@getSponsoredApartments');
     Route::get('/sponsoredPaginate', 'PageController@getSponsoredApartmentsPaginate');
-    // Route::get('/services', 'PageController@getServices');
+    Route::get('/services', 'PageController@getServices');
     Route::get('/apartment-details/?id={id}', 'PageController@show');
 });

@@ -14,7 +14,7 @@ class PageController extends Controller
 {
 
     public function getApartments(){
-        $apartments = Apartment::all();
+        $apartments = Apartment::with('services')->get();
         return response()->json($apartments);
     }
 
@@ -24,7 +24,7 @@ class PageController extends Controller
     }
 
     public function getSponsoredApartments(){
-        $sponsoredApartment = Apartment::has('sponsorships')->get();
+        $sponsoredApartment = Apartment::has('sponsorships')->with('services')->get();
 
         return response()->json($sponsoredApartment);
     }
@@ -40,9 +40,9 @@ class PageController extends Controller
         return response()->json($apartment);
     }
 
-    // public function getServices(){
-    //     $services = Service::select('name')->paginate(5);
+    public function getServices(){
+        $services = Service::paginate(5);
 
-    //     return response()->json($services);
-    // }
+        return response()->json($services);
+    }
 }
