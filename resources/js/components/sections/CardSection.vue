@@ -9,10 +9,13 @@
 
 
             <CardComp
+            v-if="sponsoredNearbyApartments.length !== 0"
             v-for="(apartment,index) in this.sponsoredNearbyApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
             />
+
+            <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato</p>
 
         </div>
 
@@ -20,10 +23,13 @@
 
 
             <CardComp
+            v-if="nearbyApartments.length !== 0"
             v-for="(apartment,index) in this.nearbyApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
             />
+
+            <p v-if="nearbyApartments.length === 0">Nessun appartamento trovato</p>
 
         </div>
 
