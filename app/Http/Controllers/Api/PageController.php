@@ -14,7 +14,7 @@ class PageController extends Controller
 {
 
     public function getApartments(){
-        $apartments = Apartment::with('services')->get();
+        $apartments = Apartment::with(['services', 'sponsorships'])->get();
         return response()->json($apartments);
     }
 
