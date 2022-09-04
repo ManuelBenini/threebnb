@@ -13,6 +13,8 @@
             v-for="(apartment,index) in this.sponsoredNearbyApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
+            :sponsordistance= "sponsoredDistances[index].distance"
+            :sponsored="true"
             />
 
             <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato</p>
@@ -27,6 +29,8 @@
             v-for="(apartment,index) in this.nearbyApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
+            :appdistance= "apartmentDistances[index].distance"
+            :sponsored="false"
             />
 
             <p v-if="nearbyApartments.length === 0">Nessun appartamento trovato</p>
@@ -59,11 +63,19 @@ import CardComp from '../elements/CardComp.vue';
             sponsored:{
                 type: Boolean,
                 Required: true
-            }
+            },
+            apartmentDistances:{
+                type: Array,
+                Required: true
+            },
+            sponsoredDistances:{
+                type: Array,
+                Required: true
+            },
         },
 
         mounted(){
-            console.log(this.sponsoredNearbyApartments, 'app sponsorizzati');
+            console.log(this.sponsoredDistances[5].distance, 'prop distanze in cardsection');
         }
 }
 </script>

@@ -80,7 +80,7 @@
                             :disabled="address.length < 3"
                             callToAction="Ricerca"
                             stile="arancione"
-                            @click.native="apartmentEmit(); sponsoredApartmentEmit()"
+                            @click.native="apartmentEmit(); sponsoredApartmentEmit(); appDistanceEmit(); sponsorDistanceEmit()"
                         />
 
                     </div>
@@ -117,10 +117,14 @@
                 // Appartamenti
                 apartments: [],
                 nearbyApartments: [],
+                apartmentDistances: [],
 
                 // Sponsorizzati
                 sponsoredApartments: [],
                 sponsoredNearbyApartments: [],
+                sponsoredDistances: [],
+                dist: [],
+                dist2: [],
 
                 // Filtri ricerca
                 radius: 20,
@@ -203,29 +207,54 @@
                     };
 
                     const distance = haversine(this.position.apartment, this.position.user);
-                    console.log((distance / 1000).toFixed(), 'distanza app da indirizzo');
 
                     if((distance / 1000).toFixed() < parseInt(this.radius)){
                         if(array === this.apartments){
-                            this.nearbyApartments.push(apartment);
+
+                            this.apartmentDistances.push({
+                                distance: (distance / 1000).toFixed(),
+                                id: apartment.id,
+                            });
                         }
+
                         if(array === this.sponsoredApartments){
-                            this.sponsoredNearbyApartments.push(apartment);
+
+                            this.sponsoredDistances.push({
+                                distance: (distance / 1000).toFixed(),
+                                id: apartment.id,
+                            });
                         }
-                        console.log('distanza scelta', parseInt(this.radius));
+                        // console.log('distanza scelta', parseInt(this.radius));
                     }
                 });
+
+                if(array === this.apartments){
+                    this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+                        this.nearbyApartments.push(this.apartments[apartment.id - 1])
+                    });
+                }
+
+                if(array === this.sponsoredApartments){
+                    this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+                        this.sponsoredNearbyApartments.push(this.apartments[apartment.id - 1])
+                    });
+                }
+
+                // console.log('distanze app', this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}));
+                // console.log('distanze spon', this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}));
             },
 
             apartmentsPush(){
                 this.nearbyApartments = [];
                 this.sponsoredNearbyApartments = [];
+                this.apartmentDistances = [];
+                this.sponsoredDistances = [];
 
                 this.distanceCalculator(this.apartments);
                 this.distanceCalculator(this.sponsoredApartments);
 
-                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
-                console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
+                // console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
+                // console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
             },
 
 
@@ -233,13 +262,22 @@
             apartmentEmit(){
                 this.apartmentsPush();
                 this.$emit('apartments', this.apartmentsWithFilters);
-                console.log(this.apartmentsWithRooms, 'computed appartamenti');
+                console.log(this.apartmentsWithFilters, 'computed appartamenti');
                 console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
             },
 
             sponsoredApartmentEmit(){
                 this.$emit('sponsoredApartments', this.sponsoredWithFilters);
+                console.log(this.sponsoredWithFilters, 'computed sponsor');
             },
+
+            appDistanceEmit(){
+                this.$emit('apartmentsDistance', this.apartmentDistances);
+            },
+
+            sponsorDistanceEmit(){
+                this.$emit('sponsoredDistance', this.sponsoredDistances);
+            }
         },
 
         computed:{

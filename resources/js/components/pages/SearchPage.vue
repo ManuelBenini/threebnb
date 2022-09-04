@@ -3,18 +3,22 @@
 
         <CheckboxComp
         @apartments="startSearchApartments"
-        @sponsoredApartments="startSearchSponsoredApartments" />
+        @sponsoredApartments="startSearchSponsoredApartments"
+        @apartmentsDistance="getApartmentDistances"
+        @sponsoredDistance="getSponsoredDistances" />
 
         <div v-if="searchSuccesfull" >
             <CardSection
                 :sponsoredNearbyApartments = sponsoredNearbyApartments
                 :sponsored="true"
+                :sponsoredDistances= sponsoredDistance
                 message="in evidenza"
             />
 
             <CardSection
                 :nearbyApartments = nearbyApartments
                 :sponsored="false"
+                :apartmentDistances= apartmentsDistance
                 message="in base alle tue ricerche"
             />
         </div>
@@ -27,28 +31,44 @@ import CheckboxComp from '../sections/CheckboxComp.vue';
 import CardSection from '../sections/CardSection.vue';
 
     export default {
-    name: "SearchPage",
-    components: { CheckboxComp, CardSection},
+        name: "SearchPage",
+        components: { CheckboxComp, CardSection},
 
-    data(){
-        return{
-            nearbyApartments: [],
-            sponsoredNearbyApartments: [],
-            searchSuccesfull: false
-        }
-    },
-
-    methods: {
-        startSearchApartments(nearbyApartments){
-            this.nearbyApartments = nearbyApartments;
-            console.log(nearbyApartments, 'comp genitore');
-            this.searchSuccesfull = true;
+        data(){
+            return{
+                nearbyApartments: [],
+                sponsoredNearbyApartments: [],
+                searchSuccesfull: false,
+                apartmentsDistance: [],
+                sponsoredDistance: [],
+            }
         },
-        startSearchSponsoredApartments(sponsoredNearbyApartments){
-            this.sponsoredNearbyApartments = sponsoredNearbyApartments;
-        }
+
+        methods: {
+            startSearchApartments(nearbyApartments){
+                this.nearbyApartments = nearbyApartments;
+                this.searchSuccesfull = true;
+                console.log(this.nearbyApartments, 'props nearbyapp');
+            },
+            startSearchSponsoredApartments(sponsoredNearbyApartments){
+                this.sponsoredNearbyApartments = sponsoredNearbyApartments;
+            },
+            getApartmentDistances(apartmentsDistance){
+                this.apartmentsDistance = apartmentsDistance;
+                console.log(this.apartmentsDistance, 'props distanze app');
+            },
+            getSponsoredDistances(sponsoredDistance){
+                this.sponsoredDistance = sponsoredDistance;
+                console.log(this.sponsoredDistance, 'props distanze sponsor');
+            },
+        },
+
+        mounted() {
+
+        },
+
     }
-}
+
 </script>
 
 <style lang="scss" scoped>
