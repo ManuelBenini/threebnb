@@ -30,7 +30,7 @@ const router = new VueRouter({
             component: ApartmentPage
         },
         {
-            path: '/profilo-utente/:id',
+            path: '/profilo-utente',
             name: 'dashboard',
             component: DashboardPage
         },

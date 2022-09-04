@@ -107,9 +107,17 @@
                     title: "Sec",
                     image:"https://cdn.lionard.com/wmcdnorigin/110/254323.jpg",
                 },
-            ]
+            ],
         }
     },
+
+    methods:{
+
+    },
+
+    mounted(){
+
+    }
 
 }
 

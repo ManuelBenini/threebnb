@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Apartment extends Model
 {
     protected $fillable = [
+        'user_id',
         'title',
         'rooms',
         'beds',
@@ -17,7 +18,7 @@ class Apartment extends Model
         'longitude',
         'image',
         'image_original_name',
-        'visible',
+        'visible'
     ];
 
     public function sponsorships(){

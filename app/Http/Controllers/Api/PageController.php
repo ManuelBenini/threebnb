@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Service;
 use App\Sponsorship;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
