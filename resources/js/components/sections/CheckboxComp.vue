@@ -9,12 +9,12 @@
                 <div class="col">
                     <div class="d-flex justify-content-center search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="parameters.address" @keyup.enter="userSearchApi">
-                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
-                            <input class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
+                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="address" @keyup="addressSearchApi()">
+                            <input v-model="rooms" class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
+                            <input v-model="beds" class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
                             <div class="distance">
-                                <label class="text-center" for="distance">20 km</label>
-                                <input class="input-km" type="number" placeholder="Distanza max (km)">
+                                <label class="text-center" for="distance">Distanza (km)</label>
+                                <input v-model="radius" class="input-km" type="number" placeholder="Distanza max (km)">
                             </div>
                         </form>
                     </div>
@@ -35,15 +35,14 @@
                         <div class="col-6 service-list-1">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in advancedSearchList1" :key="`search${index}`" >
+                                <label v-for="(service, index) in servicesList1" :key="`service${index}`" >
                                     <div class="card-service">
 
                                         <ul>
-                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                                <a :href="search.href"></a>
-                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
-                                                <i class :class="search.icon"></i>
-                                                <p>{{ search.name }}</p>
+                                            <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
+                                                <i :class="service.icon"></i>
+                                                <p>{{ service.name }}</p>
                                             </li>
                                         </ul>
 
@@ -57,15 +56,14 @@
                         <div class="col-6 service-list-2">
 
                             <form action="inserire-percorso">
-                                <label v-for="(search, index) in advancedSearchList2" :key="`search${index}`" >
+                                <label v-for="(service, index) in servicesList2" :key="`service${index}`" >
                                     <div class="card-service">
 
                                         <ul>
-                                            <li :class="(search.click ? 'selected' : 'no-selected')" id="#service">
-                                                <a :href="search.href"></a>
-                                                <input @click="search.click = !search.click" class="mr-3" type="checkbox">
-                                                <i :class="search.icon"></i>
-                                                <p>{{ search.name }}</p>
+                                            <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
+                                                <i :class="service.icon"></i>
+                                                <p>{{ service.name }}</p>
                                             </li>
                                         </ul>
 
@@ -79,9 +77,10 @@
                     <div class="search">
 
                         <ButtonComp
+                            :disabled="address.length < 3"
                             callToAction="Ricerca"
                             stile="arancione"
-                            @click.native="apartmentEmit(); sponsoredApartmentEmit()"
+                            @click.native="apartmentEmit(); sponsoredApartmentEmit(); appDistanceEmit(); sponsorDistanceEmit()"
                         />
 
                     </div>
@@ -90,198 +89,292 @@
 
             </div>
         </div>
-        <!-- CHECKBOX AREA -->
+        <!-- /CHECKBOX AREA -->
 
     </div>
 </template>
 
 <script>
-import ButtonComp from '../elements/ButtonComp.vue';
-import CardSection from './CardSection.vue';
-import {apiUrlTomTom, apiUrlDatabase} from '../../data/apiConfig';
-import haversine from 'haversine-distance';
+    import ButtonComp from '../elements/ButtonComp.vue';
+    import CardSection from './CardSection.vue';
+    import {apiUrlTomTom, apiUrlDatabase} from '../../data/apiConfig';
+    import haversine from 'haversine-distance';
 
     export default {
         name: "CheckboxComp",
 
         data() {
             return {
+                // ApiUrl e coordinate
                 apiUrlTomTom,
                 apiUrlDatabase,
-                position: [],
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
-
-                apartments: [],
-                sponsoredApartments: [],
-                posizione: {
+                position: {
                     apartment: {},
                     user: {}
                 },
 
-                radius: 2000000,
-
+                // Appartamenti
+                apartments: [],
                 nearbyApartments: [],
+                apartmentDistances: [],
+
+                // Sponsorizzati
+                sponsoredApartments: [],
                 sponsoredNearbyApartments: [],
+                sponsoredDistances: [],
+                dist: [],
+                dist2: [],
 
-                parameters:{
-                    address: ''
-                },
+                // Filtri ricerca
+                radius: 20,
+                address: '',
+                rooms: '',
+                beds: '',
+                selectedServices: [],
 
-                clicked: false,
-
-                advancedSearchList1: [
-                    {
-                        name: "Wi-Fi",
-                        href: "#",
-                        icon: "fa-solid fa-wifi",
-                        click: false
-                    },
-
-                    {
-                        name: "Posto Macchina",
-                        href: "#",
-                        icon: "fa-solid fa-square-parking",
-                        click: false
-                    },
-
-                    {
-                        name: "Piscina",
-                        href: "#",
-                        icon: "fa-solid fa-person-swimming",
-                        click: false
-                    },
-
-                    {
-                        name: "Portineria",
-                        href: "#",
-                        icon: "fa-solid fa-bell-concierge",
-                        click: false
-                    },
-
-                    {
-                        name: "Idromassaggio",
-                        href: "#",
-                        icon: "fa-solid fa-bath",
-                        click: false
-                    },
-                ],
-
-                advancedSearchList2: [
-                    {
-                        name: "Camino",
-                        href: "#",
-                        icon: "fa-solid fa-fire",
-                        click: false
-                    },
-
-
-                    {
-                        name: "Aria Condizionata",
-                        href: "#",
-                        icon: "fa-regular fa-snowflake",
-                        click: false
-                    },
-
-                    {
-                        name: "Sauna",
-                        href: "#",
-                        icon: "fa-solid fa-hot-tub-person",
-                        click: false
-                    },
-
-                    {
-                        name: "Vista Mare",
-                        href: "#",
-                        icon: "fa-solid fa-house-flood-water",
-                        click: false
-                    },
-
-                    {
-                        name: "BBQ",
-                        href: "#",
-                        icon: "fa-solid fa-bacon",
-                        click: false
-                    },
-
-                ]
+                // Servizi
+                servicesList1: [],
+                servicesList2: []
             };
         },
         methods: {
-            userSearchApi(){
-                axios.get(this.apiUrlTomTom + this.parameters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+            addressSearchApi(){
+                axios.get(this.apiUrlTomTom + this.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
-                        console.log(res.data.results[0].position);
-                        this.posizione.user = res.data.results[0].position;
+                        this.position.user = res.data.results[0].position;
+                        console.log(this.position.user);
                     })
             },
 
-            apartmentsList(){
+            getApartments(){
                 axios.get(this.apiUrlDatabase)
                     .then(res => {
                         this.apartments = res.data;
-                        console.log(this.apartments)
+                        console.log(this.apartments, 'tutti gli appartamenti')
                     })
             },
 
-            apartmentsPush(){
-                this.distanceCalculator(this.apartments);
-                this.distanceCalculator(this.sponsoredApartments);
-                console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
-                console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
+            getSponsoredApartments(){
+                axios.get(this.apiUrlDatabase + 'sponsored/')
+                    .then(res => {
+                        this.sponsoredApartments = res.data;
+                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
+                    })
             },
 
-            getSponsoredApartments(page){
-                axios.get(this.apiUrlDatabase + 'sponsoredApartments/' + '?page=' + page)
+            getServices(){
+                this.firstServicesList(1);
+                this.secondServicesList(2);
+            },
+
+            firstServicesList(page){
+                axios.get(this.apiUrlDatabase + 'services/?page=' + page)
                     .then(res => {
-                        this.sponsoredApartments = res.data.data;
-                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
-
-                        console.log(this.sponsoredApartments);
-
-                        this.pagination = {
-                            current: res.data.current_page,
-                            last: res.data.last_page
-                        }
-
-                        if(this.pagination.current != this.pagination.last){
-                            this.showPagination = true;
-                        }
+                        res.data.data.forEach(service => {
+                            service ={
+                                id: service.id,
+                                name: service.name,
+                                icon: service.icon,
+                                click: false
+                            }
+                            this.servicesList1.push(service)
+                        });
+                        console.log(this.servicesList1, 'prima lista');
+                    })
+            },
+            secondServicesList(page){
+                axios.get(this.apiUrlDatabase + 'services/?page=' + page)
+                    .then(res => {
+                        res.data.data.forEach(service => {
+                            service ={
+                                id: service.id,
+                                name: service.name,
+                                icon: service.icon,
+                                click: false
+                            }
+                            this.servicesList2.push(service)
+                        });
+                        console.log(this.servicesList2, 'seconda lista');
                     })
             },
 
             distanceCalculator(array){
                 array.forEach(apartment => {
-                    this.posizione.apartment = {
+                    this.position.apartment = {
                         latitude: apartment.latitude,
                         longitude: apartment.longitude,
                     };
 
-                    const distance = haversine(this.posizione.apartment, this.posizione.user);
-                    console.log(distance);
+                    const distance = haversine(this.position.apartment, this.position.user);
 
-                    if(distance < this.radius){
+                    if((distance / 1000).toFixed() < parseInt(this.radius)){
                         if(array === this.apartments){
-                            this.nearbyApartments.push(apartment);
+
+                            this.apartmentDistances.push({
+                                distance: (distance / 1000).toFixed(),
+                                id: apartment.id,
+                            });
                         }
+
                         if(array === this.sponsoredApartments){
-                            this.sponsoredNearbyApartments.push(apartment);
+
+                            this.sponsoredDistances.push({
+                                distance: (distance / 1000).toFixed(),
+                                id: apartment.id,
+                            });
                         }
+                        // console.log('distanza scelta', parseInt(this.radius));
                     }
                 });
+
+                if(array === this.apartments){
+                    this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+                        this.nearbyApartments.push(this.apartments[apartment.id - 1])
+                    });
+                }
+
+                if(array === this.sponsoredApartments){
+                    this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+                        this.sponsoredNearbyApartments.push(this.apartments[apartment.id - 1])
+                    });
+                }
+
+                // console.log('distanze app', this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}));
+                // console.log('distanze spon', this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}));
             },
 
+            apartmentsPush(){
+                this.nearbyApartments = [];
+                this.sponsoredNearbyApartments = [];
+                this.apartmentDistances = [];
+                this.sponsoredDistances = [];
+
+                this.distanceCalculator(this.apartments);
+                this.distanceCalculator(this.sponsoredApartments);
+
+                // console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
+                // console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
+            },
+
+
+            // EMIT
             apartmentEmit(){
                 this.apartmentsPush();
-                this.$emit('apartments', this.nearbyApartments);
+                this.$emit('apartments', this.apartmentsWithFilters);
+                console.log(this.apartmentsWithFilters, 'computed appartamenti');
+                console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
             },
+
             sponsoredApartmentEmit(){
-                this.$emit('sponsoredApartments', this.sponsoredNearbyApartments);
+                this.$emit('sponsoredApartments', this.sponsoredWithFilters);
+                console.log(this.sponsoredWithFilters, 'computed sponsor');
+            },
+
+            appDistanceEmit(){
+                this.$emit('apartmentsDistance', this.apartmentDistances);
+            },
+
+            sponsorDistanceEmit(){
+                this.$emit('sponsoredDistance', this.sponsoredDistances);
+            }
+        },
+
+        computed:{
+            apartmentsWithFilters(){
+                let apartmentsWithRooms = this.nearbyApartments;
+
+                if(this.rooms > 0){
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
+                }
+
+                if(this.beds > 0){
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.beds >= this.beds);
+                }
+
+                if(this.selectedServices.length !== 0){
+                    apartmentsWithRooms = [];
+
+                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => {
+                        let validService = 0;
+
+                        return apartment.services.some(service => {
+                            let serviceIncluded = true
+
+                            if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                                serviceIncluded = true
+                                validService++
+                                console.log(validService, 'servizi validi');
+                            }
+                            else{
+                                serviceIncluded = false
+                            }
+
+                            console.log(this.selectedServices.length, 'lunghezza array');
+
+                            if(serviceIncluded && validService == this.selectedServices.length){
+                                return true
+                            }else{
+                                return false
+                            }
+
+                        })
+                    });
+
+                }
+
+                return apartmentsWithRooms;
+            },
+
+            sponsoredWithFilters(){
+                let apartmentsWithRooms = this.sponsoredNearbyApartments;
+
+                if(this.rooms > 0){
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
+                }
+
+                if(this.beds > 0){
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.beds >= this.beds);
+                }
+
+                if(this.selectedServices.length !== 0){
+                    apartmentsWithRooms = [];
+
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => {
+                        let validService = 0;
+
+                        return apartment.services.some(service => {
+                            let serviceIncluded = true
+
+                            if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                                serviceIncluded = true
+                                validService++
+                                console.log(validService, 'servizi validi');
+                            }
+                            else{
+                                serviceIncluded = false
+                            }
+
+                            console.log(this.selectedServices.length, 'lunghezza array');
+
+                            if(serviceIncluded && validService == this.selectedServices.length){
+                                return true
+                            }else{
+                                return false
+                            }
+
+                        })
+                    });
+
+                }
+
+                return apartmentsWithRooms;
             },
         },
 
         mounted(){
-            console.log(this.apiUrlDatabase);
-            this.apartmentsList();
+            this.getServices();
+            this.getApartments();
             this.getSponsoredApartments();
         },
 

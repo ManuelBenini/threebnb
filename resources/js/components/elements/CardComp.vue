@@ -8,6 +8,14 @@
             <h2>{{ apartment.title }}</h2>
         </div>
 
+        <div class="post-data" v-if="sponsored">
+            <p>Distanza: {{sponsordistance}}Km</p>
+        </div>
+
+        <div class="post-data" v-else>
+            <p>Distanza: {{appdistance}}Km</p>
+        </div>
+
     </div>
 </template>
 
@@ -19,9 +27,23 @@
             apartment:{
                 type: Object,
                 required: true
+            },
+            appdistance:{
+                type: String,
+                required: true
+            },
+            sponsordistance:{
+                type: String,
+                required: true
+            },
+            sponsored:{
+                type: Boolean,
+                required: true
             }
         },
-
+        mounted() {
+            console.log(this.appdistance, 'ECCOMI');
+        },
 
     }
 </script>

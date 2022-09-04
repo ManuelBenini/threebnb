@@ -12,9 +12,27 @@ use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
+
     public function getApartments(){
-        $apartments = Apartment::paginate(4);
+        $apartments = Apartment::with(['services', 'sponsorships'])->get();
         return response()->json($apartments);
+    }
+
+    public function getApartmentsPaginate(){
+        $apartments = Apartment::paginate(8);
+        return response()->json($apartments);
+    }
+
+    public function getSponsoredApartments(){
+        $sponsoredApartment = Apartment::has('sponsorships')->with('services')->get();
+
+        return response()->json($sponsoredApartment);
+    }
+
+    public function getSponsoredApartmentsPaginate(){
+        $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
+
+        return response()->json($sponsoredApartment);
     }
 
     public function show($id){
@@ -22,9 +40,9 @@ class PageController extends Controller
         return response()->json($apartment);
     }
 
-    public function getSponsoredApartments(){
-        $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
+    public function getServices(){
+        $services = Service::paginate(5);
 
-        return response()->json($sponsoredApartment);
+        return response()->json($services);
     }
 }
