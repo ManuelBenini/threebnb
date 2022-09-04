@@ -89,24 +89,7 @@
 
             </div>
         </div>
-        <!-- CHECKBOX AREA -->
-
-        <!-- IMPAGINAZIONE -->
-        <!-- <div class="btn-container" v-if="showPagination">
-
-            <button
-                :disabled = "nearbyApartments.length <= 4"
-                @click="getSponsoredApartments(pagination.current - 1)">
-                &lt;&lt;
-            </button>
-
-            <button
-                :disabled = "pagination.current === pagination.last"
-                @click="getSponsoredApartments(pagination.current + 1)">
-                >>
-            </button>
-
-        </div> -->
+        <!-- /CHECKBOX AREA -->
 
     </div>
 </template>
@@ -122,7 +105,6 @@
 
         data() {
             return {
-
                 // ApiUrl e coordinate
                 apiUrlTomTom,
                 apiUrlDatabase,
@@ -131,16 +113,12 @@
                     apartment: {},
                     user: {}
                 },
-                // pagination: {
-                //     start: null,
-                //     last: null,
-                // },
-                showPagination: false,
 
                 // Appartamenti
                 apartments: [],
                 nearbyApartments: [],
 
+                // Sponsorizzati
                 sponsoredApartments: [],
                 sponsoredNearbyApartments: [],
 
@@ -245,36 +223,27 @@
 
                 this.distanceCalculator(this.apartments);
                 this.distanceCalculator(this.sponsoredApartments);
+
                 console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
                 console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
             },
 
-            // apartmentsPagination(array){
-            //     this.pagination = {
-            //         start: array.slice(0,4),
-            //         last: array.slice(array.length - 4, array.length)
-            //     };
 
-            //     if(this.pagination.start != this.pagination.last){
-            //         this.showPagination = true;
-            //     }
-            // },
-
+            // EMIT
             apartmentEmit(){
                 this.apartmentsPush();
-                this.$emit('apartments', this.apartmentsWithRooms);
-                // this.apartmentsPagination(this.nearbyApartments);
-                console.log(this.apartmentsWithRooms, 'computed');
+                this.$emit('apartments', this.apartmentsWithFilters);
+                console.log(this.apartmentsWithRooms, 'computed appartamenti');
                 console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
             },
+
             sponsoredApartmentEmit(){
-                this.$emit('sponsoredApartments', this.sponsoredNearbyApartments);
-                // this.apartmentsPagination(this.sponsoredNearbyApartments);
+                this.$emit('sponsoredApartments', this.sponsoredWithFilters);
             },
         },
 
         computed:{
-            apartmentsWithRooms(){
+            apartmentsWithFilters(){
                 let apartmentsWithRooms = this.nearbyApartments;
 
                 if(this.rooms > 0){
@@ -288,80 +257,52 @@
                 if(this.selectedServices.length !== 0){
                     apartmentsWithRooms = [];
 
-                    // let c = 0;
-
-                    // this.nearbyApartments.forEach(apartment => {
-                    //     let serviceIncluded = true
-
-                    //     apartment.services.forEach(service => {
-                    //         if(c <= this.selectedServices.length){
-
-                    //             if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
-                    //                 serviceIncluded = true
-                    //                 validService++
-                    //                 console.log(validService, 'servizi validi');
-                    //             }
-                    //             else{
-                    //                 serviceIncluded = false
-                    //             }
-
-                    //             c++
-
-                    //         }
-
-                    //     });
-
-                    //     apartmentsWithRooms = apartment.services.filter(service => this.selectedServices.includes(service.id));
-
-                    //     apartmentsWithRooms = this.nearbyApartments.map(services => services.filter(service => service.id === 1));
-
-                    //     apartmentsWithRooms = this.nearbyApartments.filter(apartment =>{
-                    //         return apartment.services.filter(service => service.id === 1);
-                    //     })
-
-                    //     console.log(this.selectedServices.length, 'lunghezza array');
-
-                    //     console.log(c, 'log di C');
-
-                    //     if(serviceIncluded && validService == this.selectedServices.length){
-                    //         apartmentsWithRooms.push(apartment)
-                    //     }
-
-                    // });
-
-                    // apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.services.some(service => service.id == 1))
-
-                    // apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.services.some(service => {
-                    //     let serviceIncluded = true
-
-                    //     if(c < this.selectedServices.length){
-
-                    //         if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
-                    //             serviceIncluded = true
-                    //             validService++
-                    //             console.log(validService, 'servizi validi');
-                    //         }
-                    //         else{
-                    //             serviceIncluded = false
-                    //         }
-
-                    //         c++
-
-                    //         console.log(this.selectedServices.length, 'lunghezza array');
-
-                    //         console.log(c, 'log di C');
-
-                    //     }
-
-                    //     if(serviceIncluded && validService == this.selectedServices.length){
-                    //         return true
-                    //     }else{
-                    //         return false
-                    //     }
-
-                    // }));
-
                     apartmentsWithRooms = this.nearbyApartments.filter(apartment => {
+                        let validService = 0;
+
+                        return apartment.services.some(service => {
+                            let serviceIncluded = true
+
+                            if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
+                                serviceIncluded = true
+                                validService++
+                                console.log(validService, 'servizi validi');
+                            }
+                            else{
+                                serviceIncluded = false
+                            }
+
+                            console.log(this.selectedServices.length, 'lunghezza array');
+
+                            if(serviceIncluded && validService == this.selectedServices.length){
+                                return true
+                            }else{
+                                return false
+                            }
+
+                        })
+                    });
+
+                }
+
+                return apartmentsWithRooms;
+            },
+
+            sponsoredWithFilters(){
+                let apartmentsWithRooms = this.sponsoredNearbyApartments;
+
+                if(this.rooms > 0){
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
+                }
+
+                if(this.beds > 0){
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.beds >= this.beds);
+                }
+
+                if(this.selectedServices.length !== 0){
+                    apartmentsWithRooms = [];
+
+                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => {
                         let validService = 0;
 
                         return apartment.services.some(service => {
@@ -394,7 +335,6 @@
         },
 
         mounted(){
-            // console.log(this.apiUrlDatabase);
             this.getServices();
             this.getApartments();
             this.getSponsoredApartments();
