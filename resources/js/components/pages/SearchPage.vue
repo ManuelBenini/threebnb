@@ -4,21 +4,18 @@
         <CheckboxComp
         @apartments="startSearchApartments"
         @sponsoredApartments="startSearchSponsoredApartments"
-        @apartmentsDistance="getApartmentDistances"
-        @sponsoredDistance="getSponsoredDistances" />
+        />
 
         <div v-if="searchSuccesfull" >
             <CardSection
                 :sponsoredNearbyApartments = sponsoredNearbyApartments
                 :sponsored="true"
-                :sponsoredDistances= sponsoredDistance
                 message="in evidenza"
             />
 
             <CardSection
                 :nearbyApartments = nearbyApartments
                 :sponsored="false"
-                :apartmentDistances= apartmentsDistance
                 message="in base alle tue ricerche"
             />
         </div>
@@ -39,8 +36,8 @@ import CardSection from '../sections/CardSection.vue';
                 nearbyApartments: [],
                 sponsoredNearbyApartments: [],
                 searchSuccesfull: false,
-                apartmentsDistance: [],
-                sponsoredDistance: [],
+                // apartmentsDistance: [],
+                // sponsoredDistance: [],
             }
         },
 
@@ -53,14 +50,14 @@ import CardSection from '../sections/CardSection.vue';
             startSearchSponsoredApartments(sponsoredNearbyApartments){
                 this.sponsoredNearbyApartments = sponsoredNearbyApartments;
             },
-            getApartmentDistances(apartmentsDistance){
-                this.apartmentsDistance = apartmentsDistance;
-                console.log(this.apartmentsDistance, 'props distanze app');
-            },
-            getSponsoredDistances(sponsoredDistance){
-                this.sponsoredDistance = sponsoredDistance;
-                console.log(this.sponsoredDistance, 'props distanze sponsor');
-            },
+            // getApartmentDistances(apartmentsDistance){
+            //     this.apartmentsDistance = apartmentsDistance;
+            //     console.log(this.apartmentsDistance, 'props distanze app');
+            // },
+            // getSponsoredDistances(sponsoredDistance){
+            //     this.sponsoredDistance = sponsoredDistance;
+            //     console.log(this.sponsoredDistance, 'props distanze sponsor');
+            // },
         },
 
         mounted() {

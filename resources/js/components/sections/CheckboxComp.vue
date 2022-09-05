@@ -80,7 +80,7 @@
                             :disabled="address.length < 3"
                             callToAction="Ricerca"
                             stile="arancione"
-                            @click.native="apartmentEmit(); sponsoredApartmentEmit(); appDistanceEmit(); sponsorDistanceEmit()"
+                            @click.native="apartmentEmit(); sponsoredApartmentEmit();"
                         />
 
                     </div>
@@ -90,7 +90,6 @@
             </div>
         </div>
         <!-- /CHECKBOX AREA -->
-
     </div>
 </template>
 
@@ -110,27 +109,25 @@
                 apiUrlDatabase,
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
                 position: {
-                    apartment: {},
-                    user: {}
+                    lat: 0,
+                    lon: 0
                 },
 
                 // Appartamenti
                 apartments: [],
-                nearbyApartments: [],
-                apartmentDistances: [],
+                apartmentsLoaded: false,
+                // apartmentDistances: [],
 
                 // Sponsorizzati
                 sponsoredApartments: [],
-                sponsoredNearbyApartments: [],
-                sponsoredDistances: [],
-                dist: [],
-                dist2: [],
+                sponsoredLoaded: false,
+                // sponsoredDistances: [],
 
                 // Filtri ricerca
                 radius: 20,
                 address: '',
-                rooms: '',
-                beds: '',
+                rooms: 0,
+                beds: 0,
                 selectedServices: [],
 
                 // Servizi
@@ -142,26 +139,43 @@
             addressSearchApi(){
                 axios.get(this.apiUrlTomTom + this.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
-                        this.position.user = res.data.results[0].position;
-                        console.log(this.position.user);
+                        this.position.lat = res.data.results[0].position.lat;
+                        this.position.lon = res.data.results[0].position.lon;
+                    })
+            },
+
+            getApartmentsApi(sponsored){
+                axios.get(this.apiUrlDatabase + 'filteredApartments/' + this.rooms + '/' + this.beds + '/' + this.radius + '/' + this.position.lat + '/' + this.position.lon + '/' + sponsored)
+                    .then(res => {
+                        console.log(this.apiUrlDatabase + 'filteredApartments/' + this.rooms + '/' + this.beds + '/' + this.radius + '/' + this.position.lat + '/' + this.position.lon + '/' + sponsored, 'tutti gli appartamenti')
+
+                        console.log(res.data, 'tutti gli appartamenti')
+                        if(sponsored){
+                            this.sponsoredApartments = res.data
+                        } else {
+                            this.apartments = res.data
+                        }
                     })
             },
 
             getApartments(){
-                axios.get(this.apiUrlDatabase)
-                    .then(res => {
-                        this.apartments = res.data;
-                        console.log(this.apartments, 'tutti gli appartamenti')
-                    })
+                this.getApartmentsApi(1)
+                console.log(this.sponsoredApartments, 'Controllo API sponsored')
+                this.sponsoredLoaded = true;
+                this.getApartmentsApi(0)
+                console.log(this.apartments, 'Controllo API apartments')
+                this.apartmentsLoaded = true;
+
             },
 
-            getSponsoredApartments(){
-                axios.get(this.apiUrlDatabase + 'sponsored/')
-                    .then(res => {
-                        this.sponsoredApartments = res.data;
-                        console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
-                    })
-            },
+
+            // getSponsoredApartments(){
+            //     axios.get(this.apiUrlDatabase + 'sponsored/')
+            //         .then(res => {
+            //             this.sponsoredApartments = res.data;
+            //             console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
+            //         })
+            // },
 
             getServices(){
                 this.firstServicesList(1);
@@ -199,103 +213,117 @@
                     })
             },
 
-            distanceCalculator(array){
-                array.forEach(apartment => {
-                    this.position.apartment = {
-                        latitude: apartment.latitude,
-                        longitude: apartment.longitude,
-                    };
+            // distanceCalculator(array){
+            //     array.forEach(apartment => {
+            //         this.position.apartment = {
+            //             latitude: apartment.latitude,
+            //             longitude: apartment.longitude,
+            //         };
 
-                    const distance = haversine(this.position.apartment, this.position.user);
+            //         const distance = haversine(this.position.apartment, this.position.user);
 
-                    if((distance / 1000).toFixed() < parseInt(this.radius)){
-                        if(array === this.apartments){
+            //         if((distance / 1000).toFixed() < parseInt(this.radius)){
+            //             if(array === this.apartments){
 
-                            this.apartmentDistances.push({
-                                distance: (distance / 1000).toFixed(),
-                                id: apartment.id,
-                            });
-                        }
+            //                 this.apartmentDistances.push({
+            //                     distance: (distance / 1000).toFixed(),
+            //                     id: apartment.id,
+            //                 });
+            //             }
 
-                        if(array === this.sponsoredApartments){
+            //             if(array === this.sponsoredApartments){
 
-                            this.sponsoredDistances.push({
-                                distance: (distance / 1000).toFixed(),
-                                id: apartment.id,
-                            });
-                        }
-                        // console.log('distanza scelta', parseInt(this.radius));
-                    }
-                });
+            //                 this.sponsoredDistances.push({
+            //                     distance: (distance / 1000).toFixed(),
+            //                     id: apartment.id,
+            //                 });
+            //             }
+            //             // console.log('distanza scelta', parseInt(this.radius));
+            //         }
+            //     });
 
-                if(array === this.apartments){
-                    this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
-                        this.nearbyApartments.push(this.apartments[apartment.id - 1])
-                    });
-                }
+            //     if(array === this.apartments){
+            //         this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+            //             this.nearbyApartments.push(this.apartments[apartment.id - 1])
+            //         });
+            //     }
 
-                if(array === this.sponsoredApartments){
-                    this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
-                        this.sponsoredNearbyApartments.push(this.apartments[apartment.id - 1])
-                    });
-                }
+            //     if(array === this.sponsoredApartments){
+            //         this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}).forEach(apartment => {
+            //             this.sponsoredNearbyApartments.push(this.apartments[apartment.id - 1])
+            //         });
+            //     }
 
-                // console.log('distanze app', this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}));
-                // console.log('distanze spon', this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}));
-            },
+            //     // console.log('distanze app', this.apartmentDistances.sort(function(a, b){return a.distance - b.distance}));
+            //     // console.log('distanze spon', this.sponsoredDistances.sort(function(a, b){return a.distance - b.distance}));
+            // },
 
             apartmentsPush(){
-                this.nearbyApartments = [];
-                this.sponsoredNearbyApartments = [];
-                this.apartmentDistances = [];
-                this.sponsoredDistances = [];
+                // this.apartments = [];
+                // this.sponsoredApartments = [];
+                this.getApartments()
+                // this.apartmentDistances = [];
+                // this.sponsoredDistances = [];
 
-                this.distanceCalculator(this.apartments);
-                this.distanceCalculator(this.sponsoredApartments);
+                // this.distanceCalculator(this.apartments);
+                // this.distanceCalculator(this.sponsoredApartments);
 
                 // console.log(this.nearbyApartments, 'APPARTAMENTI VICINI');
                 // console.log(this.sponsoredNearbyApartments, 'APPARTAMENTI VICINI SPONSORIZZATI');
             },
 
 
+
+
             // EMIT
             apartmentEmit(){
+                this.apartmentsLoaded = false
+                this.sponsoredLoaded = false
                 this.apartmentsPush();
-                this.$emit('apartments', this.apartmentsWithFilters);
-                console.log(this.apartmentsWithFilters, 'computed appartamenti');
-                console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
+                if (this.apartmentsLoaded){
+                    // this.$emit('apartments', this.apartmentsWithFilters);
+                    console.log(this.apartmentsWithFilters, 'computed appartamenti');
+                    console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
+                }
+                this.apartments = [];
+                this.sponsoredApartments = [];
             },
 
             sponsoredApartmentEmit(){
-                this.$emit('sponsoredApartments', this.sponsoredWithFilters);
-                console.log(this.sponsoredWithFilters, 'computed sponsor');
+                if (this.sponsoredLoaded){
+                    // this.$emit('sponsoredApartments', this.sponsoredWithFilters);
+                    console.log(this.sponsoredWithFilters, 'computed sponsor');
+                }
             },
 
-            appDistanceEmit(){
-                this.$emit('apartmentsDistance', this.apartmentDistances);
-            },
+            // appDistanceEmit(){
+            //     this.$emit('apartmentsDistance', this.apartmentDistances);
+            // },
 
-            sponsorDistanceEmit(){
-                this.$emit('sponsoredDistance', this.sponsoredDistances);
-            }
+            // sponsorDistanceEmit(){
+            //     this.$emit('sponsoredDistance', this.sponsoredDistances);
+            // }
         },
 
         computed:{
             apartmentsWithFilters(){
-                let apartmentsWithRooms = this.nearbyApartments;
+                let apartmentsWithRooms = this.apartments;
+                console.log(apartmentsWithRooms, 'BLABLABLA')
+                console.log(this.apartments, 'DIOCARO')
 
-                if(this.rooms > 0){
-                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
-                }
 
-                if(this.beds > 0){
-                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => apartment.beds >= this.beds);
-                }
+                // if(this.rooms > 0){
+                //     apartmentsWithRooms = this.apartments.filter(apartment => apartment.rooms >= this.rooms);
+                // }
+
+                // if(this.beds > 0){
+                //     apartmentsWithRooms = this.apartments.filter(apartment => apartment.beds >= this.beds);
+                // }
 
                 if(this.selectedServices.length !== 0){
                     apartmentsWithRooms = [];
 
-                    apartmentsWithRooms = this.nearbyApartments.filter(apartment => {
+                    apartmentsWithRooms = this.apartments.filter(apartment => {
                         let validService = 0;
 
                         return apartment.services.some(service => {
@@ -327,20 +355,20 @@
             },
 
             sponsoredWithFilters(){
-                let apartmentsWithRooms = this.sponsoredNearbyApartments;
+                let apartmentsWithRooms = this.sponsoredApartments;
 
-                if(this.rooms > 0){
-                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.rooms >= this.rooms);
-                }
+                // if(this.rooms > 0){
+                //     apartmentsWithRooms = this.sponsoredApartments.filter(apartment => apartment.rooms >= this.rooms);
+                // }
 
-                if(this.beds > 0){
-                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => apartment.beds >= this.beds);
-                }
+                // if(this.beds > 0){
+                //     apartmentsWithRooms = this.sponsoredApartments.filter(apartment => apartment.beds >= this.beds);
+                // }
 
                 if(this.selectedServices.length !== 0){
                     apartmentsWithRooms = [];
 
-                    apartmentsWithRooms = this.sponsoredNearbyApartments.filter(apartment => {
+                    apartmentsWithRooms = this.sponsoredApartments.filter(apartment => {
                         let validService = 0;
 
                         return apartment.services.some(service => {
@@ -374,8 +402,8 @@
 
         mounted(){
             this.getServices();
-            this.getApartments();
-            this.getSponsoredApartments();
+            // this.getApartments();
+            // this.getSponsoredApartments();
         },
 
         components: { ButtonComp, CardSection }

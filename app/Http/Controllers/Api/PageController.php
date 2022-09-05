@@ -60,9 +60,15 @@ class PageController extends Controller
         return $d;
     }
 
-    public function apartmentsWithFilters($rooms, $beds, $distance, $lat2, $lon2){
-        $apartments = Apartment::with(['services', 'sponsorships'])
-        ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
+    public function apartmentsWithFilters($rooms, $beds, $distance, $lat2, $lon2, $sponsored){
+        if ($sponsored) {
+            $apartments = Apartment::with(['services', 'sponsorships'])
+            ->has('sponsorships')
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
+        } else {
+            $apartments = Apartment::with(['services', 'sponsorships'])
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
+        }
 
         $nearbyApartments = [];
         foreach ($apartments as $apartment) {
@@ -74,4 +80,20 @@ class PageController extends Controller
         }
         return response()->json($nearbyApartments);
     }
+
+    // public function sponsoredWithFilters($rooms, $beds, $distance, $lat2, $lon2){
+    //     $apartments = Apartment::with(['services', 'sponsorships'])
+    //     ->has('sponsorships')
+    //     ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
+
+    //     $nearbyApartments = [];
+    //     foreach ($apartments as $apartment) {
+    //         $distanceBetween = $this->getDistance($apartment->latitude, $apartment->longitude, $lat2, $lon2);
+
+    //         if ($distanceBetween <= $distance) {
+    //             $nearbyApartments[]= $apartment;
+    //         }
+    //     }
+    //     return response()->json($nearbyApartments);
+    // }
 }
