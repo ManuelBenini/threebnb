@@ -21,6 +21,8 @@
 
         </div>
 
+        <PaginationComp />
+
         <div class="card-section" v-if="!sponsored">
 
 
@@ -42,10 +44,13 @@
 </template>
 
 <script>
-import CardComp from '../elements/CardComp.vue';
+
+    import CardComp from '../elements/CardComp.vue';
+    import PaginationComp from '../elements/PaginationComp.vue';
+
     export default {
         name: "CardSection",
-        components: { CardComp },
+        components: { CardComp, PaginationComp },
 
         props:{
             message:{

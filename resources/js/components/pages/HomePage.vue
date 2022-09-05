@@ -8,32 +8,6 @@
             message="scelti per te!"
         />
 
-        <div class="btn-container" v-if="showPagination">
-
-            <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
-            <button
-                :disabled = "pagination.current === 1"
-                @click="getSponsoredApartments(pagination.current - 1)">
-                &lt;&lt;
-            </button>
-
-            <button
-                v-for="i in pagination.last"
-                :key="`btn${i}`"
-                @click="getSponsoredApartments(i)"
-                :disabled = "pagination.current === i" >
-                {{i}}
-            </button>
-
-            <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
-            <button
-                :disabled = "pagination.current === pagination.last"
-                @click="getSponsoredApartments(pagination.current + 1)">
-                >>
-            </button>
-
-        </div>
-
         <PartnerComp />
 
         <AboutComp />
@@ -58,8 +32,8 @@ export default {
             apiUrlDatabase,
             sponsoredApartments: [],
             pagination: {
-                current: null,
-                last: null,
+                current: 1,
+                last: 10,
             },
             showPagination: false
         }
@@ -87,7 +61,7 @@ export default {
     },
 
     mounted(){
-        this.getSponsoredApartments(1)
+        // this.getSponsoredApartments(1)
     }
 }
 
