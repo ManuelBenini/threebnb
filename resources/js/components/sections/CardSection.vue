@@ -7,7 +7,6 @@
 
         <div class="card-section" v-if="sponsored">
 
-
             <CardComp
             v-if="sponsoredNearbyApartments.length !== 0"
             v-for="(apartment,index) in this.sponsoredNearbyApartments"
@@ -17,14 +16,17 @@
             :sponsored="true"
             />
 
-            <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato</p>
+            <div class="message">
+                <p>{{researchMessage}}</p>
+                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+            </div>
 
         </div>
+
 
         <PaginationComp />
 
         <div class="card-section" v-if="!sponsored">
-
 
             <CardComp
             v-if="nearbyApartments.length !== 0"
@@ -35,9 +37,13 @@
             :sponsored="false"
             />
 
-            <p v-if="nearbyApartments.length === 0">Nessun appartamento trovato</p>
+            <div class="message">
+                <p>{{researchMessage}}</p>
+                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+            </div>
 
         </div>
+
 
 
     </div>
@@ -56,6 +62,10 @@
             message:{
                 type: String,
                 Required: true
+            },
+            researchMessage:{
+                type: String,
+                Required: false
             },
             nearbyApartments:{
                 type: Array,
