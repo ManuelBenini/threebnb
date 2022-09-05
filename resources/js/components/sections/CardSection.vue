@@ -84,18 +84,21 @@ import CardComp from '../elements/CardComp.vue';
 
 @import '../../../sass/front/partials/vars';
 
-.custom-container{
+.custom-container {
     padding: 40px 0 60px 0;
 
-    .card-section{
+    .card-section {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-
         margin-top: 20px;
     }
 
+    @media screen and (max-width: 699px) {
+        .card-section {
+            justify-content: center;
+        }
 
+    }
 }
-
 </style>
