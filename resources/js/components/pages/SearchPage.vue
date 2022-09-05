@@ -8,13 +8,13 @@
 
         <div v-if="searchSuccesfull" >
             <CardSection
-                :sponsoredNearbyApartments = sponsoredNearbyApartments
+                :sponsoredApartments = "sponsoredApartments"
                 :sponsored="true"
                 message="in evidenza"
             />
 
             <CardSection
-                :nearbyApartments = nearbyApartments
+                :apartments = "apartments"
                 :sponsored="false"
                 message="in base alle tue ricerche"
             />
@@ -33,31 +33,21 @@ import CardSection from '../sections/CardSection.vue';
 
         data(){
             return{
-                nearbyApartments: [],
-                sponsoredNearbyApartments: [],
+                apartments: [],
+                sponsoredApartments: [],
                 searchSuccesfull: false,
-                // apartmentsDistance: [],
-                // sponsoredDistance: [],
             }
         },
 
         methods: {
-            startSearchApartments(nearbyApartments){
-                this.nearbyApartments = nearbyApartments;
+            startSearchApartments(apartments){
+                this.apartments = apartments;
                 this.searchSuccesfull = true;
-                console.log(this.nearbyApartments, 'props nearbyapp');
+                console.log(this.apartments, 'props nearbyapp');
             },
-            startSearchSponsoredApartments(sponsoredNearbyApartments){
-                this.sponsoredNearbyApartments = sponsoredNearbyApartments;
+            startSearchSponsoredApartments(sponsoredApartments){
+                this.sponsoredApartments = sponsoredApartments;
             },
-            // getApartmentDistances(apartmentsDistance){
-            //     this.apartmentsDistance = apartmentsDistance;
-            //     console.log(this.apartmentsDistance, 'props distanze app');
-            // },
-            // getSponsoredDistances(sponsoredDistance){
-            //     this.sponsoredDistance = sponsoredDistance;
-            //     console.log(this.sponsoredDistance, 'props distanze sponsor');
-            // },
         },
 
         mounted() {

@@ -2,11 +2,11 @@
     <div>
         <HeroComp />
 
-        <CardSection
+        <!-- <CardSection
             :sponsoredNearbyApartments = sponsoredApartments
             :sponsored="true"
-            message="scelti per te!"
-        />
+            message="sponsorizzati"
+        /> -->
 
         <div class="btn-container" v-if="showPagination">
 

@@ -9,14 +9,14 @@
 
 
             <CardComp
-            v-if="sponsoredNearbyApartments.length !== 0"
-            v-for="(apartment,index) in this.sponsoredNearbyApartments"
+            v-if="sponsoredApartments.length !== 0"
+            v-for="(apartment,index) in this.sponsoredApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
             :sponsored="true"
             />
 
-            <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato</p>
+            <p v-if="sponsoredApartments.length === 0">Nessun appartamento trovato</p>
 
         </div>
 
@@ -24,14 +24,14 @@
 
 
             <CardComp
-            v-if="nearbyApartments.length !== 0"
-            v-for="(apartment,index) in this.nearbyApartments"
+            v-if="apartments.length !== 0"
+            v-for="(apartment,index) in this.apartments"
             :key="`apartment${index}`"
             :apartment="apartment"
             :sponsored="false"
             />
 
-            <p v-if="nearbyApartments.length === 0">Nessun appartamento trovato</p>
+            <p v-if="apartments.length === 0">Nessun appartamento trovato</p>
 
         </div>
 
@@ -50,11 +50,11 @@ import CardComp from '../elements/CardComp.vue';
                 type: String,
                 Required: true
             },
-            nearbyApartments:{
+            apartments:{
                 type: Array,
                 Required: true
             },
-            sponsoredNearbyApartments:{
+            sponsoredApartments:{
                 type: Array,
                 Required: true
             },
@@ -62,19 +62,7 @@ import CardComp from '../elements/CardComp.vue';
                 type: Boolean,
                 Required: true
             },
-            // apartmentDistances:{
-            //     type: Array,
-            //     Required: true
-            // },
-            // sponsoredDistances:{
-            //     type: Array,
-            //     Required: true
-            // },
         },
-
-        mounted(){
-            // console.log(this.sponsoredDistances[5].distance, 'prop distanze in cardsection');
-        }
 }
 </script>
 

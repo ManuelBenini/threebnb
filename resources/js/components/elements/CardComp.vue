@@ -28,23 +28,12 @@
                 type: Object,
                 required: true
             },
-            // appdistance:{
-            //     type: String,
-            //     required: true
-            // },
-            // sponsordistance:{
-            //     type: String,
-            //     required: true
-            // },
+
             sponsored:{
                 type: Boolean,
                 required: true
             }
         },
-        mounted() {
-            // console.log(this.appdistance, 'ECCOMI');
-        },
-
     }
 </script>
 
