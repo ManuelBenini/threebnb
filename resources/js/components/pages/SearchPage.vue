@@ -7,12 +7,12 @@
         @apartmentsDistance="getApartmentDistances"
         @sponsoredDistance="getSponsoredDistances" />
 
-        <div v-if="searchSuccesfull" >
+        <div >
             <CardSection
                 :sponsoredNearbyApartments = sponsoredNearbyApartments
                 :sponsored="true"
                 :sponsoredDistances= sponsoredDistance
-                message="in evidenza"
+                researchMessage="Le tue ricerche appariranno qui."
             />
 
             <CardSection
@@ -20,6 +20,7 @@
                 :sponsored="false"
                 :apartmentDistances= apartmentsDistance
                 message="in base alle tue ricerche"
+                researchMessage="Le tue ricerche appariranno qui."
             />
         </div>
 
