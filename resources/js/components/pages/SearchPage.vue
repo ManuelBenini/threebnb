@@ -4,6 +4,8 @@
         <CheckboxComp
         @apartments="startSearchApartments"
         @sponsoredApartments="startSearchSponsoredApartments"
+        @paginationApp="getPaginationApp"
+        @paginationSpon="getPaginationSpon"
         />
 
         <div >
@@ -11,6 +13,7 @@
                 :sponsoredApartments = "sponsoredApartments"
                 :sponsored="true"
                 :searchSuccesfull="searchSuccesfull"
+                :paginationSpon="paginationSpon"
                 message="In evidenza"
                 researchMessage="Le tue ricerche appariranno qui."
             />
@@ -19,6 +22,7 @@
                 :apartments = "apartments"
                 :sponsored="false"
                 :searchSuccesfull="searchSuccesfull"
+                :paginationApp="paginationApp"
                 message="in base alle tue ricerche"
                 researchMessage="Le tue ricerche appariranno qui."
             />
@@ -40,6 +44,8 @@ import CardSection from '../sections/CardSection.vue';
                 apartments: [],
                 sponsoredApartments: [],
                 searchSuccesfull: false,
+                paginationApp: null,
+                paginationSpon: null,
             }
         },
 
@@ -52,6 +58,14 @@ import CardSection from '../sections/CardSection.vue';
             startSearchSponsoredApartments(sponsoredApartments){
                 this.sponsoredApartments = sponsoredApartments;
                 console.log(this.sponsoredApartments, 'props sponsorizzate');
+            },
+            getPaginationApp(receivedPaginationApp){
+                this.paginationApp = receivedPaginationApp;
+                console.log(this.paginationApp, 'props PaginationApp');
+            },
+            getPaginationSpon(receivedPaginationSpon){
+                this.paginationSpon = receivedPaginationSpon;
+                console.log(this.paginationSpon, 'props PaginationSpon');
             },
         },
 

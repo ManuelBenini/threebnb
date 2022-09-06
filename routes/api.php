@@ -25,4 +25,5 @@ Route::namespace('Api')
     Route::get('/filteredApartments/{rooms}/{beds}/{distance}/{lat}/{lon}', 'PageController@apartmentsWithFilters');
     Route::get('/filteredSponsored/{rooms}/{beds}/{distance}/{lat}/{lon}', 'PageController@sponsoredWithFilters');
     Route::get('/apartment-details/?id={id}', 'PageController@show');
+    // Route::get('/prova-1/{services}', 'PageController@apWithServices');
 });

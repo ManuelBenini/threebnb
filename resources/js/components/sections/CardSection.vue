@@ -23,7 +23,10 @@
 
             </div>
 
-            <PaginationComp />
+            <PaginationComp
+            :pagination="paginationSpon"
+            @previousPage="getPreviousPage"
+            @nextPage="getNextPage" />
 
         </div>
 
@@ -46,7 +49,10 @@
 
             </div>
 
-            <PaginationComp />
+            <PaginationComp
+            :pagination="paginationApp"
+            @previousPage="getPreviousPage"
+            @nextPage="getNextPage" />
 
         </div>
 
@@ -88,13 +94,33 @@
             searchSuccesfull:{
                 type: Boolean,
                 Required: true,
+            },
+            paginationApp:{
+                type: Object,
+                Required: true
+            },
+            paginationSpon:{
+                type: Object,
+                Required: true
             }
         },
 
         watch:{
             sponsoredApartments(){
-                console.log(this.sponsoredApartments, 'watch cardsection');
+                console.log(this.sponsoredApartments, 'watch SPON cardsection');
+            },
+            apartments(){
+                console.log(this.apartments, 'watch APP cardsection');
             }
+        },
+
+        methods:{
+            getPreviousPage(page){
+                this.pagination.current = page
+            },
+            getNextPage(page){
+                this.pagination.current = page
+            },
         }
 }
 </script>

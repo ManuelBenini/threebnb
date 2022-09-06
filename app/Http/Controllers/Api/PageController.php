@@ -4,6 +4,9 @@ use App\Apartment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class PageController extends Controller
 {
@@ -31,7 +34,9 @@ class PageController extends Controller
             }
         }
 
-        return response()->json($nearbyApartments);
+        $data = $this->paginate($nearbyApartments);
+
+        return response()->json($data);
     }
 
     public function sponsoredWithFilters($rooms, $beds, $distance, $lat2, $lon2){
@@ -49,7 +54,9 @@ class PageController extends Controller
             }
         }
 
-        return response()->json($nearbyApartments);
+        $data = $this->paginate($nearbyApartments);
+
+        return response()->json($data);
     }
 
     public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
@@ -62,13 +69,23 @@ class PageController extends Controller
         return $d;
     }
 
-    // public function getApartmentsPaginate(){
-    //     $apartments = Apartment::paginate(8);
-    //     return response()->json($apartments);
-    // }
+    public function paginate($items, $perPage = 4, $page = null, $options = []){
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
 
-    // public function getSponsoredApartmentsPaginate(){
-    //     $sponsoredApartment = Apartment::has('sponsorships')->paginate(4);
-    //     return response()->json($sponsoredApartment);
+    // public function apWithServices(){
+    //     $services = [1,2,5,7,4];
+
+    //     $apartments = Apartment::with('services');
+
+    //     foreach($services as $service) {
+    //         $apartments->whereHas('services', function ($query) use($service) {
+    //             $query->where('id', $service);
+    //         });
+    //     }
+
+    //     return response()->json($apartments->get());
     // }
 }
