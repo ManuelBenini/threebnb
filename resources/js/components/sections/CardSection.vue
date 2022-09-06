@@ -8,11 +8,10 @@
         <div class="card-section" v-if="sponsored">
 
             <CardComp
-            v-if="sponsoredNearbyApartments.length !== 0"
-            v-for="(apartment,index) in this.sponsoredNearbyApartments"
+            v-if="sponsoredApartments.length !== 0"
+            v-for="(apartment,index) in this.sponsoredApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
-            :sponsordistance= "sponsoredDistances[index].distance"
             :sponsored="true"
             />
 
@@ -29,11 +28,10 @@
         <div class="card-section" v-if="!sponsored">
 
             <CardComp
-            v-if="nearbyApartments.length !== 0"
-            v-for="(apartment,index) in this.nearbyApartments"
+            v-if="apartments.length !== 0"
+            v-for="(apartment,index) in this.apartments"
             :key="`apartment${index}`"
             :apartment="apartment"
-            :appdistance= "apartmentDistances[index].distance"
             :sponsored="false"
             />
 
@@ -63,15 +61,15 @@
                 type: String,
                 Required: true
             },
+            apartments:{
+                type: Array,
+                Required: true
+            },
             researchMessage:{
                 type: String,
                 Required: false
             },
-            nearbyApartments:{
-                type: Array,
-                Required: true
-            },
-            sponsoredNearbyApartments:{
+            sponsoredApartments:{
                 type: Array,
                 Required: true
             },
@@ -79,19 +77,7 @@
                 type: Boolean,
                 Required: true
             },
-            apartmentDistances:{
-                type: Array,
-                Required: true
-            },
-            sponsoredDistances:{
-                type: Array,
-                Required: true
-            },
         },
-
-        mounted(){
-            console.log(this.sponsoredDistances[5].distance, 'prop distanze in cardsection');
-        }
 }
 </script>
 

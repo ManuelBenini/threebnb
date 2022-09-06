@@ -4,21 +4,19 @@
         <CheckboxComp
         @apartments="startSearchApartments"
         @sponsoredApartments="startSearchSponsoredApartments"
-        @apartmentsDistance="getApartmentDistances"
-        @sponsoredDistance="getSponsoredDistances" />
+        />
 
         <div >
             <CardSection
-                :sponsoredNearbyApartments = sponsoredNearbyApartments
+                :sponsoredApartments = "sponsoredApartments"
                 :sponsored="true"
                 :sponsoredDistances= sponsoredDistance
                 researchMessage="Le tue ricerche appariranno qui."
             />
 
             <CardSection
-                :nearbyApartments = nearbyApartments
+                :apartments = "apartments"
                 :sponsored="false"
-                :apartmentDistances= apartmentsDistance
                 message="in base alle tue ricerche"
                 researchMessage="Le tue ricerche appariranno qui."
             />
@@ -37,30 +35,20 @@ import CardSection from '../sections/CardSection.vue';
 
         data(){
             return{
-                nearbyApartments: [],
-                sponsoredNearbyApartments: [],
+                apartments: [],
+                sponsoredApartments: [],
                 searchSuccesfull: false,
-                apartmentsDistance: [],
-                sponsoredDistance: [],
             }
         },
 
         methods: {
-            startSearchApartments(nearbyApartments){
-                this.nearbyApartments = nearbyApartments;
+            startSearchApartments(apartments){
+                this.apartments = apartments;
                 this.searchSuccesfull = true;
-                console.log(this.nearbyApartments, 'props nearbyapp');
+                console.log(this.apartments, 'props nearbyapp');
             },
-            startSearchSponsoredApartments(sponsoredNearbyApartments){
-                this.sponsoredNearbyApartments = sponsoredNearbyApartments;
-            },
-            getApartmentDistances(apartmentsDistance){
-                this.apartmentsDistance = apartmentsDistance;
-                console.log(this.apartmentsDistance, 'props distanze app');
-            },
-            getSponsoredDistances(sponsoredDistance){
-                this.sponsoredDistance = sponsoredDistance;
-                console.log(this.sponsoredDistance, 'props distanze sponsor');
+            startSearchSponsoredApartments(sponsoredApartments){
+                this.sponsoredApartments = sponsoredApartments;
             },
         },
 
