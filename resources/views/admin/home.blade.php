@@ -10,7 +10,7 @@
     <div class="dashboard container-fluid">
 
         <div class="row mb-5 d-flex justify-content-center">
-            <div class="user col-lg-2 col-sm-12">
+            <div class="user col-lg-2 col-md-6 col-sm-12">
                 <div class="col text-center mt-3 profile">
                     <ul>
                         <li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt=""></li>
@@ -24,11 +24,11 @@
 
 
             <div class="col-9 ">
-                <div>
+                <div class="divtitolo">
                     <h1 class="titolo">I MIEI APPARTAMENTI</h1>
                 </div>
                 @foreach ($userApartments as $apartment)
-                <div class="colonnamiei col-l-4 col-sm-6 col-12 app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
+                <div class="colonnamiei col-lg-6 col-md-8 col-sm-12 col-12 app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
                     <h4>{{$apartment->title}}</h4>
                     <a href="{{route('admin.apartments.show', $apartment)}}">
@@ -54,7 +54,9 @@
             </div>
 
             <div class="col-12 d-flex justify-content-center my-3">
-                <h1>I TUOI MESSAGGI</h1>
+                <a class="homebotton text-center" href="{{ route('admin.apartments.create') }}">
+                    Crea nuovo appartamento
+                </a>
             </div>
 
             <div>

@@ -6,10 +6,10 @@
         </a>
 
         @auth()
-            <a class="navbar-brand" href="{{ route('admin.apartments.index') }}">
-                Visualizza tutti gli appartamenti
+            <a class="navbar-brand tutti" href="{{ route('admin.apartments.index') }}">
+                Tutti gli appartamenti
             </a>
-            <a class="navbar-brand" href="{{ route('admin.apartments.create') }}">
+            <a class="navbar-brand tutti" href="{{ route('admin.apartments.create') }}">
                 Crea nuovo appartamento
             </a>
         @endauth

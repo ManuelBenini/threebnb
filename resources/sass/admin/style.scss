@@ -7,8 +7,42 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+*{
+    font-family: 'Manrope', sans-serif;
+}
+
 .navbar-brand img{
     width: 50px;
+}
+
+
+.tutti {
+    background-color: #EB594E;
+    color: white;
+    border-radius: 25px;
+    padding: 8px;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.homebotton {
+    background-color: #EB594E;
+    color: white;
+    border-radius: 21px;
+    padding: 8px;
+    font-size: 25px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.homebotton:hover{
+    color: white;
+    text-decoration: none;
+    background-color: #de675e;
+}
+
+.navbar-light .navbar-brand{
+    color:white;
 }
 
 .error-msg {
@@ -20,10 +54,15 @@
     list-style: none;
 }
 
+.dashboard .divtitolo{
+    width: 100%;
+}
+
 .dashboard .titolo{
     margin-top: 10px;
     margin-right: 20px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .dashboard button {
@@ -99,8 +138,3 @@
 .dashboard .modifica{
     background-color: rgb(68, 157, 73);
 }
-
-.colonnamiei {
-    width: 33%;
-    overflow: hidden;
-}     
