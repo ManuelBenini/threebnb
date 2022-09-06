@@ -8,7 +8,6 @@
         <div class="card-section" v-if="sponsored">
 
             <CardComp
-            v-if="sponsoredApartments.length !== 0"
             v-for="(apartment,index) in this.sponsoredApartments"
             :key="`apartment${index}`"
             :apartment="apartment"
@@ -16,14 +15,16 @@
             />
 
             <div class="message">
-                <p>{{researchMessage}}</p>
-                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+                <p v-if="!searchSuccesfull">{{researchMessage}}</p>
+                <p v-if="sponsoredApartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
             </div>
+
+            <PaginationComp />
 
         </div>
 
 
-        <PaginationComp />
+
 
         <div class="card-section" v-if="!sponsored">
 
@@ -36,9 +37,11 @@
             />
 
             <div class="message">
-                <p>{{researchMessage}}</p>
-                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+                <p v-if="!searchSuccesfull">{{researchMessage}}</p>
+                <p v-if="apartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
             </div>
+
+            <PaginationComp />
 
         </div>
 
@@ -77,7 +80,17 @@
                 type: Boolean,
                 Required: true
             },
+            searchSuccesfull:{
+                type: Boolean,
+                Required: true,
+            }
         },
+
+        watch:{
+            sponsoredApartments(){
+                console.log(this.sponsoredApartments, 'watch cardsection');
+            }
+        }
 }
 </script>
 
