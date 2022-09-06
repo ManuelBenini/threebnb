@@ -7,6 +7,134 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+*{
+    font-family: 'Manrope', sans-serif;
+}
+
+.navbar-brand img{
+    width: 50px;
+}
+
+
+.tutti {
+    background-color: #EB594E;
+    color: white;
+    border-radius: 25px;
+    padding: 8px;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.homebotton {
+    background-color: #EB594E;
+    color: white;
+    border-radius: 21px;
+    padding: 8px;
+    font-size: 25px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.homebotton:hover{
+    color: white;
+    text-decoration: none;
+    background-color: #de675e;
+}
+
+.navbar-light .navbar-brand{
+    color:white;
+}
+
 .error-msg {
     color: red;
+}
+
+.dashboard ul {
+    padding: 0;
+    list-style: none;
+}
+
+.dashboard .divtitolo{
+    width: 100%;
+}
+
+.dashboard .titolo{
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dashboard button {
+    padding: 10px 15px;
+}
+
+.dashboard .user {
+    border: 2px solid #C7C7C7;
+    border-radius: 20px;
+    margin: 20px 40px;
+    max-height: 400px;
+    box-shadow: 2px 4px 4px 0px rgb(167, 167, 167);
+}
+
+.dashboard .profile img {
+    max-width: 70%;
+    border-radius: 50%
+}
+
+.dashboard .app img {
+    border-radius: 20px;
+    border: 3px solid #EB594E;
+    width: 100%;
+    height: 65%;
+    margin: 15px 0px;
+    transition: border 0.6s linear;
+}
+
+.dashboard .app img:hover{
+    border: 10px solid #EB594E;
+}
+
+.dashboard .profile li {
+    padding: 5px 0px;
+}
+
+.dashboard .col-9 {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.dashboard button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 200;
+
+    cursor: pointer;
+}
+
+.dashboard .bottinte{
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.bottinte:hover{
+    padding: 15px;
+}
+
+.dashboard .visualizza{
+    background-color: #EB594E;    
+}
+
+.dashboard .statistiche{
+    background-color: rgb(63, 51, 125);
+}
+
+.dashboard .modifica{
+    background-color: rgb(68, 157, 73);
 }
