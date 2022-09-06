@@ -11,7 +11,7 @@
                         <form action="">
                             <div class="destination">
                                 <label class="text-center" for="rooms">Inserisci la tua destinazione</label>
-                                <input class="input-city" type="text" v-model="address" @keyup="addressSearchApi()">
+                                <input class="input-city text-center" type="text" v-model="address" @keyup="addressSearchApi()">
                             </div>
                             <div class="rooms">
                                 <label class="text-center" for="rooms">N° Stanze</label>

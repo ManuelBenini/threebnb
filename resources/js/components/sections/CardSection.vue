@@ -5,40 +5,45 @@
 
         <h2>Appartamenti <span class="orange-text"> {{message}}</span></h2>
 
-        <div class="card-section" v-if="sponsored">
+        <div v-if="sponsored">
 
-            <CardComp
-            v-for="(apartment,index) in this.sponsoredApartments"
-            :key="`apartment${index}`"
-            :apartment="apartment"
-            :sponsored="true"
-            />
+            <div class="card-section">
 
-            <div class="message">
-                <p v-if="!searchSuccesfull">{{researchMessage}}</p>
-                <p v-if="sponsoredApartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
+                <CardComp
+                v-for="(apartment,index) in this.sponsoredApartments"
+                :key="`apartment${index}`"
+                :apartment="apartment"
+                :sponsored="true"
+                />
+
+                <div class="message">
+                    <p v-if="!searchSuccesfull">{{researchMessage}}</p>
+                    <p v-if="sponsoredApartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
+                </div>
+
             </div>
 
             <PaginationComp />
 
         </div>
 
+        <div v-if="!sponsored">
 
+            <div class="card-section">
 
+                <CardComp
+                v-if="apartments.length !== 0"
+                v-for="(apartment,index) in this.apartments"
+                :key="`apartment${index}`"
+                :apartment="apartment"
+                :sponsored="false"
+                />
 
-        <div class="card-section" v-if="!sponsored">
+                <div class="message">
+                    <p v-if="!searchSuccesfull">{{researchMessage}}</p>
+                    <p v-if="apartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
+                </div>
 
-            <CardComp
-            v-if="apartments.length !== 0"
-            v-for="(apartment,index) in this.apartments"
-            :key="`apartment${index}`"
-            :apartment="apartment"
-            :sponsored="false"
-            />
-
-            <div class="message">
-                <p v-if="!searchSuccesfull">{{researchMessage}}</p>
-                <p v-if="apartments.length < 1 && searchSuccesfull">Nessun appartamento trovato.</p>
             </div>
 
             <PaginationComp />
