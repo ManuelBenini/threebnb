@@ -7,7 +7,6 @@
 
         <div class="card-section" v-if="sponsored">
 
-
             <CardComp
             v-if="sponsoredApartments.length !== 0"
             v-for="(apartment,index) in this.sponsoredApartments"
@@ -16,12 +15,17 @@
             :sponsored="true"
             />
 
-            <p v-if="sponsoredApartments.length === 0">Nessun appartamento trovato</p>
+            <div class="message">
+                <p>{{researchMessage}}</p>
+                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+            </div>
 
         </div>
 
-        <div class="card-section" v-if="!sponsored">
 
+        <PaginationComp />
+
+        <div class="card-section" v-if="!sponsored">
 
             <CardComp
             v-if="apartments.length !== 0"
@@ -31,19 +35,26 @@
             :sponsored="false"
             />
 
-            <p v-if="apartments.length === 0">Nessun appartamento trovato</p>
+            <div class="message">
+                <p>{{researchMessage}}</p>
+                <p v-if="sponsoredNearbyApartments.length === 0">Nessun appartamento trovato.</p>
+            </div>
 
         </div>
+
 
 
     </div>
 </template>
 
 <script>
-import CardComp from '../elements/CardComp.vue';
+
+    import CardComp from '../elements/CardComp.vue';
+    import PaginationComp from '../elements/PaginationComp.vue';
+
     export default {
         name: "CardSection",
-        components: { CardComp },
+        components: { CardComp, PaginationComp },
 
         props:{
             message:{
@@ -53,6 +64,10 @@ import CardComp from '../elements/CardComp.vue';
             apartments:{
                 type: Array,
                 Required: true
+            },
+            researchMessage:{
+                type: String,
+                Required: false
             },
             sponsoredApartments:{
                 type: Array,
@@ -70,18 +85,21 @@ import CardComp from '../elements/CardComp.vue';
 
 @import '../../../sass/front/partials/vars';
 
-.custom-container{
+.custom-container {
     padding: 40px 0 60px 0;
 
-    .card-section{
+    .card-section {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-
         margin-top: 20px;
     }
 
+    @media screen and (max-width: 699px) {
+        .card-section {
+            justify-content: center;
+        }
 
+    }
 }
-
 </style>

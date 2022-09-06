@@ -7,11 +7,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <div class="d-flex justify-content-center search-app">
+                    <div class="d-flex justify-content-center mt-4 search-app">
                         <form action="">
-                            <input class="input-city" type="text" placeholder="Inserisci la tua destinazione..." v-model="address" @keyup="addressSearchApi()">
-                            <input v-model="rooms" class="input-numb" type="number" min="1" max="999" placeholder="N° stanze">
-                            <input v-model="beds" class="input-numb" type="number" min="1" max="999" placeholder="N° letti">
+                            <div class="destination">
+                                <label class="text-center" for="rooms">Inserisci la tua destinazione</label>
+                                <input class="input-city" type="text" v-model="address" @keyup="addressSearchApi()">
+                            </div>
+                            <div class="rooms">
+                                <label class="text-center" for="rooms">N° Stanze</label>
+                                <input v-model="rooms" class="input-numb" type="number" min="1" max="999">
+                            </div>
+                            <div class="beds">
+                                <label class="text-center" for="beds">N° Letti</label>
+                                <input v-model="beds" class="input-numb" type="number" min="1" max="999">
+                            </div>
                             <div class="distance">
                                 <label class="text-center" for="distance">Distanza (km)</label>
                                 <input v-model="radius" class="input-km" type="number" placeholder="Distanza max (km)">
@@ -30,7 +39,7 @@
                 <div class="col">
 
 
-                    <div class="checkbox flex-wrap">
+                    <div class="checkbox flex-wrap mb-4">
 
                         <div class="col-6 service-list-1">
 
@@ -282,6 +291,7 @@
 
     label {
         margin: 0;
+        color: #979797;
     }
 
     .col-6 {
@@ -318,7 +328,7 @@
         }
     }
 
-    .distance {
+    .destination, .rooms, .beds, .distance  {
         display: flex;
         flex-direction: column;
     }
@@ -327,7 +337,7 @@
         margin: auto;
     }
 
-    form .input-city, form .input-numb {
+    .destination, .rooms, .beds {
         border-right: 1px solid #979797;
         align-content: center;
     }
@@ -339,7 +349,7 @@
     }
 
     form .input-km {
-        width: 170px;
+        width: 130px;
         text-align: center;
     }
 
@@ -433,9 +443,9 @@
         }
     }
 
-    @media screen and (max-width: 745px) {
+    @media screen and (max-width: 748px) {
         .checkbox{
-            width: 70%;
+            width: 80%;
             margin: 0 auto;
             margin-top: 40px;
             margin-bottom: 10px;
@@ -445,18 +455,20 @@
             width: 135px;
         }
 
-        form .input-city {
+        .destination {
             width: 100%;
             text-align: center;
             border-right: none;
         }
 
-        form .input-numb {
-            width: 50%;
+        .rooms, .beds, .distance {
+            width: 33%;
         }
+    }
 
-        form .input-km {
-            width: 100%;
+    @media screen and (max-width: 646px) {
+        .destination {
+            border-right: none;
         }
     }
 
@@ -473,15 +485,16 @@
     }
 
     @media screen and (max-width: 455px){
-        form .input-city, form .input-numb, form .input-km {
+        .destination, .beds, .distance {
             border-right: none;
             text-align: center;
         }
 
-        form .input-numb {
+        .rooms {
             border-right: 1px solid #979797;
+            padding-right: 10px;
         }
-        form .input-km {
+        .distance {
             width: 100%;
         }
     }
@@ -497,16 +510,19 @@
             margin: 0 40px;
         }
 
-        form .input-city, form .input-numb, form .input-km {
+        .rooms, .beds, .destination, .distance {
             margin: auto;
             padding: 5px 0px;
             border-right: none;
-            width: 250px;
+            width: 100%;
         }
 
-        form .input-city, form .input-numb {
+        .destination, .rooms, .beds {
             border-bottom: 1px solid #979797;
         }
+
+
+
 
         .search-app form {
             flex-direction: column;

@@ -6,17 +6,19 @@
         @sponsoredApartments="startSearchSponsoredApartments"
         />
 
-        <div v-if="searchSuccesfull" >
+        <div >
             <CardSection
                 :sponsoredApartments = "sponsoredApartments"
                 :sponsored="true"
-                message="in evidenza"
+                :sponsoredDistances= sponsoredDistance
+                researchMessage="Le tue ricerche appariranno qui."
             />
 
             <CardSection
                 :apartments = "apartments"
                 :sponsored="false"
                 message="in base alle tue ricerche"
+                researchMessage="Le tue ricerche appariranno qui."
             />
         </div>
 
