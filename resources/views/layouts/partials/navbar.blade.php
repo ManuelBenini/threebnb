@@ -5,15 +5,6 @@
             <img src="{{ URL('images\logo-threebnb-senza-scritta.png') }}" alt="Logo">
         </a>
 
-        @auth()
-            <a class="navbar-brand tutti" href="{{ route('admin.apartments.index') }}">
-                Tutti gli appartamenti
-            </a>
-            <a class="navbar-brand tutti" href="{{ route('admin.apartments.create') }}">
-                Crea nuovo appartamento
-            </a>
-        @endauth
-
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
