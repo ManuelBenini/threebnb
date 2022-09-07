@@ -119,15 +119,16 @@
 
                 // Filtri ricerca
                 filters:{
-                    radius: 20,
+                    radius: '20',
                     address: '',
-                    rooms: 0,
-                    beds: 0,
-                    selectedServices: [],
+                    rooms: '0',
+                    beds: '0',
+                    selectedServices: [0],
                     position: {
                         lat: 0,
                         lon: 0
                     },
+                    startResearch: false
                 },
 
                 // Servizi
@@ -148,11 +149,11 @@
             },
 
             getServices(){
-                this.firstServicesList(1, this.servicesList1);
-                this.firstServicesList(2, this.servicesList2);
+                this.servicesList(1, this.servicesList1);
+                this.servicesList(2, this.servicesList2);
             },
 
-            firstServicesList(page, array){
+            servicesList(page, array){
                 axios.get(this.apiUrlDatabase + 'services/?page=' + page)
                     .then(res => {
                         res.data.data.forEach(service => {
@@ -168,6 +169,8 @@
             },
 
             filtersAndCoordinates(){
+                this.filters.startResearch = !this.filters.startResearch;
+                console.log(this.filters.startResearch);
                 this.$emit('filters', this.filters);
                 console.log(this.filters, 'EMIT DI FILTRI');
             }

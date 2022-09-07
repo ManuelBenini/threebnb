@@ -10,7 +10,7 @@
             <div class="card-section">
 
                 <CardComp
-                v-for="(apartment,index) in sponsoredWithFilters"
+                v-for="(apartment,index) in sponsoredApartments"
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="true"
@@ -23,11 +23,6 @@
 
             </div>
 
-            <PaginationComp
-            :pagination="paginationSpon"
-            @previousPage="getPreviousPage"
-            @nextPage="getNextPage" />
-
         </div>
 
         <div v-if="!sponsored">
@@ -36,7 +31,7 @@
 
                 <CardComp
                 v-if="apartments.length !== 0"
-                v-for="(apartment,index) in apartmentsWithFilters"
+                v-for="(apartment,index) in apartments"
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="false"
@@ -49,11 +44,6 @@
 
             </div>
 
-            <PaginationComp
-            :pagination="paginationApp"
-            @previousPage="getPreviousPage"
-            @nextPage="getNextPage" />
-
         </div>
 
 
@@ -64,12 +54,11 @@
 <script>
 
     import CardComp from '../elements/CardComp.vue';
-    import PaginationComp from '../elements/PaginationComp.vue';
     import {apiUrlDatabase} from '../../data/apiConfig';
 
     export default {
         name: "CardSection",
-        components: { CardComp, PaginationComp },
+        components: {CardComp},
 
         data(){
             return{
@@ -77,24 +66,13 @@
 
                 // Appartamenti
                 apartments: [],
-                apartmentsWithFilters: [],
                 // apartmentDistances: [],
-
-                paginationApp: {
-                    current: 1,
-                    last: null,
-                },
 
                 // Sponsorizzati
                 sponsoredApartments: [],
-                sponsoredWithFilters: [],
                 // sponsoredDistances: [],
-                paginationSpon: {
-                    current: 1,
-                    last: null,
-                },
 
-                updatedFilters: this.filters
+                startResearch2: this.startResearch
             }
         },
 
@@ -108,133 +86,67 @@
                 Required: false
             },
             sponsored:{
-                type: Boolean,
+                type: Number,
                 Required: true
             },
             searchSuccesfull:{
                 type: Boolean,
                 Required: true
             },
-            filters:{
-                type: Object,
-                Required: true
-            }
+            address: String,
+            beds: String,
+            radius: String,
+            rooms: String,
+            selectedServices: Array,
+            lat: Number,
+            lon: Number,
+            startResearch: Boolean
         },
 
         methods:{
-            getPreviousPage(page){
-                this.pagination.current = page
-            },
-
-            getNextPage(page){
-                this.pagination.current = page
-            },
-
-            getApartmentsApi(page){
-                axios.get(this.apiUrlDatabase + 'filteredApartments/' + this.filters.rooms + '/' + this.filters.beds + '/' + this.filters.radius + '/' + this.filters.position.lat + '/' + this.filters.position.lon + '?page=' + page)
+            getApartmentsApi(sponsored){
+                axios.get(this.apiUrlDatabase + 'filteredApartments/' + parseInt(this.rooms) + '/' + parseInt(this.beds) + '/' + parseInt(this.radius) + '/' + this.lat + '/' + this.lon + '/' + this.selectedServices.toString() + '/' + sponsored)
                     .then(res => {
-                        this.apartments = res.data
 
-                        this.paginationApp = {
-                            current: res.data.current_page,
-                            last: res.data.last_page,
-                        };
-
-                        if(this.apartments.data.length === res.data.data.length){
-                            this.apartmentsLoaded = true;
-                            console.log(this.apartments, 'Lista degli appartamenti');
-                            this.filtersOnApartments(this.apartments.data);
-                        }
-                    })
-            },
-
-            getSponsoredApi(page){
-                axios.get(this.apiUrlDatabase + 'filteredSponsored/' + this.filters.rooms + '/' + this.filters.beds + '/' + this.filters.radius + '/' + this.filters.position.lat + '/' + this.filters.position.lon + '?page=' + page)
-                    .then(res => {
-                        this.sponsoredApartments = res.data
-
-                        this.paginationSpon = {
-                            current: res.data.current_page,
-                            last: res.data.last_page,
-                        };
-
-                        if(this.sponsoredApartments.data.length === res.data.data.length){
-                            this.sponsoredLoaded = true;
+                        if(sponsored){
+                            this.sponsoredApartments = res.data;
                             console.log(this.sponsoredApartments, 'Lista degli sponsorizzati');
-                            this.filtersOnApartments(this.sponsoredApartments.data);
+                        }else{
+                            this.apartments = res.data;
+                            console.log(this.apartments, 'Lista degli appartamenti');
                         }
                     })
-            },
-
-            apartmentsPush(){
-                this.apartments = [];
-                this.sponsoredApartments = [];
-
-                this.getApartmentsApi(1);
-                this.getSponsoredApi(1);
-
-                console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
-            },
-
-            filtersOnApartments(array){
-                let apartmentsWithRooms = array;
-
-                if(this.filters.selectedServices.length !== 0){
-                    apartmentsWithRooms = [];
-
-                    apartmentsWithRooms = array.filter(apartment => {
-                        let validService = 0;
-
-                        return apartment.services.some(service => {
-                            let serviceIncluded = true
-
-                            if(this.filters.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
-                                serviceIncluded = true
-                                validService++
-                                // console.log(validService, 'servizi validi');
-                            }
-                            else{
-                                serviceIncluded = false
-                            }
-
-                            // console.log(this.selectedServices.length, 'lunghezza array');
-
-                            if(serviceIncluded && validService == this.filters.selectedServices.length){
-                                return true
-                            }else{
-                                return false
-                            }
-
-                        })
-                    });
-
-                }
-
-                if(array == this.apartments.data){
-                    this.apartmentsWithFilters = apartmentsWithRooms;
-                    console.log(this.apartmentsWithFilters, 'array appartamenti filtrati restituito dal metodo')
-                }else{
-                    this.sponsoredWithFilters = apartmentsWithRooms;
-                    console.log(this.sponsoredWithFilters, 'array sponsorizzati filtrati restituito dal metodo')
-                }
-
             },
         },
 
         watch:{
-            filters(){
-                this.getApartmentsApi(1);
-                this.getSponsoredApi(1);
+            startResearch(){
+                this.services = this.selectedServices;
 
-                console.log(this.filters, 'CARDSECTION FILTERS');
+                if(this.services.length === 0){
+                    this.services.push(0)
+                   console.log(this.services, 'push avvenuto');
+                }
+
+                if(this.services[0] == 0 && this.services.length > 1){
+                   this.services = this.services.splice(0, 1);
+                   console.log(this.services, 'splice avvenuto');
+                }
+
+                this.getApartmentsApi(this.sponsored);
+
+                console.log('--------- INIZIO PARAMETRI DI RICERCA CARDSECTION---------');
+                console.log(parseInt(this.rooms), 'Stanze');
+                console.log(parseInt(this.beds), 'letti');
+                console.log(parseInt(this.radius), 'Radius');
+                console.log(this.address, 'Indirizzo');
+                console.log(this.lat, 'Lat');
+                console.log(this.lon, 'Lon');
+                console.log(this.selectedServices[0], 'services');
+                console.log('--------- FINE PARAMETRI DI RICERCA CARDSECTION---------');
             },
-
-            updatedFilters(){
-                this.updatedFilters = this.filters
-                console.log(this.updatedFilters, 'FILTRI AGGIORNATI');
-            }
-        }
-}
+        },
+    }
 </script>
 
 <style lang="scss" scoped>

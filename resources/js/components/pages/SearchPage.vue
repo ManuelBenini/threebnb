@@ -7,16 +7,30 @@
 
         <div >
             <CardSection
-                :filters="filters"
-                :sponsored="true"
+                :address="filters.address"
+                :rooms="filters.rooms"
+                :beds="filters.beds"
+                :radius="filters.radius"
+                :lat="filters.position.lat"
+                :lon="filters.position.lon"
+                :selectedServices="filters.selectedServices"
+                :startResearch="filters.startResearch"
+                :sponsored="1"
                 :searchSuccesfull="searchSuccesfull"
                 message="In evidenza"
                 researchMessage="Le tue ricerche appariranno qui."
             />
 
             <CardSection
-                :filters="filters"
-                :sponsored="false"
+                :address="filters.address"
+                :rooms="filters.rooms"
+                :beds="filters.beds"
+                :radius="filters.radius"
+                :lat="filters.position.lat"
+                :lon="filters.position.lon"
+                :selectedServices="filters.selectedServices"
+                :startResearch="filters.startResearch"
+                :sponsored="0"
                 :searchSuccesfull="searchSuccesfull"
                 message="in base alle tue ricerche"
                 researchMessage="Le tue ricerche appariranno qui."
@@ -36,8 +50,18 @@ import CardSection from '../sections/CardSection.vue';
 
         data(){
             return{
-                filters: {},
-
+                filters: {
+                    radius: null,
+                    address: null,
+                    rooms: null,
+                    beds: null,
+                    selectedServices: null,
+                    position: {
+                        lat: null,
+                        lon: null
+                    },
+                    startResearch: null
+                },
                 searchSuccesfull: false,
             }
         },
@@ -45,6 +69,7 @@ import CardSection from '../sections/CardSection.vue';
         methods: {
             getFilters(filters){
                 this.filters = filters;
+                this.searchSuccesfull = true;
                 console.log(this.filters, 'Filtri ricevuti');
             }
         },
