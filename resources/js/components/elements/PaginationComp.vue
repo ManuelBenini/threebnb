@@ -2,21 +2,21 @@
 
     <div class="text-center pagination-container">
 
-    <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
-    <button
-        class="custom-button"
-        :disabled = "savedPagination.current === 1"
-        @click="$emit('previousPage', savedPagination.current - 1)">
-        <i class="fa-solid fa-arrow-left"></i>
-    </button>
+        <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
+        <button
+            class="custom-button"
+            :disabled = "savedPagination.current === 1"
+            @click="$emit('previousPage', savedPagination.current - 1)">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-    <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
-    <button
-        class="custom-button"
-        :disabled = "savedPagination.current === savedPagination.last"
-        @click="$emit('nextPage', savedPagination.current + 1)">
-        <i class="fa-solid fa-arrow-right"></i>
-    </button>
+        <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
+        <button
+            class="custom-button"
+            :disabled = "savedPagination.current === savedPagination.last"
+            @click="$emit('nextPage', savedPagination.current + 1)">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
 
     </div>
 

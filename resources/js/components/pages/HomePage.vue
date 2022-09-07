@@ -2,11 +2,34 @@
     <div>
         <HeroComp />
 
-        <!-- <CardSection
-            :sponsoredNearbyApartments = sponsoredApartments
-            :sponsored="true"
+        <CardSection
+            :sponsoredApartmentsHomePage = sponsoredApartments
+            :sponsored="1"
+            :homePage= "true"
             message="sponsorizzati"
-        /> -->
+        />
+
+        <!-- Pagination: -->
+
+        <div class="text-center pagination-container">
+
+            <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
+            <button
+                class="custom-button"
+                :disabled = "pagination.current === 1"
+                @click="getSponsoredApartments(pagination.current - 1)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
+            <button
+                class="custom-button"
+                :disabled = "pagination.current === pagination.last"
+                @click="getSponsoredApartments(pagination.current +1)">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
 
         <PartnerComp />
 
@@ -32,8 +55,8 @@ export default {
             apiUrlDatabase,
             sponsoredApartments: [],
             pagination: {
-                current: 1,
-                last: 10,
+                current: '',
+                last: '',
             },
             showPagination: false
         }
@@ -41,17 +64,17 @@ export default {
 
     methods:{
         getSponsoredApartments(page){
-            axios.get(this.apiUrlDatabase + 'sponsoredApartments/' + '?page=' + page)
+            axios.get(this.apiUrlDatabase + 'sponsored/' + '?page=' + page)
                 .then(res => {
                     this.sponsoredApartments = res.data.data;
                     console.log(this.sponsoredApartments, 'appartamenti sponsorizzati')
-
-                    console.log(this.sponsoredApartments);
 
                     this.pagination = {
                         current: res.data.current_page,
                         last: res.data.last_page
                     }
+
+                    console.log(this.pagination);
 
                     if(this.pagination.current != this.pagination.last){
                         this.showPagination = true;
@@ -61,12 +84,28 @@ export default {
     },
 
     mounted(){
-        // this.getSponsoredApartments(1)
+        this.getSponsoredApartments(1)
     }
 }
 
 </script>
 
 <style lang="scss" scoped>
+
+.pagination-container{
+
+    margin-top: -50px;
+
+    .custom-button{
+
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        width: 64px;
+        margin-right: 5px;
+
+    }
+
+}
 
 </style>
