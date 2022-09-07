@@ -3,6 +3,9 @@ namespace App\Http\Controllers\Api;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
+use App\Sponsorship;
+use DateTime;
+
 // use Illuminate\Http\Request;
 // use Illuminate\Pagination\LengthAwarePaginator;
 // use Illuminate\Pagination\Paginator;
@@ -10,6 +13,55 @@ use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
+    public function checkSponsorExpiryTime(){
+        $apartments = Apartment::has('sponsorships')->with('sponsorships')->get();
+
+        $date = '';
+
+        foreach ($apartments as $apartment) {
+
+
+            if($apartment->sponsorships[0]->id == 1){
+               $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
+
+            //    var_dump($date, 'data default 1');
+
+               $date->modify('+1 day');
+               $date->modify('+2 hours');
+
+               var_dump($date, 'data after 1');
+
+            }elseif ($apartment->sponsorships[0]->id == 2) {
+                $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
+                // var_dump($date, 'data default 3');
+
+                $date->modify('+3 day');
+                $date->modify('+2 hours');
+
+                var_dump($date, 'data after 3');
+
+            }else{
+                $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
+
+                // var_dump($date, 'data default 6');
+
+                $date->modify('+6 day');
+                $date->modify('+2 hours');
+
+                var_dump($date, 'data after 6');
+            }
+
+            if($date->getTimestamp() < strtotime(date('Y-m-d H:i:s'))){
+                $apartment = Apartment::find($apartment->id);
+
+                $apartment->sponsorships()->detach($apartment->sponsorships[0]->id);
+            }
+
+        }
+
+        return response()->json($apartments);
+    }
+
     public function apartmentsWithFilters($rooms, $beds, $distance, $lat2, $lon2, $servicesList, $sponsored){
 
         // Se il parametro "sponsored" è vero (1), stampo gli appartamenti sponsorizzati
@@ -75,7 +127,8 @@ class PageController extends Controller
     // public function paginate($items, $perPage = 4, $page = null, $options = []){
     //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
     //     $items = $items instanceof Collection ? $items : Collection::make($items);
-    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items
+    //     ->count(), $perPage, $page, $options);
 
     //     #APPUNTI
     //     importare questi dentro il file in cui eseguire la paginazione.

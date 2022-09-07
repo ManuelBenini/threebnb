@@ -58,10 +58,15 @@ export default {
                     }
                 })
         },
+
+        checkExpiredSponsored(){
+            axios.get(this.apiUrlDatabase + 'sponsor-expiry-time');
+            console.log('EFFETTUATA CHIAMATA API');
+        }
     },
 
     mounted(){
-        // this.getSponsoredApartments(1)
+        this.checkExpiredSponsored();
     }
 }
 
