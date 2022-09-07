@@ -11,7 +11,7 @@
                         <form action="">
                             <div class="destination">
                                 <label class="text-center" for="rooms">Inserisci la tua destinazione</label>
-                                <input class="input-city text-center" type="text" v-model="filters.address" @keyup="addressSearchApi()">
+                                <input class="input-city text-center" type="text" v-model="filters.address">
                             </div>
                             <div class="rooms">
                                 <label class="text-center" for="rooms">N° Stanze</label>
@@ -58,6 +58,14 @@
                                     </div>
 
                                 </label>
+
+                                <!-- POSIZIONI SUGGERITE -->
+                                <div id="recommendedPositions" v-for="(position, index) in recommendedPositions" :key="`position${index}`">
+                                    <ul>
+                                        <li @click="filters.address = position.address.freeformAddress">{{position.address.freeformAddress}}</li>
+                                    </ul>
+                                </div>
+
                             </form>
 
                         </div>
@@ -116,6 +124,7 @@
                 apiUrlTomTom,
                 apiUrlDatabase,
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
+                recommendedPositions: [],
 
                 // Filtri ricerca
                 filters:{
@@ -137,14 +146,23 @@
             };
         },
 
+        watch:{
+            'filters.address'(){
+                this.addressSearchApi();
+            }
+        },
+
         methods: {
             addressSearchApi(){
-                axios.get(this.apiUrlTomTom + this.filters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+                axios.get(this.apiUrlTomTom + this.filters.address + '.json?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
                         this.filters.position.lat = res.data.results[0].position.lat;
                         this.filters.position.lon = res.data.results[0].position.lon;
 
-                        console.log(res.data.results[0].position, 'coordinate tomtom');
+                        this.recommendedPositions = res.data.results;
+
+                        console.log(this.recommendedPositions, 'posizioni suggerite');
+                        console.log(this.filters.position, 'coordinate tomtom');
                     })
             },
 
