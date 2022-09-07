@@ -6,6 +6,7 @@ use App\Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormApartmentRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -141,6 +142,16 @@ class ApartmentController extends Controller
         $apartment->messages()->delete();
         $apartment->delete();
         return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
+    }
+
+    public function sponsoredPush($sponsorId, $apartmentId){
+
+        $apartment = Apartment::find($apartmentId);
+
+        $apartment->sponsorships()->sync($sponsorId);
+
+        return Redirect::to('http://127.0.0.1:8000/dettaglio-appartamento/' . $apartment->id);
+
     }
 
 }

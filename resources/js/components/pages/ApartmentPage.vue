@@ -1,18 +1,18 @@
 <template>
     <div class="container">
-       
+
         <ApartmentDetails/>
-        <MapComp/>
+        <!-- <MapComp/> -->
     </div>
 </template>
 
 <script>
-import MapComp from '../elements/MapComp.vue';
+// import MapComp from '../elements/MapComp.vue';
 import ApartmentDetails from '../sections/ApartmentDetails.vue';
 
     export default {
     name: "ApartmentPage",
-    components: { MapComp, ApartmentDetails}
+    components: { ApartmentDetails}
 }
 </script>
 

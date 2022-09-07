@@ -10,6 +10,7 @@
     export default {
         name: 'MapComp'
     }
+
 </script>
 
 <style lang="scss" scoped>
@@ -19,6 +20,7 @@
     background-color: blue;
     border-radius: 30px;
     overflow: hidden;
+    margin-bottom: 50px;
 }
 
 img{

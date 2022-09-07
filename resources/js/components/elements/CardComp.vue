@@ -1,22 +1,26 @@
 <template>
-    <div class="card">
-        <div class="bg-image">
-            <img :src="apartment.image" alt="">
+    <router-link
+        :to="{name: 'apartment', params:{id: apartment.id}}">
+        <div class="card">
+            <div class="bg-image">
+                <img :src="apartment.image" alt="">
+            </div>
+
+            <div class="post-data">
+                <h2>{{ apartment.title }}</h2>
+            </div>
+
+            <!-- <div class="post-data" v-if="sponsored">
+                <p>Distanza: {{sponsordistance}}Km</p>
+            </div>
+
+            <div class="post-data" v-else>
+                <p>Distanza: {{appdistance}}Km</p>
+            </div> -->
+
         </div>
+    </router-link>
 
-        <div class="post-data">
-            <h2>{{ apartment.title }}</h2>
-        </div>
-
-        <!-- <div class="post-data" v-if="sponsored">
-            <p>Distanza: {{sponsordistance}}Km</p>
-        </div>
-
-        <div class="post-data" v-else>
-            <p>Distanza: {{appdistance}}Km</p>
-        </div> -->
-
-    </div>
 </template>
 
 <script>
