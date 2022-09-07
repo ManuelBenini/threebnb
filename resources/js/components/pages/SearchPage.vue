@@ -2,22 +2,35 @@
     <div>
 
         <CheckboxComp
-        @apartments="startSearchApartments"
-        @sponsoredApartments="startSearchSponsoredApartments"
+        @filters="getFilters"
         />
 
         <div >
             <CardSection
-                :sponsoredApartments = "sponsoredApartments"
-                :sponsored="true"
+                :address="filters.address"
+                :rooms="filters.rooms"
+                :beds="filters.beds"
+                :radius="filters.radius"
+                :lat="filters.position.lat"
+                :lon="filters.position.lon"
+                :selectedServices="filters.selectedServices"
+                :startResearch="filters.startResearch"
+                :sponsored="1"
                 :searchSuccesfull="searchSuccesfull"
                 message="In evidenza"
                 researchMessage="Le tue ricerche appariranno qui."
             />
 
             <CardSection
-                :apartments = "apartments"
-                :sponsored="false"
+                :address="filters.address"
+                :rooms="filters.rooms"
+                :beds="filters.beds"
+                :radius="filters.radius"
+                :lat="filters.position.lat"
+                :lon="filters.position.lon"
+                :selectedServices="filters.selectedServices"
+                :startResearch="filters.startResearch"
+                :sponsored="0"
                 :searchSuccesfull="searchSuccesfull"
                 message="in base alle tue ricerche"
                 researchMessage="Le tue ricerche appariranno qui."
@@ -37,26 +50,28 @@ import CardSection from '../sections/CardSection.vue';
 
         data(){
             return{
-                apartments: [],
-                sponsoredApartments: [],
+                filters: {
+                    radius: null,
+                    address: null,
+                    rooms: null,
+                    beds: null,
+                    selectedServices: null,
+                    position: {
+                        lat: null,
+                        lon: null
+                    },
+                    startResearch: null
+                },
                 searchSuccesfull: false,
             }
         },
 
         methods: {
-            startSearchApartments(apartments){
-                this.apartments = apartments;
+            getFilters(filters){
+                this.filters = filters;
                 this.searchSuccesfull = true;
-                console.log(this.apartments, 'props appartamenti');
-            },
-            startSearchSponsoredApartments(sponsoredApartments){
-                this.sponsoredApartments = sponsoredApartments;
-                console.log(this.sponsoredApartments, 'props sponsorizzate');
-            },
-        },
-
-        mounted() {
-
+                console.log(this.filters, 'Filtri ricevuti');
+            }
         },
 
     }

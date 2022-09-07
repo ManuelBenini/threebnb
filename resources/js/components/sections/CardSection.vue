@@ -10,7 +10,7 @@
             <div class="card-section">
 
                 <CardComp
-                v-for="(apartment,index) in this.sponsoredApartments"
+                v-for="(apartment,index) in sponsoredApartments"
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="true"
@@ -23,8 +23,6 @@
 
             </div>
 
-            <PaginationComp />
-
         </div>
 
         <div v-if="!sponsored">
@@ -33,7 +31,7 @@
 
                 <CardComp
                 v-if="apartments.length !== 0"
-                v-for="(apartment,index) in this.apartments"
+                v-for="(apartment,index) in apartments"
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="false"
@@ -46,8 +44,6 @@
 
             </div>
 
-            <PaginationComp />
-
         </div>
 
 
@@ -58,45 +54,99 @@
 <script>
 
     import CardComp from '../elements/CardComp.vue';
-    import PaginationComp from '../elements/PaginationComp.vue';
+    import {apiUrlDatabase} from '../../data/apiConfig';
 
     export default {
         name: "CardSection",
-        components: { CardComp, PaginationComp },
+        components: {CardComp},
+
+        data(){
+            return{
+                apiUrlDatabase,
+
+                // Appartamenti
+                apartments: [],
+                // apartmentDistances: [],
+
+                // Sponsorizzati
+                sponsoredApartments: [],
+                // sponsoredDistances: [],
+
+                startResearch2: this.startResearch
+            }
+        },
 
         props:{
             message:{
                 type: String,
                 Required: true
             },
-            apartments:{
-                type: Array,
-                Required: true
-            },
             researchMessage:{
                 type: String,
                 Required: false
             },
-            sponsoredApartments:{
-                type: Array,
-                Required: true
-            },
             sponsored:{
-                type: Boolean,
+                type: Number,
                 Required: true
             },
             searchSuccesfull:{
                 type: Boolean,
-                Required: true,
-            }
+                Required: true
+            },
+            address: String,
+            beds: String,
+            radius: String,
+            rooms: String,
+            selectedServices: Array,
+            lat: Number,
+            lon: Number,
+            startResearch: Boolean
+        },
+
+        methods:{
+            getApartmentsApi(sponsored){
+                axios.get(this.apiUrlDatabase + 'filteredApartments/' + parseInt(this.rooms) + '/' + parseInt(this.beds) + '/' + parseInt(this.radius) + '/' + this.lat + '/' + this.lon + '/' + this.selectedServices.toString() + '/' + sponsored)
+                    .then(res => {
+
+                        if(sponsored){
+                            this.sponsoredApartments = res.data;
+                            console.log(this.sponsoredApartments, 'Lista degli sponsorizzati');
+                        }else{
+                            this.apartments = res.data;
+                            console.log(this.apartments, 'Lista degli appartamenti');
+                        }
+                    })
+            },
         },
 
         watch:{
-            sponsoredApartments(){
-                console.log(this.sponsoredApartments, 'watch cardsection');
-            }
-        }
-}
+            startResearch(){
+                this.services = this.selectedServices;
+
+                if(this.services.length === 0){
+                    this.services.push(0)
+                   console.log(this.services, 'push avvenuto');
+                }
+
+                if(this.services[0] == 0 && this.services.length > 1){
+                   this.services = this.services.splice(0, 1);
+                   console.log(this.services, 'splice avvenuto');
+                }
+
+                this.getApartmentsApi(this.sponsored);
+
+                console.log('--------- INIZIO PARAMETRI DI RICERCA CARDSECTION---------');
+                console.log(parseInt(this.rooms), 'Stanze');
+                console.log(parseInt(this.beds), 'letti');
+                console.log(parseInt(this.radius), 'Radius');
+                console.log(this.address, 'Indirizzo');
+                console.log(this.lat, 'Lat');
+                console.log(this.lon, 'Lon');
+                console.log(this.selectedServices[0], 'services');
+                console.log('--------- FINE PARAMETRI DI RICERCA CARDSECTION---------');
+            },
+        },
+    }
 </script>
 
 <style lang="scss" scoped>

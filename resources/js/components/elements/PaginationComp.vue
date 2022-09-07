@@ -5,27 +5,16 @@
     <!-- Inserire  v-if="pagination.current != 1" OPPURE :disabled-->
     <button
         class="custom-button"
-        :disabled = "pagination.current === 1"
-        @click="getSponsoredApartments(pagination.current - 1)">
+        :disabled = "savedPagination.current === 1"
+        @click="$emit('previousPage', savedPagination.current - 1)">
         <i class="fa-solid fa-arrow-left"></i>
-    </button>
-
-    <button
-        class="custom-button"
-        v-for="i in pagination.last"
-        :key="`btn${i}`"
-        @click="getSponsoredApartments(i)"
-        :disabled = "pagination.current === i" >
-        {{i}}
     </button>
 
     <!-- Inserire v-if="pagination.current != pagination.last" OPPURE :disabled-->
     <button
         class="custom-button"
-
-
-        :disabled = "pagination.current === pagination.last"
-        @click="getSponsoredApartments(pagination.current + 1)">
+        :disabled = "savedPagination.current === savedPagination.last"
+        @click="$emit('nextPage', savedPagination.current + 1)">
         <i class="fa-solid fa-arrow-right"></i>
     </button>
 
@@ -40,13 +29,32 @@ export default {
 
     data(){
         return{
-            pagination: {
-                current: 2,
-                last: 2,
+            savedPagination: {
+                current: null,
+                last: null
             },
             showPagination: false
         }
     },
+
+    props:{
+        pagination:{
+            type: Object,
+            Required: true
+        },
+    },
+
+    watch:{
+        pagination(){
+            console.log(this.pagination, 'PAGINAZIONE');
+
+            this.savedPagination.current = this.pagination.current;
+            this.savedPagination.last = this.pagination.last;
+
+            console.log(this.savedPagination, 'PAGINAZIONE SALVATA');
+
+        }
+    }
 
 }
 </script>

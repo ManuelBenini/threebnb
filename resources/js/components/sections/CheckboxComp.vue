@@ -11,19 +11,19 @@
                         <form action="">
                             <div class="destination">
                                 <label class="text-center" for="rooms">Inserisci la tua destinazione</label>
-                                <input class="input-city text-center" type="text" v-model="address" @keyup="addressSearchApi()">
+                                <input class="input-city text-center" type="text" v-model="filters.address" @keyup="addressSearchApi()">
                             </div>
                             <div class="rooms">
                                 <label class="text-center" for="rooms">N° Stanze</label>
-                                <input v-model="rooms" class="input-numb" type="number" min="1" max="999">
+                                <input v-model="filters.rooms" class="input-numb" type="number" min="1" max="999">
                             </div>
                             <div class="beds">
                                 <label class="text-center" for="beds">N° Letti</label>
-                                <input v-model="beds" class="input-numb" type="number" min="1" max="999">
+                                <input v-model="filters.beds" class="input-numb" type="number" min="1" max="999">
                             </div>
                             <div class="distance">
                                 <label class="text-center" for="distance">Distanza (km)</label>
-                                <input v-model="radius" class="input-km" type="number" placeholder="Distanza max (km)">
+                                <input v-model="filters.radius" class="input-km" type="number" placeholder="Distanza max (km)">
                             </div>
                         </form>
                     </div>
@@ -49,7 +49,7 @@
 
                                         <ul>
                                             <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
-                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="filters.selectedServices">
                                                 <i :class="service.icon"></i>
                                                 <p>{{ service.name }}</p>
                                             </li>
@@ -70,7 +70,7 @@
 
                                         <ul>
                                             <li :class="(service.click ? 'selected' : 'no-selected')" id="#service">
-                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="selectedServices">
+                                                <input @click="service.click = !service.click" class="mr-3" type="checkbox" :value="service.id" v-model="filters.selectedServices">
                                                 <i :class="service.icon"></i>
                                                 <p>{{ service.name }}</p>
                                             </li>
@@ -86,10 +86,10 @@
                     <div class="search">
 
                         <ButtonComp
-                            :disabled="address.length < 3"
+                            :disabled="filters.address.length < 3"
                             callToAction="Ricerca"
                             stile="arancione"
-                            @click.native="apartmentEmit()"
+                            @click.native="filtersAndCoordinates()"
                         />
 
                     </div>
@@ -116,27 +116,20 @@
                 apiUrlTomTom,
                 apiUrlDatabase,
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
-                position: {
-                    lat: 0,
-                    lon: 0
-                },
-
-                // Appartamenti
-                apartments: [],
-                apartmentsWithFilters: [],
-                // apartmentDistances: [],
-
-                // Sponsorizzati
-                sponsoredApartments: [],
-                sponsoredWithFilters: [],
-                // sponsoredDistances: [],
 
                 // Filtri ricerca
-                radius: 20,
-                address: '',
-                rooms: 0,
-                beds: 0,
-                selectedServices: [],
+                filters:{
+                    radius: '20',
+                    address: '',
+                    rooms: '0',
+                    beds: '0',
+                    selectedServices: [0],
+                    position: {
+                        lat: 0,
+                        lon: 0
+                    },
+                    startResearch: false
+                },
 
                 // Servizi
                 servicesList1: [],
@@ -144,61 +137,23 @@
             };
         },
 
-        watch:{
-            apartments(){
-                this.$emit('apartments', this.apartmentsWithFilters);
-            },
-
-            sponsoredApartments(){
-                this.$emit('sponsoredApartments', this.sponsoredWithFilters);
-            },
-
-        },
-
         methods: {
             addressSearchApi(){
-                axios.get(this.apiUrlTomTom + this.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+                axios.get(this.apiUrlTomTom + this.filters.address + '.json' + '?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
                     .then(res => {
-                        this.position.lat = res.data.results[0].position.lat;
-                        this.position.lon = res.data.results[0].position.lon;
+                        this.filters.position.lat = res.data.results[0].position.lat;
+                        this.filters.position.lon = res.data.results[0].position.lon;
 
                         console.log(res.data.results[0].position, 'coordinate tomtom');
                     })
             },
 
-            getApartmentsApi(){
-                axios.get(this.apiUrlDatabase + 'filteredApartments/' + this.rooms + '/' + this.beds + '/' + this.radius + '/' + this.position.lat + '/' + this.position.lon)
-                    .then(res => {
-                        this.apartments = res.data
-
-                        if(this.apartments.length === res.data.length){
-                            this.apartmentsLoaded = true;
-                            console.log(this.apartments, 'Lista degli appartamenti');
-                            this.filtersOnApartments(this.apartments);
-                        }
-
-                    })
-            },
-
-            getSponsoredApi(){
-                axios.get(this.apiUrlDatabase + 'filteredSponsored/' + this.rooms + '/' + this.beds + '/' + this.radius + '/' + this.position.lat + '/' + this.position.lon)
-                    .then(res => {
-                        this.sponsoredApartments = res.data
-
-                        if(this.sponsoredApartments.length === res.data.length){
-                            this.sponsoredLoaded = true;
-                            console.log(this.sponsoredApartments, 'Lista degli sponsorizzati');
-                            this.filtersOnApartments(this.sponsoredApartments);
-                        }
-                    })
-            },
-
             getServices(){
-                this.firstServicesList(1, this.servicesList1);
-                this.firstServicesList(2, this.servicesList2);
+                this.servicesList(1, this.servicesList1);
+                this.servicesList(2, this.servicesList2);
             },
 
-            firstServicesList(page, array){
+            servicesList(page, array){
                 axios.get(this.apiUrlDatabase + 'services/?page=' + page)
                     .then(res => {
                         res.data.data.forEach(service => {
@@ -213,63 +168,12 @@
                     })
             },
 
-            apartmentsPush(){
-                this.apartments = [];
-                this.sponsoredApartments = [];
-
-                this.getApartmentsApi();
-                this.getSponsoredApi();
-            },
-
-            filtersOnApartments(array){
-                let apartmentsWithRooms = array;
-
-                if(this.selectedServices.length !== 0){
-                    apartmentsWithRooms = [];
-
-                    apartmentsWithRooms = array.filter(apartment => {
-                        let validService = 0;
-
-                        return apartment.services.some(service => {
-                            let serviceIncluded = true
-
-                            if(this.selectedServices.sort(function(a, b){return a-b}).includes(service.id)){
-                                serviceIncluded = true
-                                validService++
-                                // console.log(validService, 'servizi validi');
-                            }
-                            else{
-                                serviceIncluded = false
-                            }
-
-                            // console.log(this.selectedServices.length, 'lunghezza array');
-
-                            if(serviceIncluded && validService == this.selectedServices.length){
-                                return true
-                            }else{
-                                return false
-                            }
-
-                        })
-                    });
-
-                }
-
-                if(array == this.apartments){
-                    this.apartmentsWithFilters = apartmentsWithRooms;
-                    console.log(this.apartmentsWithFilters, 'array appartamenti filtrati restituito dal metodo')
-                }else{
-                    this.sponsoredWithFilters = apartmentsWithRooms;
-                    console.log(this.sponsoredWithFilters, 'array sponsorizzati filtrati restituito dal metodo')
-                }
-
-            },
-
-            // EMIT
-            apartmentEmit(){
-                this.apartmentsPush();
-                console.log(this.selectedServices.sort(function(a, b){return a-b}), 'servizi selezionati');
-            },
+            filtersAndCoordinates(){
+                this.filters.startResearch = !this.filters.startResearch;
+                console.log(this.filters.startResearch);
+                this.$emit('filters', this.filters);
+                console.log(this.filters, 'EMIT DI FILTRI');
+            }
         },
 
         mounted(){
