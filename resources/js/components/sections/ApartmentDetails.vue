@@ -1,5 +1,7 @@
 <template>
     <div>
+
+
         <h2>{{apartment.title}}</h2>
 
         <div class="immagineapp">
@@ -30,6 +32,10 @@
                             </li>
 
                         </ul>
+                    </div>
+
+                    <div>
+                        <a href="/admin/">Torna ai tuoi appartamenti</a>
                     </div>
 
                 </div>
@@ -96,6 +102,17 @@ import {apiUrlDatabase} from '../../data/apiConfig';
 </script>
 
 <style lang="scss" scoped>
+
+@import '../../../sass/front/partials/vars';
+
+a {
+    background-color: $colore-primario;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+}
 
 .immagineapp{
     height: 500px;
