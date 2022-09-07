@@ -5,6 +5,21 @@
 
         <h2>Appartamenti <span class="orange-text"> {{message}}</span></h2>
 
+        <div v-if="homePage">
+
+            <div class="card-section">
+
+                <CardComp
+                v-for="(apartment,index) in sponsoredApartmentsHomePage"
+                :key="`apartment${index}`"
+                :apartment="apartment"
+                :sponsored="true"
+                />
+
+            </div>
+
+        </div>
+
         <div v-if="sponsored">
 
             <div class="card-section">
@@ -80,6 +95,14 @@
             message:{
                 type: String,
                 Required: true
+            },
+            homePage:{
+                type: Boolean,
+                Required: false
+            },
+            sponsoredApartmentsHomePage:{
+                type: Array,
+                required: false
             },
             researchMessage:{
                 type: String,
