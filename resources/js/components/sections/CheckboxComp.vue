@@ -127,7 +127,7 @@
                 recommendedPositions: [],
 
                 // Filtri ricerca
-                filters:{
+                filtes:{
                     radius: '20',
                     address: '',
                     rooms: '0',
