@@ -18,6 +18,7 @@ class PageController extends Controller
             ->has('sponsorships')
             ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]]);
         }
+
         // Se il parametro "sponsored" è falso (0), stampo tutti gli appartamenti
         else{
             $apartments = Apartment::with(['services', 'sponsorships'])
@@ -50,6 +51,14 @@ class PageController extends Controller
 
         // Ritorno l'array degli appartamenti vicini che, essendo stato riempito da un forEach di $apartments, possiede già tutti i filtri precedenti
         return response()->json($nearbyApartments);
+    }
+
+    public function sponsoredApartments(){
+        $apartments = Apartment::with('sponsorships')
+            ->has('sponsorships')
+            ->paginate(4);
+
+        return response()->json($apartments);
     }
 
     public function show($id){
