@@ -53,7 +53,7 @@ class PageController extends Controller
     }
 
     public function show($id){
-        $apartment = Apartment::find($id);
+        $apartment = Apartment::with(['user', 'services'])->find($id);
         return response()->json($apartment);
     }
 

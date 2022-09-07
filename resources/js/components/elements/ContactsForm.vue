@@ -26,7 +26,9 @@
 
 <script>
     export default {
-        name: 'ContactsForm'
+        name: 'ContactsForm',
+        props:{
+        }
     }
 </script>
 

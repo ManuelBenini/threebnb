@@ -21,9 +21,11 @@ Route::middleware('auth')
     ->prefix('admin')
     ->group(function(){
         Route::get('/', 'HomeController@index')->name('index');
+        Route::get('/apartments/sponsorpush/{sponsorId}/{apartmentId}', 'ApartmentController@sponsoredPush' )->name('pushSponsor');
         Route::resource('apartments', 'ApartmentController');
     });
 
 Route::get('{any?}', function(){
      return view('guests.home');
     })->where('any', '.*')->name('home');
+

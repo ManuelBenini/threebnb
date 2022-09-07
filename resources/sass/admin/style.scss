@@ -128,7 +128,7 @@
 }
 
 .dashboard .visualizza{
-    background-color: #EB594E;    
+    background-color: #EB594E;
 }
 
 .dashboard .statistiche{
@@ -138,3 +138,49 @@
 .dashboard .modifica{
     background-color: rgb(68, 157, 73);
 }
+
+
+/*
+  Popup Search Bar
+*/
+
+.custom-modal {
+    padding: 1rem;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+    transition: all 0.2s;
+    visibility: visible;
+  }
+
+  .custom-modal.hidden{
+    opacity: 0;
+    visibility: hidden;
+    display: flex!important;
+  }
+
+  .custom-modal.hidden .search-modal{
+    margin-top: 100px;
+  }
+
+
+  .custom-modal .backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: #000000;
+    opacity: 0.4;
+  }
+
+  .custom-modal .search-modal {
+    transition: all 0.4s;
+    position: relative;;
+    width: 100%;
+    max-width: 500px;
+    margin: 0px auto;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+  }
