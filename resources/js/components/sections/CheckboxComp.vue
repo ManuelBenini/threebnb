@@ -5,13 +5,14 @@
 
         <!-- SEARCH APP -->
         <div class="container-fluid">
-            <div class="row">
+            <div class="row d-flex flex-column">
                 <div class="col">
                     <div class="d-flex justify-content-center mt-4 search-app">
                         <form action="">
                             <div class="destination">
                                 <label class="text-center" for="rooms">Inserisci la tua destinazione</label>
-                                <input class="input-city text-center" type="text" v-model="filters.address">
+                                <input class="input-city text-center" type="text" v-on:keyup="isHidden = false" v-model="filters.address">
+
                             </div>
                             <div class="rooms">
                                 <label class="text-center" for="rooms">N° Stanze</label>
@@ -27,6 +28,19 @@
                             </div>
                         </form>
                     </div>
+
+                </div>
+
+                <div class="col pos-recommended d-flex justify-content-center">
+                    <!-- POSIZIONI SUGGERITE -->
+                    <div class="container-recommended">
+                        <div id="recommendedPositions" v-on:click="isHidden = true" v-for="(position, index) in recommendedPositions" :key="`position${index}`">
+                            <ul>
+                                <li v-if="!isHidden && filters.address.length > 3" @click="filters.address = position.address.freeformAddress">{{position.address.freeformAddress}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /POSIZIONI SUGGERITE -->
                 </div>
             </div>
         </div>
@@ -44,6 +58,9 @@
                         <div class="col-6 service-list-1">
 
                             <form action="inserire-percorso">
+
+
+
                                 <label v-for="(service, index) in servicesList1" :key="`service${index}`" >
                                     <div class="card-service">
 
@@ -59,12 +76,7 @@
 
                                 </label>
 
-                                <!-- POSIZIONI SUGGERITE -->
-                                <div id="recommendedPositions" v-for="(position, index) in recommendedPositions" :key="`position${index}`">
-                                    <ul>
-                                        <li @click="filters.address = position.address.freeformAddress">{{position.address.freeformAddress}}</li>
-                                    </ul>
-                                </div>
+
 
                             </form>
 
@@ -125,6 +137,7 @@
                 apiUrlDatabase,
                 tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
                 recommendedPositions: [],
+                isHidden: false,
 
                 // Filtri ricerca
                 filters:{
@@ -220,17 +233,36 @@
         padding: 0px 10px;
     }
 
+
+    .pos-recommended {
+        position: absolute;
+        top: 294px;
+        right: 167px;
+    }
+    .container-recommended {
+        border: 1px solid #979797;
+        border-radius: 20px;
+        width: 313px;
+        z-index: 999;
+        background-color: #FFFFFF;
+
+
+        li {
+            font-size: 15px;
+        }
+    }
+
     // SEARCH APP
 
     .search-app form {
-        border: 1px solid #979797;
+        border: 2px solid #979797;
         padding: 12px 12px;
         border-radius: 35px;
     }
 
     .search-app input{
         padding: 0px 10px;
-        width: 300px;
+        width: 330px;
         border: none;
 
         &:focus {
@@ -365,7 +397,11 @@
         }
     }
 
-    @media screen and (max-width: 748px) {
+    @media screen and (max-width: 757px) {
+
+    }
+
+    @media screen and (max-width: 757px) {
         .checkbox{
             width: 80%;
             margin: 0 auto;
@@ -386,19 +422,52 @@
         .rooms, .beds, .distance {
             width: 33%;
         }
+
+        .pos-recommended {
+            top: 342px;
+            right: 0px;
+        }
+
+        .container-recommended {
+            width: 90%;
+        }
     }
 
     @media screen and (max-width: 646px) {
         .destination {
             border-right: none;
         }
+
+        .container-recommended {
+            width: 80%;
+        }
+
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 550px) {
+        h1 {
+            margin: 0px 45px;
+        }
+
+        .pos-recommended {
+            top: 371px;
+        }
+    }
+
+    @media screen and (max-width: 505px) {
+        .pos-recommended {
+            top: 371px;
+        }
+
+        .container-recommended {
+            width: 85%;
+        }
+
         h1 {
             margin: 0 40px;
         }
     }
+
 
     @media screen and (max-width: 465px){
         form .input-city {
@@ -418,6 +487,10 @@
         }
         .distance {
             width: 100%;
+        }
+
+        .pos-recommended {
+            top: 419px;
         }
     }
 
@@ -441,6 +514,14 @@
 
         .destination, .rooms, .beds {
             border-bottom: 1px solid #979797;
+        }
+
+        .pos-recommended {
+            top: 510px;
+        }
+
+        .container-recommended {
+            width: 80%;
         }
 
 
