@@ -28,26 +28,30 @@
                     <h1 class="titolo">I tuoi appartamenti</h1>
                 </div>
                 @foreach ($userApartments as $apartment)
-                <div class="mb-5 colonnamiei col-lg-6 col-md-8 col-sm-12 col-12 app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
-                    <h4>{{$apartment->title}}</h4>
-                    <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
-                        <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
-                    </a>
+                    <div class="mb-5 colonnamiei col-lg-6 col-md-8 col-sm-12 col-12 app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
-                    <ul class="d-flex justify-content-around">
-                        <li>
-                            <a class="buttonId visualizza bottinte" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
-                        </li>
-                        <li>
-                            <button class="statistiche bottinte buttonSponsor">Sponsorizza</button>
-                        </li>
-                        <li>
-                            <a class="modifica bottinte" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
-                        </li>
-                    </ul>
+                        <h4>{{$apartment->title}}</h4>
 
-                </div>
+                        <div class="app-image {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
+                            <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
+                                <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
+                            </a>
+                        </div>
+
+                        <ul class="d-flex justify-content-around">
+                            <li>
+                                <a class="buttonId visualizza bottinte" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
+                            </li>
+                            <li>
+                                <button class="statistiche bottinte buttonSponsor">Sponsorizza</button>
+                            </li>
+                            <li>
+                                <a class="modifica bottinte" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
+                            </li>
+                        </ul>
+
+                    </div>
                 @endforeach
 
 
