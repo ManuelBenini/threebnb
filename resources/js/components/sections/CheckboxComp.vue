@@ -27,7 +27,7 @@
                             </div>
                             <div class="distance">
                                 <label class="text-center" for="distance">Distanza (km)</label>
-                                <input v-model="filters.radius" class="input-km" type="number" placeholder="Distanza max (km)">
+                                <input v-model="filters.radius" class="input-km" type="number" max="99999" placeholder="Distanza max (km)">
                             </div>
                         </form>
                     </div>
@@ -263,7 +263,7 @@
         right: 0px;
         bottom: 0px;
         left: 0px;
-        opacity: 0.4;
+        opacity: 0.5;
     }
 
     // /BACKGROUND RESEARCH
@@ -378,6 +378,7 @@
 
     p {
         margin-bottom: 2px;
+        font-weight: 600;
     }
 
     input[type=checkbox] {
@@ -447,7 +448,7 @@
         }
 
         .card-service {
-            width: 135px;
+            width: 136px;
         }
 
         .destination {
