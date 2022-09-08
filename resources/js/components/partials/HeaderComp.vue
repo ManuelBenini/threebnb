@@ -29,6 +29,8 @@
                     <li>
                         <a href="/admin">Sezione admin</a>
                     </li>
+                </ul>
+                <ul>
                     <hr>
                     <li>
                         <a href="/ricerca">Trova una stanza</a>
@@ -59,6 +61,25 @@
 </script>
 
 <style lang="scss" scoped>
+
+    a {
+        color: #000000;
+
+        &:hover {
+            font-weight: 600;
+            color: #000000;
+        }
+
+
+    }
+
+    ul {
+        padding: 0px 20px;
+        text-align: center;
+    }
+
+
+
 
 .header{
     display: flex;
@@ -134,22 +155,16 @@
 
         background-color: white;
         box-shadow: 1px 1px 12px -5px #5b5a5a;
+        z-index: 999;
 
-        nav{
-            ul{
+        nav ul li {
+            // border: 1px dashed black;
+            list-style: none;
+            margin-bottom: 7px;
 
-                li{
-                    // border: 1px dashed black;
-                    list-style: none;
-                    margin-bottom: 7px;
-
-                }
-            }
         }
 
-
     }
-
 
 }
 

@@ -1,10 +1,13 @@
 <template>
-    <div>
+    <div class="bg-checkbox">
 
-        <h1 class="text-center">Cerca il tuo BnB ideale</h1>
+        <div>
+
+        </div>
 
         <!-- SEARCH APP -->
         <div class="container-fluid">
+            <h1 class="text-center text-dark">Cerca il tuo BnB ideale</h1>
             <div class="row d-flex flex-column">
                 <div class="col">
                     <div class="d-flex justify-content-center mt-4 search-app">
@@ -24,7 +27,7 @@
                             </div>
                             <div class="distance">
                                 <label class="text-center" for="distance">Distanza (km)</label>
-                                <input v-model="filters.radius" class="input-km" type="number" placeholder="Distanza max (km)">
+                                <input v-model="filters.radius" class="input-km" type="number" max="99999" placeholder="Distanza max (km)">
                             </div>
                         </form>
                     </div>
@@ -32,7 +35,7 @@
                 </div>
 
                 <div class="col pos-recommended d-flex justify-content-center">
-                    <!-- POSIZIONI SUGGERITE -->
+                    <!-- RECOMMENDED POSITION -->
                     <div class="container-recommended">
                         <div id="recommendedPositions" v-on:click="isHidden = true" v-for="(position, index) in recommendedPositions" :key="`position${index}`">
                             <ul>
@@ -40,7 +43,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- /POSIZIONI SUGGERITE -->
+                    <!-- /RECOMMENDED POSITION -->
                 </div>
             </div>
         </div>
@@ -219,6 +222,8 @@
 
     @import '../../../sass/front/partials/vars';
 
+    // GENERAL PRESETS
+
     h1{
         font-size: 48px;
         margin-top: 20px;
@@ -229,18 +234,50 @@
         color: #979797;
     }
 
+
+    .container-fluid {
+        position: relative;
+    }
+
     .col-6 {
         padding: 0px 10px;
     }
 
+    // /GENERAL PRESETS
 
+
+    // BACKGROUND RESEARCH
+
+    .bg-checkbox {
+        position: relative;
+        padding: 35px 0px;
+        overflow: hidden;
+    }
+
+    .bg-checkbox::before {
+        content: "";
+        position: absolute;
+        background-image: url(../../../assets/GoNear_LA_2580w.png);
+        background-size: cover;
+        background-position: top;
+        top: -120px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.5;
+    }
+
+    // /BACKGROUND RESEARCH
+
+
+    // RECOMMENDED POSITION
     .pos-recommended {
         position: absolute;
-        top: 294px;
+        top: 165px;
         right: 167px;
     }
     .container-recommended {
-        border: 1px solid #979797;
+        border: 1px solid #000000;
         border-radius: 20px;
         width: 313px;
         z-index: 999;
@@ -252,12 +289,16 @@
         }
     }
 
+    // /RECOMMENDED POSITION
+
+
     // SEARCH APP
 
     .search-app form {
-        border: 2px solid #979797;
+        border: 3px solid #000000;
         padding: 12px 12px;
         border-radius: 35px;
+        background-color: #FFFFFF;
     }
 
     .search-app input{
@@ -307,7 +348,6 @@
         text-align: center;
     }
 
-
     // /SEARCH APP
 
 
@@ -339,6 +379,7 @@
 
     p {
         margin-bottom: 2px;
+        font-weight: 600;
     }
 
     input[type=checkbox] {
@@ -373,11 +414,11 @@
     .selected {
         color: #000000;
         transition: .2s ease-in-out;
-        border-bottom: 2px solid #979797
+        // border-bottom: 2px solid #525252
     }
 
     .no-selected {
-        color: #979797;
+        color: #525252;
     }
 
     // /CHECKBOX AREA
@@ -397,9 +438,7 @@
         }
     }
 
-    @media screen and (max-width: 757px) {
 
-    }
 
     @media screen and (max-width: 757px) {
         .checkbox{
@@ -410,7 +449,7 @@
         }
 
         .card-service {
-            width: 135px;
+            width: 136px;
         }
 
         .destination {
@@ -424,7 +463,7 @@
         }
 
         .pos-recommended {
-            top: 342px;
+            top: 214px;
             right: 0px;
         }
 
@@ -450,13 +489,13 @@
         }
 
         .pos-recommended {
-            top: 371px;
+            top: 263px;
         }
     }
 
     @media screen and (max-width: 505px) {
         .pos-recommended {
-            top: 371px;
+            top: 263px;
         }
 
         .container-recommended {
@@ -490,7 +529,7 @@
         }
 
         .pos-recommended {
-            top: 419px;
+            top: 311px;
         }
     }
 
@@ -517,15 +556,12 @@
         }
 
         .pos-recommended {
-            top: 510px;
+            top: 402px;
         }
 
         .container-recommended {
             width: 80%;
         }
-
-
-
 
         .search-app form {
             flex-direction: column;
