@@ -181,12 +181,12 @@
 
     .card-section {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
         margin-top: 20px;
     }
 
-    @media screen and (max-width: 699px) {
+    @media screen and (max-width: 1516px) {
         .card-section {
             justify-content: center;
         }
