@@ -251,6 +251,7 @@
     .bg-checkbox {
         position: relative;
         padding: 35px 0px;
+        overflow: hidden;
     }
 
     .bg-checkbox::before {
@@ -258,8 +259,8 @@
         position: absolute;
         background-image: url(../../../assets/GoNear_LA_2580w.png);
         background-size: cover;
-        background-position: center;
-        top: 0px;
+        background-position: top;
+        top: -120px;
         right: 0px;
         bottom: 0px;
         left: 0px;
@@ -413,7 +414,7 @@
     .selected {
         color: #000000;
         transition: .2s ease-in-out;
-        border-bottom: 2px solid #525252
+        // border-bottom: 2px solid #525252
     }
 
     .no-selected {
