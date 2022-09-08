@@ -41,7 +41,7 @@
                 </div>
 
                 <!--Colonna form-->
-               <ContactsForm
+               <ContactsForm v-if="apartment.userId != apartment.loggedUserId"
                />
 
             </div>
@@ -66,6 +66,8 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                     title: '',
                     image: '',
                     user: '',
+                    loggedUserId: '',
+                    userId: '',
                     services: [],
                     lat: '',
                     lon: ''
@@ -81,17 +83,25 @@ import {apiUrlDatabase} from '../../data/apiConfig';
             apiRequest(){
                 axios.get(this.apiUrlDatabase + 'apartment-details/' + this.$route.params.id)
                     .then(res => {
-                        this.apartment.title = res.data.title
-                        this.apartment.image = res.data.image
+                        this.apartment.title = res.data.title;
+
+                        this.apartment.image = res.data.image;
 
                         this.apartment.services = res.data.services;
-                        console.log(this.apartment.services);
 
-                        this.apartment.user = res.data.user.name + ' ' + res.data.user.surname
-                        console.log(typeof this.apartment.user);
+                        this.apartment.user = res.data.user.name + ' ' + res.data.user.surname;
 
-                        this.apartment.lat = res.data.latitude
-                        this.apartment.lon = res.data.longitude
+                        this.apartment.userId = res.data.user.id;
+
+                        this.apartment.loggedUserId = window.Id;
+
+                        console.log(this.apartment.userId, 'Id Proprietario Appartamento');
+
+                        console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
+
+                        this.apartment.lat = res.data.latitude;
+
+                        this.apartment.lon = res.data.longitude;
 
                         console.log('appartamento: ', res.data);
 
