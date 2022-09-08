@@ -19,5 +19,9 @@
     </div>
 
     <script src="{{asset('js/frontend.js')}}"></script>
+    <script>
+        window.User = {!! Auth::User() !!}
+        window.Id = {!! Auth::Id() !!}
+    </script>
 </body>
 </html>

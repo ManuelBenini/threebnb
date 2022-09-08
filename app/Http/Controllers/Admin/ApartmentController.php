@@ -64,7 +64,7 @@ class ApartmentController extends Controller
             $new_apartment->services()->attach($data['services']);
         };
 
-        return redirect()->route('admin.apartments.show', $new_apartment);
+        return Redirect::to('http://127.0.0.1:8000/dettaglio-appartamento/'.$new_apartment->id);
     }
 
     /**
@@ -128,7 +128,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($data['services']);
         };
 
-        return redirect()->route('admin.apartments.show', $apartment);
+        return Redirect::to('http://127.0.0.1:8000/dettaglio-appartamento/'.$apartment->id);
     }
 
     /**
