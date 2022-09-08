@@ -155,7 +155,7 @@
             element.addEventListener('click', function () {
                 modal.classList.remove("hidden")
 
-                appartmentId = element.offsetParent.children[1].getAttribute('href').slice(24);
+                appartmentId = element.offsetParent.children[1].children[0].getAttribute('href').slice(24);
 
                 console.log('id appartamento: ', appartmentId);
             });
