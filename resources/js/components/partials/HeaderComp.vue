@@ -21,22 +21,33 @@
 
         </div>
 
-        <div
-         v-if="showNavLink"
-         class="nav-link-menu">
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/admin">Sezione admin</a>
-                    </li>
-                </ul>
-                <ul>
-                    <hr>
-                    <li>
-                        <a href="/ricerca">Trova una stanza</a>
-                    </li>
-                </ul>
-            </nav>
+        <div v-if="showNavLink" class="nav-link-menu">
+
+            <div>
+
+                <nav>
+                    <ul>
+                        <li>
+                            <a v-if="isUserLogged" href="/admin">Profilo Utente</a>
+                            <a v-if="!isUserLogged" href="/register">Registrati</a>
+                        </li>
+
+                        <hr v-if="!isUserLogged">
+
+                        <li>
+                            <a v-if="!isUserLogged" href="/login">Login</a>
+                        </li>
+
+                        <hr>
+
+                        <li>
+                            <a href="/ricerca">Trova una stanza</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
         </div>
 
     </header>
@@ -49,14 +60,25 @@
         data(){
             return{
                 showNavLink: false,
+                isUserLogged: false,
+                userLoggedId: '',
             }
         },
 
         methods:{
             showMenuLink(){
                 this.showNavLink = !this.showNavLink
+
+                this.userLoggedId = window.Id;
+
+                if (this.userLoggedId != undefined){
+                    this.isUserLogged = true
+                }
+                console.log(this.isUserLogged, 'utente booleano');
             }
-        }
+        },
+
+
     }
 </script>
 
@@ -74,8 +96,9 @@
     }
 
     ul {
-        padding: 0px 20px;
+        padding: 20px 20px;
         text-align: center;
+        margin: 0px;
     }
 
 
@@ -147,22 +170,26 @@
         top: 100px;
 
         width: 200px;
-        height: 125px;
-        border: 1px solid #dee2e6;
-        border-radius: 10px;
 
-        padding-top: 20px;
 
-        background-color: white;
+
         box-shadow: 1px 1px 12px -5px #5b5a5a;
         z-index: 999;
 
-        nav ul li {
-            // border: 1px dashed black;
-            list-style: none;
-            margin-bottom: 7px;
+        nav {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            border: 1px solid #DEE2E6;
 
+            ul li {
+                // border: 1px dashed black;
+                list-style: none;
+
+
+            }
         }
+
+
 
     }
 
