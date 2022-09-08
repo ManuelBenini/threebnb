@@ -134,6 +134,7 @@
 
         background-color: white;
         box-shadow: 1px 1px 12px -5px #5b5a5a;
+        z-index: 999;
 
         nav{
             ul{
