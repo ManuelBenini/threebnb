@@ -114,7 +114,7 @@ class PageController extends Controller
     }
 
     public function show($id){
-        $apartment = Apartment::with(['user', 'services'])->find($id);
+        $apartment = Apartment::with(['user', 'services', 'sponsorships'])->find($id);
         return response()->json($apartment);
     }
 

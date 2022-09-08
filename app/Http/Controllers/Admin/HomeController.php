@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index(){
         $userId = Auth::id();
-        $userApartments = Apartment::where('user_id', '=', $userId)->paginate(3);
+        $userApartments = Apartment::where('user_id', '=', $userId)->with(['services', 'sponsorships'])->get();
         return view('admin.home', compact('userApartments'));
     }
 }

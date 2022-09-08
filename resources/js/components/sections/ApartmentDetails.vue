@@ -6,6 +6,7 @@
 
         <div class="immagineapp">
             <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
+            <h6 v-if="apartment.sponsorships.length > 0">Sponsorizzato</h6>
         </div>
 
         <div>
@@ -16,9 +17,11 @@
                     <div class="row ">
                         <div class="col-md-2">
                             <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Mario Rossi">
+
                         </div>
-                        <div class="col-md-6 d-flex align-self-center">
-                            <h3>Nome Host: {{apartment.user}}</h3>
+
+                        <div class="col-md-9 d-flex align-self-center">
+                            <h3>Host: {{apartment.user}}</h3>
                         </div>
                     </div>
 
@@ -69,6 +72,7 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                     loggedUserId: '',
                     userId: '',
                     services: [],
+                    sponsorships: [],
                     lat: '',
                     lon: ''
                 }
@@ -88,6 +92,8 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                         this.apartment.image = res.data.image;
 
                         this.apartment.services = res.data.services;
+
+                        this.apartment.sponsorships = res.data.sponsorships;
 
                         this.apartment.user = res.data.user.name + ' ' + res.data.user.surname;
 
@@ -124,30 +130,43 @@ a {
     text-decoration: none;
 }
 
-.immagineapp{
+h6 {
+    position: absolute;
+    top: 175px;
+    right: 135px;
+    font-weight: bold;
+    color: $colore-primario;
+    background-color: #FFFFFF;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.immagineapp {
     height: 500px;
     background-color: blue;
     border-radius: 30px;
     overflow: hidden;
 }
 
-img{
+img {
+    position: relative;
     background-color: red;
     height: 100%;
     width: 100%;
 }
 
-#szdettagli img{
+#szdettagli img {
     width: 80px;
     border-radius: 100px;
 }
 
-ul{
+ul {
     list-style: none;
     padding: 0;
 }
 
-#host{
+#host {
     display: inline-block;
 }
 
