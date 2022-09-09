@@ -3,7 +3,8 @@ namespace App\Http\Controllers\Api;
 use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
-use App\Sponsorship;
+use App\Message;
+use Illuminate\Http\Request;
 use DateTime;
 
 // use Illuminate\Http\Request;
@@ -105,6 +106,24 @@ class PageController extends Controller
         $c = 2 * asin(sqrt($a));
         $d = $earth_radius * $c;
         return $d;
+    }
+
+    public function sendMessage(Request $request){
+        $formData = $request;
+
+        $new_message = new Message();
+        $new_message->apartment_id = $formData->appId;
+        $new_message->text = $formData->text;
+        $new_message->email = $formData->email;
+        $new_message->save();
+
+        return response()->json($formData);
+    }
+
+    public function getMessages($apartmentId){
+        $messages = Message::where('apartment_id', $apartmentId)->get();
+
+        return response()->json($messages);
     }
 
     // public function paginate($items, $perPage = 4, $page = null, $options = []){
