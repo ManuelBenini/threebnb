@@ -1,12 +1,18 @@
 <template>
-    <div>
+    <div class="mt-3">
 
+        <div class="back-to-profile">
+            <a class="back-to-app" href="/admin/">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Torna al profilo</span>
+            </a>
+        </div>
 
-        <h2>{{apartment.title}}</h2>
+        <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
 
         <div class="immagineapp">
             <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
-            <h6 v-if="apartment.sponsorships.length > 0">Sponsorizzato</h6>
+            <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
         </div>
 
         <div>
@@ -15,30 +21,53 @@
                 <div id="szdettagli" class="col-md-6 p-3">
 
                     <div class="row ">
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                             <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Mario Rossi">
-
-                        </div>
+                        </div> -->
 
                         <div class="col-md-9 d-flex align-self-center">
                             <h3>Host: {{apartment.user}}</h3>
                         </div>
                     </div>
 
-                    <div id="servizi" class="pt-2">
-                        <br><h4>Servizi offerti</h4>
+                    <div class="apartment-details">
+
+                        <h4 class="my-4">Dettaglio Appartamento </h4>
+                        <ul>
+                            <li>
+                                <strong>Indirizzo: </strong>
+                                <span>{{apartment.address}}</span>
+                            </li>
+                            <li>
+                                <strong>Bagni: </strong>
+                                <span>{{apartment.bathrooms}}</span>
+                            </li>
+                            <li>
+                                <strong>Letti: </strong>
+                                <span>{{apartment.beds}}</span>
+                            </li>
+                            <li>
+                                <strong>Stanze: </strong>
+                                <span>{{apartment.rooms}}</span>
+                            </li>
+                            <li>
+                                <strong>MQ: </strong>
+                                <span>{{apartment.sqm}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+                    <div id="service" class="pt-2">
+                        <br><h4>Servizi offerti </h4>
                         <ul>
                             <li
                             v-for="(service, index) in this.apartment.services"
                             :key="index">
                                 {{service.name}}
                             </li>
-
                         </ul>
-                    </div>
-
-                    <div>
-                        <a href="/admin/">Torna ai tuoi appartamenti</a>
                     </div>
 
                 </div>
@@ -67,6 +96,11 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                 apiUrlDatabase,
                 apartment: {
                     title: '',
+                    address: '',
+                    bathrooms: '',
+                    beds: '',
+                    rooms: '',
+                    sqm: '',
                     image: '',
                     user: '',
                     loggedUserId: '',
@@ -90,6 +124,16 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                         this.apartment.title = res.data.title;
 
                         this.apartment.image = res.data.image;
+
+                        this.apartment.address = res.data.address;
+
+                        this.apartment.bathrooms = res.data.bathrooms;
+
+                        this.apartment.beds = res.data.beds;
+
+                        this.apartment.rooms = res.data.rooms;
+
+                        this.apartment.sqm = res.data.sqm;
 
                         this.apartment.services = res.data.services;
 
@@ -119,55 +163,76 @@ import {apiUrlDatabase} from '../../data/apiConfig';
 
 <style lang="scss" scoped>
 
-@import '../../../sass/front/partials/vars';
+    @import '../../../sass/front/partials/vars';
 
-a {
-    background-color: $colore-primario;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    color: #FFFFFF;
-    text-decoration: none;
-}
+    .back-to-app {
+        color: #929292;
+        text-decoration: none;
+        transition: 0.5s;
+    }
 
-h6 {
-    position: absolute;
-    top: 175px;
-    right: 135px;
-    font-weight: bold;
-    color: $colore-primario;
-    background-color: #FFFFFF;
-    padding: 8px 15px;
-    border-radius: 10px;
-    font-size: 18px;
-}
+    .back-to-app:hover {
+        color: $colore-primario;
+        font-size: 19px;
+    }
 
-.immagineapp {
-    height: 500px;
-    background-color: blue;
-    border-radius: 30px;
-    overflow: hidden;
-}
+    .back-to-app span {
+        margin-left: 12px;
+    }
 
-img {
-    position: relative;
-    background-color: red;
-    height: 100%;
-    width: 100%;
-}
+    .sponsor-label {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-weight: bold;
+        color: $colore-primario;
+        background-color: #FFFFFF;
+        padding: 5px 8px;
+        border-radius: 10px;
+    }
 
-#szdettagli img {
-    width: 80px;
-    border-radius: 100px;
-}
+    .immagineapp {
+        height: 50%;
+        width: 100%;
+        background-color: blue;
+        border-radius: 30px;
+        overflow: hidden;
+        position: relative;
+    }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
+    img {
+        background-color: red;
+        height: 100%;
+        width: 100%;
+    }
 
-#host {
-    display: inline-block;
-}
+    #szdettagli img {
+        width: 80px;
+        border-radius: 100px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #host {
+        display: inline-block;
+    }
+
+    .apartment-details {
+        margin-top: 20px;
+    }
+
+    .apartment-details li {
+        margin-bottom: 5px;
+        margin-left: 25px;
+    }
+
+    #service li {
+        margin-bottom: 5px;
+        margin-left: 25px;
+    }
+
 
 </style>

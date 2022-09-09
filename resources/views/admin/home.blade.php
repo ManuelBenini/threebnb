@@ -9,14 +9,26 @@
 
     <div class="dashboard container-fluid">
 
-        <div class="row mb-5 d-flex justify-content-center">
-            <div class="user col-lg-2 col-md-6 col-sm-12">
-                <div class="col text-center mt-3 profile">
+        <div class="row d-flex justify-content-center mb-5">
+            <div class="user col-lg-3 col-md-6 col-sm-12">
+                <div class="col mt-3 profile">
+                    <div class="user-image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
+                    </div>
                     <ul>
-                        <li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt=""></li>
-                        <li><h4>{{ Auth::user()->name }}</h4></li>
-                        <li><h4>{{ Auth::user()->surname }}</h4></li>
+                        <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
+                        <li><p>Data di nascita: </p></li>
+                        <li><p>N° Appartamenti: </p></li>
+                        <li><p>Iscritto il: </p></li>
+                        <li class="my-3">
+                            <a class="homebottom text-center" href="{{ route('admin.apartments.create') }}">
+                            Crea nuovo appartamento</a>
+                        </li>
                     </ul>
+
+                    <div class="col-12 d-flex justify-content-center my-5">
+
+                    </div>
                 </div>
 
             </div>
@@ -29,58 +41,66 @@
                 </div>
                 @foreach ($userApartments as $apartment)
 
-                    <div class="mb-5 colonnamiei col-lg-6 col-md-8 col-sm-12 col-12 app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
+                    <div class="col-lg-6 col app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
                         <h4>{{$apartment->title}}</h4>
 
-                        <div class="app-image {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
+                        <div class="app-image col {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
                             <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
                                 <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
                             </a>
                         </div>
 
-                        <ul class="d-flex justify-content-around">
-                            <li>
-                                <a class="buttonId visualizza bottinte" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
-                            </li>
-                            <li>
-                                <button class="statistiche bottinte buttonSponsor">Sponsorizza</button>
-                            </li>
-                            <li>
-                                <a class="modifica bottinte" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
-                            </li>
-                        </ul>
+                        <div class="buttons-apartment">
+
+                            <ul>
+                                <li>
+                                    <button class="btn sponsor-button buttonSponsor">Sponsorizza</button>
+                                </li>
+                            </ul>
+
+                            <div class="edit-view-buttons d-flex justify-content-around">
+
+                                <a class="btn view-button" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
+
+                                <a class="btn edit-button" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
+
+                            </div>
+
+
+
+                        </div>
 
                     </div>
                 @endforeach
 
-
             </div>
 
-            <div class="col-12 d-flex justify-content-center my-3">
-                <a class="homebotton text-center" href="{{ route('admin.apartments.create') }}">
-                    Crea nuovo appartamento
-                </a>
-            </div>
 
             {{-- Modal --}}
             <div id="modal" class="custom-modal hidden">
                 <div id="backdrop" class="backdrop"></div>
               <div class="search-modal">
-                <div class="text-center d-flex justify-content-between align-items-center border-bottom py-3 px-3">
-                  <h3>Acquista il pacchetto che preferisci</h3>
+                <div class="text-center d-flex justify-content-center align-items-center border-bottom py-2 px-2">
+                  <h3> Acquista il pacchetto che preferisci</h3>
                 </div>
 
-                    <p style="margin-top:20px; margin-left:20px">Sponsorizza il tuo appartamento e ottieni visibilità per..</p>
+                    <h5 style="margin:20px 5px; text-align:center">Sponsorizza il tuo appartamento e ottieni visibilità per..</h5>
 
-                  <ul style="display:flex; margin-top:20px; margin-left:20px">
+                  <ul style="display:flex; margin-top:20px; margin-left:20px; justify-content:space-between; text-align:center">
 
 
                     <div>
                         <p>Lite: 2,99€ (24h)</p>
 
                         <button
-                            style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em;cursor:pointer"
+                            style=" background-color:#0A7C00;
+                                    color:#FFF;
+                                    padding:8px 12px;
+                                    border:0;
+                                    border-radius:4px;
+                                    font-size:1em;
+                                    cursor:pointer"
                             id="checkout-button-sku_Fhr95UGQgRdVuN"
                             role="link"
                             type="button"
@@ -98,7 +118,13 @@
                         <p>Premium: 5,99€ (72h)</p>
 
                         <button
-                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em;cursor:pointer"
+                        style=" background-color:#0A7C00;
+                                color:#FFF;
+                                padding:8px 12px;
+                                border:0;
+                                border-radius:4px;
+                                font-size:1em;
+                                cursor:pointer"
                         id="checkout-button-sku_MNO1fABFzf9734"
                         role="link"
                         type="button"
@@ -114,7 +140,12 @@
                         <p>Gold: 9,99€ (144h)</p>
 
                         <button
-                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em;cursor:pointer"
+                        style=" background-color:#0A7C00;
+                                color:#FFF; padding:8px 12px;
+                                border:0;
+                                border-radius:4px;
+                                font-size:1em;
+                                cursor:pointer"
                         id="checkout-button-sku_MNO1FfDk1mocB0"
                         role="link"
                         type="button"
