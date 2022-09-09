@@ -5,16 +5,24 @@
                 <h2>I nostri <span class="orange-text">partner</span></h2>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
-                <img class="partner-icon" src="../../../assets/airbnb.png" alt="">
+                <a href="https://www.airbnb.it/" target="_blank">
+                    <img class="partner-icon" src="../../../assets/airbnb.png" alt="">
+                </a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
-                <img class="partner-icon" src="../../../assets/Lonely_Planet-Logo.png" alt="">
+                <a href="https://www.lonelyplanetitalia.it/" target="_blank">
+                    <img class="partner-icon" src="../../../assets/Lonely_Planet-Logo.png" alt="">
+                </a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
-                <img class="partner-icon" src="../../../assets/hostelWorld.png" alt="">
+                <a href="https://www.italian.hostelworld.com/" target="_blank">
+                    <img class="partner-icon" src="../../../assets/hostelWorld.png" alt="">
+                </a>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col text-center partner-logo-container">
-                <img class="partner-icon" src="../../../assets/booking.png" alt="">
+                <a href="https://www.booking.com/index.it.html" target="_blank">
+                    <img class="partner-icon" src="../../../assets/booking.png" alt="">
+                </a>
             </div>
         </div>
     </div>

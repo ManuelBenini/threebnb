@@ -1,7 +1,7 @@
 <template>
     <div class="mt-3">
 
-        <div class="back-to-profile">
+        <div v-if="apartment.userId == apartment.loggedUserId" class="back-to-profile">
             <a class="back-to-app" href="/admin/">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span>Torna al profilo</span>
@@ -132,7 +132,7 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
                         this.apartment.id = res.data.id;
                         this.ip.apartmentId = res.data.id;
 
-                        console.log(this.apartment.id, 'id appartamento');
+                        // console.log(this.apartment.id, 'id appartamento');
 
                         this.apartment.title = res.data.title;
 
@@ -158,15 +158,15 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
 
                         this.apartment.loggedUserId = window.Id;
 
-                        console.log(this.apartment.userId, 'Id Proprietario Appartamento');
+                        // console.log(this.apartment.userId, 'Id Proprietario Appartamento');
 
-                        console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
+                        // console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
 
                         this.apartment.lat = res.data.latitude;
 
                         this.apartment.lon = res.data.longitude;
 
-                        console.log('appartamento: ', res.data);
+                        // console.log('appartamento: ', res.data);
 
                         this.getApartmentViews();
 

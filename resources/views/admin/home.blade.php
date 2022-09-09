@@ -17,9 +17,9 @@
                     </div>
                     <ul>
                         <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
-                        <li><p>Data di nascita: </p></li>
-                        <li><p>N° Appartamenti: </p></li>
-                        <li><p>Iscritto il: </p></li>
+                        <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
+                        <li><p>N° Appartamenti: {{count($userApartments)}}</p></li>
+                        <li><p>Iscritto il: {{ Auth::user()->created_at }}</p></li>
                         <li class="my-3">
                             <a class="homebottom text-center" href="{{ route('admin.apartments.create') }}">
                             Crea nuovo appartamento</a>
