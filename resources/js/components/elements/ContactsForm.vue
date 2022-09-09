@@ -1,45 +1,107 @@
 <template>
   <div id="szform" class="col-md-6 p-3">
-        <h3 class="mb-3">Contatta l'host</h3>
-        <form>
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input
+    <h3 class="mb-3">Contatta l'host</h3>
+    <form v-on:submit.prevent="submitForm">
+      <div class="form-group">
+          <label for="email">Email address</label>
+          <input
             type="email"
             class="form-control"
             id="email"
+            v-model="form.email"
             aria-describedby="emailHelp"
-            placeholder="Inserisci la email"/>
-        </div>
+            placeholder="Inserisci la email"
+            @click="formSubmitted = false"
+          />
+      </div>
 
-        <div class="form-group">
-            <label for="testo">Testo</label>
-            <textarea class="form-control" id="teto" rows="4"></textarea>
-        </div>
+      <div class="form-group">
+          <label for="testo">Testo</label>
+          <textarea
+            v-model="form.text"
+            class="form-control"
+            id="teto"
+            rows="4"
+            @click="formSubmitted = false"
+          >
+          </textarea>
+      </div>
 
-        <div class="form-check mb-4">
-            <input type="checkbox" class="form-check-input" id="privacypolicy" />
-            <label class="form-check-label" for="privacypolicy">Accetto i termini della Privacy Policy</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Invia</button>
-        </form>
+      <div class="mb-4">
+        <input
+          type="radio"
+          v-model="form.policy"
+          id="privacypolicy"
+          name="privacypolicy"
+          value="1"
+          required
+        > Accetto i termini della Privacy Policy
+      </div>
+
+      <button type="submit" class="btn btn-primary">Invia</button>
+
+    </form>
+
+    <p v-if="formSubmitted" class="text-success mt-3">Messaggio inviato con successo!</p>
+
   </div>
 </template>
 
 <script>
+    import {apiUrlDatabase} from '../../data/apiConfig';
 export default {
   name: "ContactsForm",
-  props: {},
+
+  data(){
+    return{
+        apiUrlDatabase,
+        formSubmitted: false,
+        form:{
+            email: '',
+            text: '',
+            policy: 0,
+            appId: 0
+        }
+    }
+  },
+
+  props:{
+    apartmentid: Number
+  },
+
+  methods:{
+        submitForm(){
+            this.formSubmitted = true;
+
+            axios.post(this.apiUrlDatabase + 'send-message', this.form)
+                 .then((res) => {
+                    //  console.log(res);
+                 });
+
+            this.form = {
+                email: '',
+                text: '',
+                policy: 0,
+                appId: 0
+            }
+        }
+  },
+
+  mounted(){
+        this.form.appId = this.apartmentid;
+        // console.log(this.form.appId, 'id appa FORM');
+  }
 };
+
 </script>
 
 <style lang="scss" scoped>
-button {
-  background-color: #eb594e;
-  font-weight: 500;
-  border: none;
-  &:hover {
-    background-color: #a33a33;
-  }
-}
+    button {
+    background-color: #eb594e;
+    font-weight: 500;
+    border: none;
+    &:hover {
+        background-color: #a33a33;
+    }
+    }
 </style>

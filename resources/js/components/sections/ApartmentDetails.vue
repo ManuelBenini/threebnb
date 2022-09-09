@@ -44,7 +44,7 @@
                 </div>
 
                 <!--Colonna form-->
-               <ContactsForm v-if="apartment.userId != apartment.loggedUserId"
+               <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
                />
 
             </div>
@@ -66,6 +66,7 @@ import {apiUrlDatabase} from '../../data/apiConfig';
             return{
                 apiUrlDatabase,
                 apartment: {
+                    id: undefined,
                     title: '',
                     image: '',
                     user: '',
@@ -87,6 +88,10 @@ import {apiUrlDatabase} from '../../data/apiConfig';
             apiRequest(){
                 axios.get(this.apiUrlDatabase + 'apartment-details/' + this.$route.params.id)
                     .then(res => {
+                        this.apartment.id = res.data.id;
+
+                        console.log(this.apartment.id, 'id appartamento');
+
                         this.apartment.title = res.data.title;
 
                         this.apartment.image = res.data.image;
