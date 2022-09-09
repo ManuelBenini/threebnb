@@ -11,17 +11,28 @@
     font-family: 'Manrope', sans-serif;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
+.user p {
+    margin-bottom: 5px;
+
+}
+
 .app-image {
     overflow: hidden;
     border-radius: 20px;
     margin: 10px 0px;
+    padding: 0px;
 }
 
 .border-sponsorship {
-    border: 4px solid #A0BD00;
+    border: 4px solid #E6D223;
+    width: 100%;
+    height: 50%;
+    padding: 0px;
 }
-
-
 
 .navbar-brand img{
     width: 50px;
@@ -37,20 +48,20 @@
     text-decoration: none;
 }
 
-.homebotton {
+.homebottom {
     background-color: #EB594E;
     color: white;
     border-radius: 21px;
     padding: 8px;
-    font-size: 25px;
+    font-size: 16px;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all .5s;
 }
 
-.homebotton:hover{
-    color: white;
+.homebottom:hover{
     text-decoration: none;
-    background-color: #de675e;
+    background-color: #d8766f;
+    color: #000000;
 }
 
 .navbar-light .navbar-brand{
@@ -81,31 +92,32 @@
     padding: 10px 15px;
 }
 
-.dashboard .user {
-    border: 2px solid #C7C7C7;
-    border-radius: 20px;
-    margin: 20px 40px;
-    max-height: 400px;
-    box-shadow: 2px 4px 4px 0px rgb(167, 167, 167);
+.user {
+    border: 2px solid #DEE2E6;
+    border-radius: 10px;
+    max-height: 355px;
+    box-shadow: 0px 0px 6px 2px #2A2A2A;
 }
 
-.dashboard .profile img {
+.user-image {
+    text-align: center;
+}
+
+.profile img {
     max-width: 70%;
-    border-radius: 50%
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
 .dashboard .app img {
     width: 100%;
-    height: 65%;
+    height: 100%;
+    border-radius: 10px;
     transform: scale(1.0);
-    transition: all .3;
+    transition: transform .4s;
 }
 .dashboard .app img:hover {
     transform: scale(1.2);
-}
-
-.dashboard .profile li {
-    padding: 5px 0px;
 }
 
 .dashboard .col-9 {
@@ -113,41 +125,48 @@
     flex-wrap: wrap
 }
 
-.dashboard button {
-    border: none;
-    border-radius: 10px;
-    padding: 10px 30px;
-    color: #FFFFFF;
-    font-size: 18px;
-    font-weight: 200;
+// EDIT, VIEW, SPONSOR BUTTON
 
+.btn {
+    font-size: 18px;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 10px;
+
+    text-decoration: none;
+    transition: 0.5s;
     cursor: pointer;
 }
 
-.dashboard .bottinte{
-    color: white;
-    border-radius: 20px;
-    padding: 10px;
-    text-decoration: none;
-    transition: 0.5s;
+.view-button, .edit-button {
+    width: 45%;
 }
 
-.bottinte:hover{
-    padding: 15px;
+.view-button:hover, .edit-button:hover {
+    width: 50%;
+    color: #000000;
 }
 
-.dashboard .visualizza{
+.view-button {
     background-color: #EB594E;
 }
 
-.dashboard .statistiche{
-    background-color: rgb(63, 51, 125);
+.edit-button {
+    background-color: #00719E;
 }
 
-.dashboard .modifica{
-    background-color: rgb(68, 157, 73);
+.sponsor-button {
+    background-color: #0A7C00;
+    width: 95%;
 }
 
+.sponsor-button:hover {
+    font-size: 24px;
+    width: 100%;
+    background-color: #0EA500;
+}
+
+// EDIT, VIEW, SPONSOR BUTTON
 
 /*
   Popup Search Bar

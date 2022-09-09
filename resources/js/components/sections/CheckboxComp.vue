@@ -7,7 +7,7 @@
 
         <!-- SEARCH APP -->
         <div class="container-fluid">
-            <h1 class="text-center text-dark">Cerca il tuo BnB ideale</h1>
+            <h1 class="text-center">Cerca il tuo BnB ideale</h1>
             <div class="row d-flex flex-column">
                 <div class="col">
                     <div class="d-flex justify-content-center mt-4 search-app">
@@ -227,6 +227,7 @@
     h1{
         font-size: 48px;
         margin-top: 20px;
+        color: #FFFFFF;
     }
 
     label {
@@ -257,14 +258,14 @@
     .bg-checkbox::before {
         content: "";
         position: absolute;
-        background-image: url(../../../assets/GoNear_LA_2580w.png);
+        background-image: url(../../../assets/foto-1.044.jpeg);
         background-size: cover;
-        background-position: top;
-        top: -120px;
+        background-position: center;
+        top: 0px;
         right: 0px;
-        bottom: 0px;
+        bottom: -260px;
         left: 0px;
-        opacity: 0.5;
+        // opacity: 0.5;
     }
 
     // /BACKGROUND RESEARCH
@@ -277,7 +278,7 @@
         right: 167px;
     }
     .container-recommended {
-        border: 1px solid #000000;
+        border: 1px solid #dee2e6;
         border-radius: 20px;
         width: 313px;
         z-index: 999;
@@ -286,6 +287,10 @@
 
         li {
             font-size: 15px;
+
+            &:hover {
+                color: #000000;
+            }
         }
     }
 
@@ -295,7 +300,7 @@
     // SEARCH APP
 
     .search-app form {
-        border: 3px solid #000000;
+        border: 3px solid #dee2e6;
         padding: 12px 12px;
         border-radius: 35px;
         background-color: #FFFFFF;
@@ -373,13 +378,13 @@
             text-decoration: none;
             -webkit-transition: color .2s ease-in-out;
             -moz-transition: color .2s ease-in-out;
-            color: #000000;
+            color: #9DC2F6;
         }
     }
 
     p {
         margin-bottom: 2px;
-        font-weight: 600;
+        // font-weight: 600;
     }
 
     input[type=checkbox] {
@@ -412,13 +417,13 @@
     }
 
     .selected {
-        color: #000000;
+        color: #9DC2F6;
         transition: .2s ease-in-out;
         // border-bottom: 2px solid #525252
     }
 
     .no-selected {
-        color: #525252;
+        color: #FFFFFF;
     }
 
     // /CHECKBOX AREA
