@@ -9,7 +9,7 @@
 
         {{-- Titolo --}}
         <div class="mb-3">
-          <label for="title" class="form-label">Titolo riepilogativo</label>
+          <label for="title" class="form-label">&#42;Titolo riepilogativo</label>
           <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}">
           @error('title')
             <p class="error-msg">{{$message}}</p>
@@ -101,12 +101,12 @@
                    @if(in_array($service->id, old('services',[]))) checked @endif>
           </div>
           @endforeach
-          
+
         </div>
         @error('services')
           <p class="error-msg">{{$message}}</p>
         @enderror
-        
+
         <p id="error-services" class="text-danger"></p>
 
         {{-- Immagine --}}
