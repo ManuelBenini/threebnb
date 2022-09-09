@@ -17,15 +17,28 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')
     ->prefix('apartments')
     ->group(function(){
+
+    // GET CALLS
     Route::get('/', 'PageController@getApartments');
-    Route::get('/paginate', 'PageController@getApartmentsPaginate');
-    Route::get('/sponsoredPaginate', 'PageController@getSponsoredApartmentsPaginate');
+
     Route::get('/services', 'PageController@getServices');
+
     Route::get('/apartment-details/{id}', 'PageController@show');
-    Route::post('/send-message', 'PageController@sendMessage');
+
     Route::get('/see-messages/{apartmentID}', 'PageController@getMessages');
+
     Route::get('/sponsor-expiry-time', 'PageController@checkSponsorExpiryTime');
+
     Route::get('/filteredApartments/{rooms}/{beds}/{distance}/{lat}/{lon}/{servicesList}/{sponsored}', 'PageController@apartmentsWithFilters');
 
     Route::get('/sponsored', 'PageController@sponsoredApartments');
+
+    Route::get('/get-apartment-views/{id}', 'PageController@getApartmentViews');
+
+    Route::get('/get-all-views', 'PageController@getAllViews');
+
+    // POST CALLS
+    Route::post('/send-message', 'PageController@sendMessage');
+
+    Route::post('/add-view', 'PageController@addView');
 });

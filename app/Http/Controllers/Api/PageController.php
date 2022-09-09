@@ -4,13 +4,9 @@ use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
 use App\Message;
+use App\View;
 use Illuminate\Http\Request;
 use DateTime;
-
-// use Illuminate\Http\Request;
-// use Illuminate\Pagination\LengthAwarePaginator;
-// use Illuminate\Pagination\Paginator;
-// use Illuminate\Support\Collection;
 
 class PageController extends Controller
 {
@@ -98,6 +94,12 @@ class PageController extends Controller
         return response()->json($services);
     }
 
+    public function getApartments(){
+        $apartments = Apartment::all();
+
+        return response()->json(count($apartments));
+    }
+
     public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
         $earth_radius = 6371;
         $dLat = deg2rad($latitude2 - $latitude1);
@@ -116,8 +118,6 @@ class PageController extends Controller
         $new_message->text = $formData->text;
         $new_message->email = $formData->email;
         $new_message->save();
-
-        return response()->json($formData);
     }
 
     public function getMessages($apartmentId){
@@ -126,18 +126,28 @@ class PageController extends Controller
         return response()->json($messages);
     }
 
-    // public function paginate($items, $perPage = 4, $page = null, $options = []){
-    //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-    //     $items = $items instanceof Collection ? $items : Collection::make($items);
-    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items
-    //     ->count(), $perPage, $page, $options);
+    public function addView(Request $request){
+        $isIpPresent = View::where([['ip', $request->clientIp], ['apartment_id', $request->apartmentId]])->get();
 
-    //     #APPUNTI
-    //     importare questi dentro il file in cui eseguire la paginazione.
-    //     use Illuminate\Pagination\LengthAwarePaginator;
-    //     use Illuminate\Pagination\Paginator;
-    //     use Illuminate\Support\Collection;
+        if(count($isIpPresent) == 0){
+            $new_view = new View();
+            $new_view->apartment_id = $request->apartmentId;
+            $new_view->ip = $request->clientIp;
+            $new_view->save();
+        }
 
-    // }
+        return response()->json($request);
+    }
 
+    public function getApartmentViews($apartmentId){
+        $views = View::where('apartment_id', $apartmentId)->get();
+
+        return response()->json($views);
+    }
+
+    public function getAllViews(){
+        $views = View::all();
+
+        return response()->json($views);
+    }
 }
