@@ -76,6 +76,10 @@
                <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
                />
 
+               <StatisticsComp :viewsArray="[allViews ,
+                apartmentViews]"
+               />
+
             </div>
         </div>
 
@@ -86,10 +90,11 @@
 <script>
 import ContactsForm from '../elements/ContactsForm.vue';
 import {apiUrlDatabase} from '../../data/apiConfig';
+import StatisticsComp from '../elements/StatisticsComp.vue';
 
     export default {
         name: "ApartmentDetails",
-        components: { ContactsForm },
+        components: { ContactsForm, StatisticsComp },
 
         data(){
             return{
@@ -110,12 +115,14 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                     sponsorships: [],
                     lat: '',
                     lon: ''
-                }
+                },
+                ip: {
+                    clientIp: '',
+                    apartmentId: 0,
+                },
+                allViews: 0,
+                apartmentViews: 0,
             }
-        },
-
-        mounted(){
-            this.apiRequest()
         },
 
         methods: {
@@ -123,6 +130,7 @@ import {apiUrlDatabase} from '../../data/apiConfig';
                 axios.get(this.apiUrlDatabase + 'apartment-details/' + this.$route.params.id)
                     .then(res => {
                         this.apartment.id = res.data.id;
+                        this.ip.apartmentId = res.data.id;
 
                         console.log(this.apartment.id, 'id appartamento');
 
@@ -160,8 +168,51 @@ import {apiUrlDatabase} from '../../data/apiConfig';
 
                         console.log('appartamento: ', res.data);
 
+                        this.getApartmentViews();
+
+                        this.getClientIp();
+
+                        this.getAllViews();
+
                     })
             },
+
+            getClientIp(){
+                axios.get('https://api.ipify.org?format=json')
+                .then( res => {
+                    this.ip.clientIp = res.data.ip;
+                    console.log(this.ip.clientIp);
+                    this.sendClientIp();
+                });
+            },
+
+            getAllViews(){
+                axios.get(this.apiUrlDatabase + 'get-all-views')
+                .then( res => {
+                    this.allViews = res.data.length;
+                    console.log(this.allViews, 'Visualizzazioni di ogni appartamento');
+                });
+            },
+
+            getApartmentViews(){
+                axios.get(this.apiUrlDatabase + 'get-apartment-views/' + this.apartment.id)
+                .then( res => {
+                    this.apartmentViews = res.data.length;
+                    console.log(this.apartmentViews, 'Visualizzazioni dell\'appartamento');
+                });
+            },
+
+            sendClientIp(){
+                axios.post(this.apiUrlDatabase + 'add-view', this.ip)
+                .then((sendedData) => {
+                    console.log(this.ip);
+                    console.log(sendedData, 'CHIAMATA POST VISUALIZZAZIONE');
+                });
+            },
+        },
+
+        mounted(){
+            this.apiRequest();
         }
 }
 </script>
