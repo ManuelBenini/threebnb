@@ -5,6 +5,7 @@ use App\Apartment;
 use App\Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormApartmentRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -149,6 +150,24 @@ class ApartmentController extends Controller
         $apartment = Apartment::find($apartmentId);
 
         $apartment->sponsorships()->sync($sponsorId);
+
+        // $apartment = Apartment::with('sponsorships')->find($apartmentId);
+
+        // dump($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
+
+        if($sponsorId == 1){
+            $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(1);
+        }
+        else if($sponsorId == 2){
+            $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(3);
+        }
+        else{
+            $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(6);
+        }
+
+        $apartment->push();
+
+        // dd($apartment->sponsorships[0]->expired_at->format('Y/m/d H:i:s'));
 
         return Redirect::to('http://127.0.0.1:8000/dettaglio-appartamento/' . $apartment->id);
 
