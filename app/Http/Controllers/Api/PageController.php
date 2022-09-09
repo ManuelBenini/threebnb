@@ -19,37 +19,11 @@ class PageController extends Controller
         $date = '';
 
         foreach ($apartments as $apartment) {
+            $date = new DateTime($apartment->sponsorships[0]->expired_at);
 
-
-            if($apartment->sponsorships[0]->id == 1){
-               $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
-
-            //    var_dump($date, 'data default 1');
-
-               $date->modify('+1 day');
-               $date->modify('+2 hours');
-
-               var_dump($date, 'data after 1');
-
-            }elseif ($apartment->sponsorships[0]->id == 2) {
-                $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
-                // var_dump($date, 'data default 3');
-
-                $date->modify('+3 day');
-                $date->modify('+2 hours');
-
-                var_dump($date, 'data after 3');
-
-            }else{
-                $date = new DateTime($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
-
-                // var_dump($date, 'data default 6');
-
-                $date->modify('+6 day');
-                $date->modify('+2 hours');
-
-                var_dump($date, 'data after 6');
-            }
+            // var_dump($date);
+            // var_dump($date->getTimestamp());
+            // var_dump(strtotime(date('Y-m-d H:i:s')));
 
             if($date->getTimestamp() < strtotime(date('Y-m-d H:i:s'))){
                 $apartment = Apartment::find($apartment->id);
