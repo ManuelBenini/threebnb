@@ -26,8 +26,8 @@
                                 <input v-model="filters.beds" class="input-numb" type="number" min="1" max="999">
                             </div>
                             <div class="distance">
-                                <label class="text-center" for="distance">Distanza (km)</label>
-                                <input v-model="filters.radius" class="input-km" type="number" max="99999" placeholder="Distanza max (km)">
+                                <label class="text-center" for="distance">Distanza: {{filters.radius}}km</label>
+                                <input type="range" min="1" max="50" v-model="filters.radius" class="slider input-km" id="myRange">
                             </div>
                         </form>
                     </div>
