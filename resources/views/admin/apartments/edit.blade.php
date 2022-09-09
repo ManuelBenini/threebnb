@@ -11,7 +11,7 @@
         <div class="mb-3">
           <label
           for="title"
-          class="form-label">&#42;Titolo</label>
+          class="form-label">&#42;Titolo riepilogativo</label>
           <input
           type="text"
           class="form-control
@@ -152,7 +152,7 @@
           </div>
           @endforeach
         </div>
-        
+
         @error('service')
           <p class="error-msg">{{$message}}</p>
         @enderror
