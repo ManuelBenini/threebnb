@@ -19,6 +19,7 @@ class CreateSponsorshipsTable extends Migration
             $table->decimal('price', 4, 2);
             $table->unsignedTinyInteger('time_amount');
             $table->timestamps();
+            $table->timestamp('expired_at')->useCurrent();
         });
     }
 
