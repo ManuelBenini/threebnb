@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Il tuo profilo | ThreeBnB')
 
 @section('content')
 

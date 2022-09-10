@@ -210,10 +210,6 @@
             }
         },
 
-        mounted(){
-            this.getServices();
-        },
-
         components: { ButtonComp, CardSection }
     }
 </script>

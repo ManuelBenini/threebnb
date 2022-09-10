@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('title', 'Dati appartamento | ThreeBnB')
+
 @section('content')
 <div class="container">
     <table class="table m-5">

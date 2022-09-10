@@ -213,6 +213,9 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
 
         mounted(){
             this.apiRequest();
+
+            // si potrebbe impostare il nome dell'appartamento in modo dinamico
+            document.title = "Dettagli Appartamento | ThreeBnB"
         }
 }
 </script>
