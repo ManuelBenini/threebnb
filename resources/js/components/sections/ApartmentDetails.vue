@@ -10,7 +10,7 @@
 
         <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
 
-        <div class="immagineapp">
+        <div class="app-image">
             <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
             <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
         </div>
@@ -250,13 +250,13 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
         border-radius: 10px;
     }
 
-    .immagineapp {
-        height: 50%;
-        width: 100%;
-        background-color: blue;
+    .app-image {
+        height: 620px;
+        width: 1300px;
         border-radius: 30px;
         overflow: hidden;
         position: relative;
+        margin: auto;
     }
 
     img {
