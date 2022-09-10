@@ -7,7 +7,7 @@
 
         <!-- SEARCH APP -->
         <div class="container-fluid">
-            <h1 class="text-center">Cerca il tuo BnB ideale</h1>
+            <h1 class="text-center">Cerca il tuo <span class="bnb">BnB</span> ideale</h1>
             <div class="row d-flex flex-column">
                 <div class="col">
                     <div class="d-flex justify-content-center mt-4 search-app">
@@ -243,6 +243,16 @@
     .col-6 {
         padding: 0px 10px;
     }
+
+    .bnb {
+        animation: color-change 4s infinite
+    }
+
+    @keyframes color-change {
+        0% { color: #FFFFFF; }
+        50% { color: $colore-primario; }
+        100% { color: #FFFFFF; }
+      }
 
     // /GENERAL PRESETS
 
