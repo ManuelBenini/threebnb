@@ -331,6 +331,8 @@
     .destination, .rooms, .beds, .distance  {
         display: flex;
         flex-direction: column;
+        align-content: center;
+        flex-wrap: wrap;
     }
 
     form .input-city, form .input-numb, form .input-km {
@@ -343,7 +345,7 @@
     }
 
     form .input-numb {
-        width: 110px;
+        width: 95px;
         text-align: center;
 
     }
@@ -351,6 +353,7 @@
     form .input-km {
         width: 130px;
         text-align: center;
+        margin: 0px 10px;
     }
 
     // /SEARCH APP
@@ -475,6 +478,10 @@
         .container-recommended {
             width: 90%;
         }
+
+        form .input-km {
+            width: 70%;
+        }
     }
 
     @media screen and (max-width: 646px) {
@@ -531,10 +538,15 @@
         }
         .distance {
             width: 100%;
+
         }
 
         .pos-recommended {
-            top: 311px;
+            top: 302px;
+        }
+
+        form .input-km {
+            width: 80%;
         }
     }
 
@@ -561,7 +573,7 @@
         }
 
         .pos-recommended {
-            top: 402px;
+            top: 393px;
         }
 
         .container-recommended {
@@ -571,6 +583,8 @@
         .search-app form {
             flex-direction: column;
         }
+
+
     }
 
     // /MEDIA QUERY
