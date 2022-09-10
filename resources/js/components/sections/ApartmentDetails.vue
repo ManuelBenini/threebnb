@@ -73,12 +73,14 @@
                 </div>
 
                 <!--Colonna form-->
-               <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
-               />
+                <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
+                />
 
-               <StatisticsComp :viewsArray="[allViews ,
-                apartmentViews]"
-               />
+                <div class="col-12">
+                   <StatisticsComp :viewsArray="[allViews ,
+                   apartmentViews]"
+                   />
+                </div>
 
             </div>
         </div>
@@ -91,10 +93,11 @@
 import ContactsForm from '../elements/ContactsForm.vue';
 import {apiUrlDatabase} from '../../data/apiConfig';
 import StatisticsComp from '../elements/StatisticsComp.vue';
+import ChartComp from '../elements/ChartComp.vue';
 
     export default {
         name: "ApartmentDetails",
-        components: { ContactsForm, StatisticsComp },
+        components: { ContactsForm, StatisticsComp, ChartComp },
 
         data(){
             return{
@@ -292,6 +295,7 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
         margin-bottom: 5px;
         margin-left: 25px;
     }
+
 
 
 </style>
