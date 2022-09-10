@@ -35,11 +35,11 @@
       },
       width: {
         type: Number,
-        default: 880
+        default: 360
       },
       height: {
         type: Number,
-        default: 400
+        default: 250
       },
       cssClasses: {
         default: '',
