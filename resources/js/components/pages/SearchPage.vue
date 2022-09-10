@@ -74,6 +74,10 @@ import CardSection from '../sections/CardSection.vue';
             }
         },
 
+        mounted(){
+            document.title = "Ricerca Appartamento | ThreeBnB"
+        },
+
     }
 
 </script>

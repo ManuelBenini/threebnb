@@ -11,12 +11,9 @@
     font-family: 'Manrope', sans-serif;
 }
 
-a:hover {
-    text-decoration: none;
-}
-
-.container{
-    padding: 0px;
+ul {
+    padding: 0;
+    list-style: none;
 }
 
 .user p {
@@ -24,14 +21,20 @@ a:hover {
 
 }
 
+.app-list{
+    width: 100%;
+    margin: 15px 0px;
+    text-align: center;
+}
+
 .app-image {
     overflow: hidden;
     border-radius: 20px;
     margin: 10px 0px;
-    padding: 0px;
     width: 100%;
     height: 60%;
     border: 4px solid transparent;
+    padding: 0px;
 }
 
 .border-sponsorship {
@@ -43,31 +46,31 @@ a:hover {
     width: 50px;
 }
 
-
-.tutti {
+.new-app {
     background-color: #EB594E;
-    color: white;
-    border-radius: 25px;
-    padding: 8px;
-    font-size: 15px;
-    text-decoration: none;
+    border-radius: 20px;
+    transition: all 0.5s;
+
+    text-align: center;
+    padding: 5px 0px;
+
+    &:hover {
+        background-color: #C7453C;
+    }
+
+    a {
+        color: #FFFFFF;
+        transition: all 0.5s;
+
+        &:hover{
+
+            color: #000000;
+            text-decoration: none;
+        }
+    }
+
 }
 
-.homebottom {
-    background-color: #EB594E;
-    color: white;
-    border-radius: 21px;
-    padding: 8px;
-    font-size: 16px;
-    text-decoration: none;
-    transition: all .5s;
-}
-
-.homebottom:hover{
-    text-decoration: none;
-    background-color: #d8766f;
-    color: #000000;
-}
 
 .navbar-light .navbar-brand{
     color:white;
@@ -77,31 +80,15 @@ a:hover {
     color: red;
 }
 
-.dashboard ul {
-    padding: 0;
-    list-style: none;
-}
-
-.dashboard .divtitolo{
-    width: 100%;
-}
-
-.dashboard .titolo{
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
 .dashboard button {
     padding: 10px 15px;
 }
 
-.user {
+.profile {
     border: 2px solid #DEE2E6;
     border-radius: 10px;
-    max-height: 355px;
     box-shadow: 0px 0px 6px 2px #2A2A2A;
+    height: min-content;
 }
 
 .user-image {
@@ -114,41 +101,54 @@ a:hover {
     margin-bottom: 10px;
 }
 
-.dashboard .app img {
+.app {
+    width: 45%;
+    margin: 20px 0px;
+}
+.app h4 {
+    font-weight: 600;
+}
+
+.app img {
     width: 100%;
     height: 100%;
     border-radius: 10px;
     transform: scale(1.0);
     transition: transform .4s;
 }
-.dashboard .app img:hover {
+.app img:hover {
     transform: scale(1.2);
 }
 
-.dashboard .col-9 {
+.col-9 {
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-// EDIT, VIEW, SPONSOR BUTTON
+// EDIT, VIEW, DELETE, SPONSOR BUTTON
 
 .btn {
     font-size: 18px;
     border: none;
     color: #FFFFFF;
     border-radius: 10px;
-
     text-decoration: none;
     transition: 0.5s;
     cursor: pointer;
 }
 
-.view-button, .edit-button {
-    width: 45%;
+.buttons-apartment {
+    margin: 10px 0px;
 }
 
-.view-button:hover, .edit-button:hover {
-    width: 50%;
+.view-button, .edit-button, .delete-button {
+    width: 30%;
+    font-size: 15px;
+}
+
+.view-button:hover, .edit-button:hover, .delete-button:hover {
+    width: 45%;
     color: #000000;
 }
 
@@ -158,6 +158,10 @@ a:hover {
 
 .edit-button {
     background-color: #00719E;
+}
+
+.delete-button {
+    background-color: #DD0000;
 }
 
 .sponsor-button {
@@ -171,7 +175,7 @@ a:hover {
     background-color: #0EA500;
 }
 
-// EDIT, VIEW, SPONSOR BUTTON
+// EDIT, VIEW, DELETE, SPONSOR BUTTON
 
 /*
   Popup Search Bar
@@ -216,4 +220,76 @@ a:hover {
     background-color: #ffffff;
     padding: 1rem;
     border-radius: 10px;
-  }
+}
+
+// MEDIA QUERY
+
+@media screen and (max-width: 1200px) {
+    .app {
+        width: 90%;
+    }
+
+    .col-9 {
+        justify-content: center;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .col-md-7 {
+        margin: 20px auto;
+    }
+
+    .col-9 {
+        justify-content: center;
+        margin: auto;
+        flex: 0 0 90%;
+        max-width: 90%;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .col-12 {
+        width: 100%;
+    }
+
+    .col-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 0px;
+    }
+
+    .app {
+        width: 100%;
+        height: 35%;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .edit-view-buttons {
+        flex-wrap: wrap;
+    }
+
+    .view-button, .edit-button, .delete-button {
+        width: 80%;
+        margin: 3px 0px;
+
+        &:hover {
+            width: 100%;
+        }
+    }
+
+    .col-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .app {
+        border-bottom: 2px solid #EB594E;
+    }
+
+}
+// /MEDIA QUERY
+
+

@@ -1,15 +1,17 @@
 <template>
-    <Bar
-      :chart-options="chartOptions"
-      :chart-data="chartData"
-      :chart-id="chartId"
-      :dataset-id-key="datasetIdKey"
-      :plugins="plugins"
-      :css-classes="cssClasses"
-      :styles="styles"
-      :width="width"
-      :height="height"
-    />
+    <div class="d-flex justify-content-center">
+        <Bar
+        :chart-options="chartOptions"
+        :chart-data="chartData"
+        :chart-id="chartId"
+        :dataset-id-key="datasetIdKey"
+        :plugins="plugins"
+        :css-classes="cssClasses"
+        :styles="styles"
+        :width="width"
+        :height="height"
+        />
+    </div>
   </template>
 
   <script>
@@ -33,11 +35,11 @@
       },
       width: {
         type: Number,
-        default: 400
+        default: 360
       },
       height: {
         type: Number,
-        default: 400
+        default: 250
       },
       cssClasses: {
         default: '',
@@ -60,7 +62,14 @@
           labels: ['Media appartamenti', 'Questo appartamento'],
           datasets: [{
             label: 'Visualizzazioni',
-            data: []
+            data: [],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)'
+            ],
+            borderWidth: 1
           }]
         },
         chartOptions: {
@@ -98,3 +107,5 @@
     }
   }
   </script>
+
+

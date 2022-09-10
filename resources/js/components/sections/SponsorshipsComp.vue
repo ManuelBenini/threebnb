@@ -6,7 +6,7 @@
     </div>
 
     <div class="d-flex justify-content-center align-items-center container">
-      
+
         <div class="d-flex card text-center m-2 lite">
             <h1>Lite</h1><span class="d-block">2,99 &euro;</span>
             <div class="mt-4"><p>Ottieni un posizionamento di rilievo per</p></div>
@@ -20,7 +20,7 @@
             <h1>72h</h1>
             <a href="#scegli" @click="checkPlus" class="seleziona">Seleziona</a>
         </div>
-       
+
         <div class="d-flex card text-center m-2 gold">
             <h1>Gold</h1><span class="d-block sbarra">17,94 &euro;</span><span class="d-block">9,99 &euro;</span>
             <div class="mt-4"><p>Ottieni un posizionamento di rilievo per</p></div>
@@ -33,7 +33,7 @@
       <div>
         <h3>Seleziona il tipo di sponsorizzazione</h3>
       </div>
-      
+
       <div class="d-flex flex-row">
         <p>
         Lite <input type="radio" name="sponsor" value="lite" :checked="liteChecked" />
@@ -45,9 +45,9 @@
         Gold <input type="radio" name="sponsor" value="gold" :checked="goldChecked" />
       </p>
       </div>
-      
-    
-      
+
+
+
     </div>
 
   </div>
@@ -57,26 +57,31 @@
     export default {
         name: 'SponsorshipsComp',
         data(){
-          return {
-            liteChecked: false,
-            plusChecked: false,
-            goldChecked: false,
-          }
+            return {
+                liteChecked: false,
+                plusChecked: false,
+                goldChecked: false,
+            }
         },
+
         methods:{
-          checkLite(){
-            this.liteChecked = true
-          },
-          checkPlus(){
-            this.plusChecked = true
-          }, 
-          checkGold(){
-            this.goldChecked = true
-          }  
+            checkLite(){
+                this.liteChecked = true
+            },
+            checkPlus(){
+                this.plusChecked = true
+            },
+            checkGold(){
+                this.goldChecked = true
+            }
+        },
+
+        mounted(){
+            document.title = "Lello"
         }
 
     }
-    
+
 </script>
 
 <style lang="scss" scoped>

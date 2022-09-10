@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div class="container mt-3">
 
         <div v-if="apartment.userId == apartment.loggedUserId" class="back-to-profile">
             <a class="back-to-app" href="/admin/">
@@ -10,7 +10,7 @@
 
         <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
 
-        <div class="immagineapp">
+        <div class="app-image">
             <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
             <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
         </div>
@@ -51,7 +51,7 @@
                                 <span>{{apartment.rooms}}</span>
                             </li>
                             <li>
-                                <strong>MQ: </strong>
+                                <strong>M²: </strong>
                                 <span>{{apartment.sqm}}</span>
                             </li>
                         </ul>
@@ -73,14 +73,20 @@
                 </div>
 
                 <!--Colonna form-->
-               <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
-               />
-
-               <StatisticsComp :viewsArray="[allViews ,
-                apartmentViews]"
-               />
+                <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
+                />
 
             </div>
+
+            <div class="row">
+
+                <div class="col-12 my-4 d-flex justify-content-center">
+                    <StatisticsComp :viewsArray="[allViews ,
+                    apartmentViews]"
+                    />
+                </div>
+            </div>
+
         </div>
 
 
@@ -91,10 +97,11 @@
 import ContactsForm from '../elements/ContactsForm.vue';
 import {apiUrlDatabase} from '../../data/apiConfig';
 import StatisticsComp from '../elements/StatisticsComp.vue';
+import ChartComp from '../elements/ChartComp.vue';
 
     export default {
         name: "ApartmentDetails",
-        components: { ContactsForm, StatisticsComp },
+        components: { ContactsForm, StatisticsComp, ChartComp },
 
         data(){
             return{
@@ -213,6 +220,9 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
 
         mounted(){
             this.apiRequest();
+
+            // si potrebbe impostare il nome dell'appartamento in modo dinamico
+            document.title = "Dettagli Appartamento | ThreeBnB"
         }
 }
 </script>
@@ -247,13 +257,13 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
         border-radius: 10px;
     }
 
-    .immagineapp {
-        height: 50%;
-        width: 100%;
-        background-color: blue;
+    .app-image {
+        position: relative;
+        height: 100%;
+        width: 85%;
         border-radius: 30px;
         overflow: hidden;
-        position: relative;
+        margin: 20px auto;
     }
 
     img {
@@ -290,5 +300,26 @@ import StatisticsComp from '../elements/StatisticsComp.vue';
         margin-left: 25px;
     }
 
+    .col-12 {
+
+    }
+
+    @media screen and (max-width: 767px){
+        .sponsor-label {
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        .sponsor-label {
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (max-width: 430px){
+        .sponsor-label {
+            font-size: 10px;
+        }
+    }
 
 </style>

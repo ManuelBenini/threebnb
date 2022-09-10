@@ -91,6 +91,8 @@ export default {
     mounted(){
         this.checkExpiredSponsored();
         this.getSponsoredApartments(1)
+
+        document.title = "ThreeBnB | I migliori appartamenti, in tutto il mondo"
     }
 }
 

@@ -7,7 +7,7 @@
 
         <!-- SEARCH APP -->
         <div class="container-fluid">
-            <h1 class="text-center">Cerca il tuo BnB ideale</h1>
+            <h1 class="text-center">Cerca il tuo <span class="bnb">BnB</span> ideale</h1>
             <div class="row d-flex flex-column">
                 <div class="col">
                     <div class="d-flex justify-content-center mt-4 search-app">
@@ -210,10 +210,6 @@
             }
         },
 
-        mounted(){
-            this.getServices();
-        },
-
         components: { ButtonComp, CardSection }
     }
 </script>
@@ -243,6 +239,16 @@
     .col-6 {
         padding: 0px 10px;
     }
+
+    .bnb {
+        animation: color-change 4s infinite
+    }
+
+    @keyframes color-change {
+        0% { color: #FFFFFF; }
+        50% { color: $colore-primario; }
+        100% { color: #FFFFFF; }
+      }
 
     // /GENERAL PRESETS
 
@@ -331,6 +337,8 @@
     .destination, .rooms, .beds, .distance  {
         display: flex;
         flex-direction: column;
+        align-content: center;
+        flex-wrap: wrap;
     }
 
     form .input-city, form .input-numb, form .input-km {
@@ -343,7 +351,7 @@
     }
 
     form .input-numb {
-        width: 110px;
+        width: 95px;
         text-align: center;
 
     }
@@ -351,6 +359,7 @@
     form .input-km {
         width: 130px;
         text-align: center;
+        margin: 0px 10px;
     }
 
     // /SEARCH APP
@@ -475,6 +484,10 @@
         .container-recommended {
             width: 90%;
         }
+
+        form .input-km {
+            width: 70%;
+        }
     }
 
     @media screen and (max-width: 646px) {
@@ -531,10 +544,15 @@
         }
         .distance {
             width: 100%;
+
         }
 
         .pos-recommended {
-            top: 311px;
+            top: 302px;
+        }
+
+        form .input-km {
+            width: 80%;
         }
     }
 
@@ -561,7 +579,7 @@
         }
 
         .pos-recommended {
-            top: 402px;
+            top: 393px;
         }
 
         .container-recommended {
@@ -571,6 +589,8 @@
         .search-app form {
             flex-direction: column;
         }
+
+
     }
 
     // /MEDIA QUERY

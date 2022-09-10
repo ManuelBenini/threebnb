@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Modifica appartamento')
+@section('title', 'Modifica appartamento | ThreeBnB')
 
 @section('content')
 
