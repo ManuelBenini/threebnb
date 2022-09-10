@@ -130,7 +130,7 @@ a:hover {
     flex-wrap: wrap
 }
 
-// EDIT, VIEW, SPONSOR BUTTON
+// EDIT, VIEW, DELETE, SPONSOR BUTTON
 
 .btn {
     font-size: 18px;
@@ -143,12 +143,13 @@ a:hover {
     cursor: pointer;
 }
 
-.view-button, .edit-button {
-    width: 45%;
+.view-button, .edit-button, .delete-button {
+    width: 30%;
+    font-size: 15px;
 }
 
-.view-button:hover, .edit-button:hover {
-    width: 50%;
+.view-button:hover, .edit-button:hover, .delete-button:hover {
+    width: 45%;
     color: #000000;
 }
 
@@ -158,6 +159,10 @@ a:hover {
 
 .edit-button {
     background-color: #00719E;
+}
+
+.delete-button {
+    background-color: #DD0000;
 }
 
 .sponsor-button {
@@ -171,7 +176,7 @@ a:hover {
     background-color: #0EA500;
 }
 
-// EDIT, VIEW, SPONSOR BUTTON
+// EDIT, VIEW, DELETE, SPONSOR BUTTON
 
 /*
   Popup Search Bar

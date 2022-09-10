@@ -67,6 +67,8 @@
 
                                 <a class="btn edit-button" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
 
+                                <a class="btn delete-button" href="{{route('admin.apartments.destroy', $apartment)}}">Cancella</a>
+
                             </div>
 
 
