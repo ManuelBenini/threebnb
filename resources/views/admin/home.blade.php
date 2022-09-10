@@ -9,120 +9,91 @@
     <!-- Nuova sezione Dashboard -->
 
 
-    <div class="dashboard">
 
-        <div class="row d-flex justify-content-center">
 
-            <div class="profile col-3 py-3">
-                <div class="user-image my-3">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
-                </div>
+    <div class="row d-flex flex-wrap">
 
-                <ul>
-                    <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
-                    <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
-                    <li><p>N° Appartamenti: {{count($userApartments)}}</p></li>
-                    <li><p>Iscritto il: {{ Auth::user()->created_at }}</p></li>
-                    <li class="my-3 text-center">
-                        <a class="homebottom text-center" href="{{ route('admin.apartments.create') }}">
-                        Crea nuovo appartamento</a>
-                    </li>
-                </ul>
-
-                <div class="col-12 d-flex justify-content-center my-5">
-
-                </div>
+        <div class="profile col-8 col-md-7 col-lg-3 py-3">
+            <div class="user-image my-3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
             </div>
 
+            <ul>
+                <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
+                <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
+                <li><p>N° Appartamenti: {{count($userApartments)}}</p></li>
+                <li><p>Iscritto il: {{ Auth::user()->created_at }}</p></li>
+                <li class="my-3 new-app">
+                    <a href="{{ route('admin.apartments.create') }}">
+                    Crea nuovo appartamento</a>
+                </li>
+            </ul>
+
+        </div>
 
 
+        <div class="col-9 col-md-9">
 
-            <div class="col-9">
+                <h1 class="app-list">I tuoi appartamenti</h1>
 
-                    <h1 class="app-list">I tuoi appartamenti</h1>
+            @foreach ($userApartments as $apartment)
 
-                @foreach ($userApartments as $apartment)
+                <div class="app text-center py-2 mx-3" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
-                    <div class="col-6 app text-center py-2 my-4" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
+                    <h4>{{$apartment->title}}</h4>
 
-                        <h4>{{$apartment->title}}</h4>
+                    <div class="app-image col-12 {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
+                        <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
+                            <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
+                        </a>
+                        {{-- <span>Sponsorizzatp</span> --}}
+                    </div>
 
-                        <div class="app-image col-12 {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
-                            <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
-                                <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
-                            </a>
-                            <span>Sponsorizzatp</span>
-                        </div>
+                    <div class="buttons-apartment">
 
-                        <div class="buttons-apartment">
+                        <ul>
+                            <li>
+                                <button class="btn sponsor-button buttonSponsor">Sponsorizza</button>
+                            </li>
+                        </ul>
 
-                            <ul>
-                                <li>
-                                    <button class="btn sponsor-button buttonSponsor">Sponsorizza</button>
-                                </li>
-                            </ul>
+                        <div class="edit-view-buttons d-flex justify-content-around">
 
-                            <div class="edit-view-buttons d-flex justify-content-around">
+                            <a class="btn view-button" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
 
-                                <a class="btn view-button" href="/dettaglio-appartamento/{{$apartment->id}}" >Visualizza</a>
+                            <a class="btn edit-button" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
 
-                                <a class="btn edit-button" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
-
-                                <a class="btn delete-button" href="{{route('admin.apartments.destroy', $apartment)}}">Cancella</a>
-
-                            </div>
-
-
+                            <a class="btn delete-button" href="{{route('admin.apartments.destroy', $apartment)}}">Cancella</a>
 
                         </div>
 
-                    </div>
-                @endforeach
 
+
+                    </div>
+
+                </div>
+            @endforeach
+
+        </div>
+
+
+        {{-- Modal --}}
+        <div id="modal" class="custom-modal hidden">
+            <div id="backdrop" class="backdrop"></div>
+            <div class="search-modal">
+            <div class="text-center d-flex justify-content-center align-items-center border-bottom py-2 px-2">
+                <h3> Acquista il pacchetto che preferisci</h3>
             </div>
 
+                <h5 style="margin:20px 5px; text-align:center">Sponsorizza il tuo appartamento e ottieni visibilità per..</h5>
 
-            {{-- Modal --}}
-            <div id="modal" class="custom-modal hidden">
-                <div id="backdrop" class="backdrop"></div>
-              <div class="search-modal">
-                <div class="text-center d-flex justify-content-center align-items-center border-bottom py-2 px-2">
-                  <h3> Acquista il pacchetto che preferisci</h3>
-                </div>
-
-                    <h5 style="margin:20px 5px; text-align:center">Sponsorizza il tuo appartamento e ottieni visibilità per..</h5>
-
-                  <ul style="display:flex; margin-top:20px; margin-left:20px; justify-content:space-between; text-align:center">
+                <ul style="display:flex; margin-top:20px; margin-left:20px; justify-content:space-between; text-align:center">
 
 
-                    <div>
-                        <p>Lite: 2,99€ (24h)</p>
+                <div>
+                    <p>Lite: 2,99€ (24h)</p>
 
-                        <button
-                            style=" background-color:#0A7C00;
-                                    color:#FFF;
-                                    padding:8px 12px;
-                                    border:0;
-                                    border-radius:4px;
-                                    font-size:1em;
-                                    cursor:pointer"
-                            id="checkout-button-sku_Fhr95UGQgRdVuN"
-                            role="link"
-                            type="button"
-                            >
-                            Acquista
-                        </button>
-                    </div>
-
-
-                    <br><br><br>
-
-
-                    <div style="margin: 0 20px">
-
-                        <p>Premium: 5,99€ (72h)</p>
-
-                        <button
+                    <button
                         style=" background-color:#0A7C00;
                                 color:#FFF;
                                 padding:8px 12px;
@@ -130,42 +101,66 @@
                                 border-radius:4px;
                                 font-size:1em;
                                 cursor:pointer"
-                        id="checkout-button-sku_MNO1fABFzf9734"
+                        id="checkout-button-sku_Fhr95UGQgRdVuN"
                         role="link"
                         type="button"
                         >
                         Acquista
-                        </button>
-                    </div>
-
-                    <br><br><br>
-
-
-                    <div>
-                        <p>Gold: 9,99€ (144h)</p>
-
-                        <button
-                        style=" background-color:#0A7C00;
-                                color:#FFF; padding:8px 12px;
-                                border:0;
-                                border-radius:4px;
-                                font-size:1em;
-                                cursor:pointer"
-                        id="checkout-button-sku_MNO1FfDk1mocB0"
-                        role="link"
-                        type="button"
-                        >
-                        Acquista
-                        </button>
-                    </div>
-
-                  </ul>
+                    </button>
                 </div>
-            </div>
 
+
+                <br><br><br>
+
+
+                <div style="margin: 0 20px">
+
+                    <p>Premium: 5,99€ (72h)</p>
+
+                    <button
+                    style=" background-color:#0A7C00;
+                            color:#FFF;
+                            padding:8px 12px;
+                            border:0;
+                            border-radius:4px;
+                            font-size:1em;
+                            cursor:pointer"
+                    id="checkout-button-sku_MNO1fABFzf9734"
+                    role="link"
+                    type="button"
+                    >
+                    Acquista
+                    </button>
+                </div>
+
+                <br><br><br>
+
+
+                <div>
+                    <p>Gold: 9,99€ (144h)</p>
+
+                    <button
+                    style=" background-color:#0A7C00;
+                            color:#FFF; padding:8px 12px;
+                            border:0;
+                            border-radius:4px;
+                            font-size:1em;
+                            cursor:pointer"
+                    id="checkout-button-sku_MNO1FfDk1mocB0"
+                    role="link"
+                    type="button"
+                    >
+                    Acquista
+                    </button>
+                </div>
+
+                </ul>
+            </div>
         </div>
 
     </div>
+
+
 
 
 
