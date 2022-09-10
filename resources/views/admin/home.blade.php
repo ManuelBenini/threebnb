@@ -9,48 +9,49 @@
     <!-- Nuova sezione Dashboard -->
 
 
-    <div class="dashboard container-fluid">
+    <div class="dashboard">
 
-        <div class="row d-flex justify-content-center mb-5">
-            <div class="user col-lg-3 col-md-6 col-sm-12">
-                <div class="col mt-3 profile">
-                    <div class="user-image">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
-                    </div>
-                    <ul>
-                        <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
-                        <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
-                        <li><p>N° Appartamenti: {{count($userApartments)}}</p></li>
-                        <li><p>Iscritto il: {{ Auth::user()->created_at }}</p></li>
-                        <li class="my-3">
-                            <a class="homebottom text-center" href="{{ route('admin.apartments.create') }}">
-                            Crea nuovo appartamento</a>
-                        </li>
-                    </ul>
+        <div class="row d-flex justify-content-center">
 
-                    <div class="col-12 d-flex justify-content-center my-5">
-
-                    </div>
+            <div class="profile col-3 py-3">
+                <div class="user-image my-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
                 </div>
 
+                <ul>
+                    <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
+                    <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
+                    <li><p>N° Appartamenti: {{count($userApartments)}}</p></li>
+                    <li><p>Iscritto il: {{ Auth::user()->created_at }}</p></li>
+                    <li class="my-3 text-center">
+                        <a class="homebottom text-center" href="{{ route('admin.apartments.create') }}">
+                        Crea nuovo appartamento</a>
+                    </li>
+                </ul>
+
+                <div class="col-12 d-flex justify-content-center my-5">
+
+                </div>
             </div>
 
 
 
-            <div class="col-9 ">
-                <div class="divtitolo">
-                    <h1 class="titolo">I tuoi appartamenti</h1>
-                </div>
+
+            <div class="col-9">
+
+                    <h1 class="app-list">I tuoi appartamenti</h1>
+
                 @foreach ($userApartments as $apartment)
 
-                    <div class="col-lg-6 col app text-center py-2" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
+                    <div class="col-6 app text-center py-2 my-4" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
 
                         <h4>{{$apartment->title}}</h4>
 
-                        <div class="app-image col {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
+                        <div class="app-image col-12 {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
                             <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
                                 <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
                             </a>
+                            <span>Sponsorizzatp</span>
                         </div>
 
                         <div class="buttons-apartment">
