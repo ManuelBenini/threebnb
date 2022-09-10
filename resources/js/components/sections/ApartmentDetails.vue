@@ -51,7 +51,7 @@
                                 <span>{{apartment.rooms}}</span>
                             </li>
                             <li>
-                                <strong>MQ: </strong>
+                                <strong>M²: </strong>
                                 <span>{{apartment.sqm}}</span>
                             </li>
                         </ul>
