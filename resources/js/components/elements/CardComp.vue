@@ -9,12 +9,12 @@
 
                 <div class="p-2">
                     <div class="post-data">
-                        <h2>{{ apartment.title }}</h2>
+                        <h2>Nome: {{ apartment.title }}</h2>
                     </div>
 
-                    <!-- <div class="post-data">
-                        <p>{{ apartment.address }}</p>
-                    </div> -->
+                    <div class="post-data" v-if="!homepage">
+                        <p>Distanza: {{parseFloat(apartment.distance).toFixed(2)}}Km</p>
+                    </div>
 
                     <div class="post-data">
                         <p><span>Stanze: </span>{{ apartment.rooms }}</p>
@@ -34,19 +34,6 @@
                 </div>
             </div>
 
-
-
-
-
-
-            <!-- <div class="post-data" v-if="sponsored">
-                <p>Distanza: {{sponsordistance}}Km</p>
-            </div>
-
-            <div class="post-data" v-else>
-                <p>Distanza: {{appdistance}}Km</p>
-            </div> -->
-
         </div>
     </router-link>
 
@@ -65,8 +52,17 @@
             sponsored:{
                 type: Boolean,
                 required: true
+            },
+            homepage:{
+                type: Boolean,
+                required: true
             }
         },
+
+        mounted(){
+            console.log(this.apartment, 'DISTANZA');
+
+        }
     }
 </script>
 
