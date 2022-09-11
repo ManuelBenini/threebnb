@@ -239,4 +239,352 @@ return $apartments = [
             'PaoloMaldini@gmail.com',
         ]
     ],
+    [
+        "user_id" => 3,
+        "id" =>9,
+		"title" => "Appartamento a Udine",
+		"rooms" => 4,
+		"beds" => 2,
+		"bathrooms" => 3,
+		"sqm" => 80,
+		"address" => "Viale Trieste 23 Udine",
+		"latitude" => 46.0675,
+		"longitude" => 13.24455,
+		"image" => '/images/Udine.jpg',
+		"image_original_name" => 'Udine.jpg',
+		"visible" => true,
+        "services" => [5,7,8],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'SalePepe@gmail.com',
+            'MozzaRella@gmail.com',
+            'CacioPepe@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 3,
+        "id" =>10,
+		"title" => "Appartamento a Marano",
+		"rooms" => 6,
+		"beds" => 4,
+		"bathrooms" => 2,
+		"sqm" => 160,
+		"address" => "Via Adda 63 Marano di Napoli",
+		"latitude" => 40.90289,
+		"longitude" => 14.17808,
+		"image" => '/images/Maranp.jpg',
+		"image_original_name" => 'Marano.jpg',
+		"visible" => true,
+        "services" => [1,9],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'PaoloBitta@gmail.com',
+            'AldoBrando@gmail.com',
+            'PaoloBonolis@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 3,
+        "id" =>11,
+		"title" => "Appartamento a Senigallia",
+		"rooms" => 6,
+		"beds" => 5,
+		"bathrooms" => 3,
+		"sqm" => 90,
+		"address" => "Via Marche 32 Senigallia",
+		"latitude" => 43.70733,
+		"longitude" => 13.21841,
+		"image" => '/images/Senigallia.jpg',
+		"image_original_name" => 'Senigallia.jpg',
+		"visible" => true,
+        "services" => [3,4,7],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'JavierZanetti@gmail.com',
+            'ChristianDeSica@gmail.com',
+            'MariaDeFilippi@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 3,
+        "id" =>12,
+		"title" => "Via Roma 45 Pavia",
+		"rooms" => 7,
+		"beds" => 3,
+		"bathrooms" => 3,
+		"sqm" => 95,
+		"address" => "Piazza Europa, 95129 Catania CT",
+		"latitude" => 45.02653,
+		"longitude" => 9.27227,
+		"image" => '/images/Pavia.jpg',
+		"image_original_name" => 'Pavia.jpg',
+		"visible" => true,
+        "services" => [6,7,8],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'MarioRossi@gmail.com',
+            'GiulioGiulia@gmail.com',
+            'FedericoSecondo@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 4,
+        "id" =>13,
+		"title" => "Appartamento vicino al porto",
+		"rooms" => 2,
+		"beds" => 1,
+		"bathrooms" => 1,
+		"sqm" => 40,
+		"address" => "Via Trieste 30 Pescara",
+		"latitude" => 42.38762,
+		"longitude" => 14.09574,
+		"image" => '/images/Pescara.jpg',
+		"image_original_name" => 'Pescara.jpg',
+		"visible" => true,
+        "services" => [3,5,6],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'MauroCostanzo@gmail.com',
+            'SaraSalli@gmail.com',
+            'CarloCarli@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 4,
+        "id" =>14,
+		"title" => "Appartamento vicino al porto",
+		"rooms" => 5,
+		"beds" => 3,
+		"bathrooms" => 10,
+		"sqm" => 130,
+		"address" => "Via Milano 20 Grosseto",
+		"latitude" => 42.96887,
+		"longitude" => 11.03455,
+		"image" => '/images/Grosseto.jpg',
+		"image_original_name" => 'Grosseto.jpg',
+		"visible" => true,
+        "services" => [3,8],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'VeronicaPrimo@gmail.com',
+            'AliceMeraviglia@gmail.com',
+            'AntonioCassano@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 4,
+        "id" =>15,
+		"title" => "Appartamento al centro di Napoli",
+		"rooms" => 8,
+		"beds" => 4,
+		"bathrooms" => 4,
+		"sqm" => 80,
+		"address" => "Via Nazionale, 93, 80143 Napoli NA",
+		"latitude" => 40.85617,
+		"longitude" => 14.27406,
+		"image" => '/images/Napoli.jpg',
+		"image_original_name" => 'Napoli.jpg',
+		"visible" => true,
+        "services" => [1,8,9,10],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'piripillo@gmail.com',
+            'sempreulisse@gmail.com',
+            'ulisse@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 4,
+        "id" =>16,
+		"title" => "Appartamento Vittorio Emanuele",
+		"rooms" => 26,
+		"beds" => 5,
+		"bathrooms" => 5,
+		"sqm" => 300,
+		"address" => "Via Tiburtina, 135, 00185 Roma RM",
+		"latitude" => 41.89902,
+		"longitude" => 12.51532,
+		"image" => '/images/Roma.jpg',
+		"image_original_name" => 'Roma.jpg',
+		"visible" => true,
+        "services" => [4,5,6,7,10],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, quali sono le attrazioni turistiche da visitare qui vicino?',
+            'È possibile sapere se la colazione è inclusa?',
+            'Ho visto questo annuncio un mese fa ed adesso ho deciso di prenotare! Quanto costa?'
+        ],
+        "messages-email" =>
+        [
+            'stereo@gmail.com',
+            'danceFloor@gmail.com',
+            'TakemeToTheRavelon@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 5,
+        "id" =>17,
+		"title" => "Appartamento San Marino",
+		"rooms" => 5,
+		"beds" => 2,
+		"bathrooms" => 1,
+		"sqm" => 60,
+		"address" => "Via Cinque Febbraio, 47899, San Marino",
+		"latitude" => 43.96165,
+		"longitude" => 12.47108,
+		"image" => '/images/SanMarino.jpg',
+		"image_original_name" => 'SanMarino.jpg',
+		"visible" => true,
+        "services" => [3,4,8,9],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'pallina@gmail.com',
+            'pallapalla@gmail.com',
+            'ornitorinco@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 5,
+        "id" =>18,
+		"title" => "Appartamento Tra le acque",
+		"rooms" => 7,
+		"beds" => 3,
+		"bathrooms" => 8,
+		"sqm" => 80,
+		"address" => "30100 Venezia VE",
+		"latitude" => 45.4477,
+		"longitude" => 12.34502,
+		"image" => '/images/Venezia.jpg',
+		"image_original_name" => 'Venezia.jpg',
+		"visible" => true,
+        "services" => [1,4,5,6,7,10],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Il Wifi è gratis?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'porpo@gmail.com',
+            'elohim@gmail.com',
+            'carciofo@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 5,
+        "id" =>19,
+		"title" => "Appartamento Padova",
+		"rooms" => 15,
+		"beds" => 7,
+		"bathrooms" => 1,
+		"sqm" => 100,
+		"address" => "Via Guglielmo Oberdan, 6, 35122 Padova PD",
+		"latitude" => 37.51639,
+		"longitude" => 15.10534,
+		"image" => '/images/Padova.jpg',
+		"image_original_name" => 'Padova.jpg',
+		"visible" => true,
+        "services" => [6,7,8,9,10],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'eracapito@gmail.com',
+            'ercapito@gmail.com',
+            'haicapito@gmail.com',
+        ]
+    ],
+    [
+        "user_id" => 5,
+        "id" =>20,
+		"title" => "Appartamento vicino al porto",
+		"rooms" => 5,
+		"beds" => 2,
+		"bathrooms" => 1,
+		"sqm" => 60,
+		"address" => "Via Tullio Buelli, 26, 24035 Curno BG",
+		"latitude" => 45.69233,
+		"longitude" => 9.6072,
+		"image" => '/images/Bergamo.jpg',
+		"image_original_name" => 'Bergamo.jpg',
+		"visible" => true,
+        "services" => [1,4,5,6],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'urcaurca@gmail.com',
+            'queryfattamale@gmail.com',
+            'sonoilmasterbackend@gmail.com',
+        ]
+    ],
 ];

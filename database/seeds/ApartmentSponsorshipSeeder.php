@@ -17,24 +17,27 @@ class ApartmentSponsorshipSeeder extends Seeder
 
         $apartments = config('apartments');
 
-        foreach ($apartments as $defaultApartment) {
+        for ($i=0; $i < count($apartments); $i++) { 
 
-            $apartment = Apartment::find($defaultApartment['id']);
+            $apartment = Apartment::find($apartments[$i]['id']);
+            
+            if($apartments[$i]['sponsorships'] != 0){
+                
+                $apartment->sponsorships()->attach($apartments[$i]['sponsorships']);
 
-            $apartment->sponsorships()->attach($defaultApartment['sponsorships']);
+                if($apartments[$i]['sponsorships'] == 1){
+                    $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(1);
+                }
+                else if($apartments[$i]['sponsorships'] == 2){
+                    $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(3);
+                }
+                else{
+                    $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(6);
+                }
+    
+                $apartment->push();
 
-            if($defaultApartment['sponsorships'] == 1){
-                $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(1);
             }
-            else if($defaultApartment['sponsorships'] == 2){
-                $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(3);
-            }
-            else{
-                $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(6);
-            }
-
-            $apartment->push();
-
         }
     }
 }
