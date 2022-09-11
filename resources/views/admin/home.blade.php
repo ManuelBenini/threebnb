@@ -62,7 +62,15 @@
 
                             <a class="btn edit-button" href="{{route('admin.apartments.edit', $apartment)}}">Modifica</a>
 
-                            <a class="btn delete-button" href="{{route('admin.apartments.destroy', $apartment)}}">Cancella</a>
+                            <form class="d-inline"
+                        action="{{route('admin.apartments.destroy', $apartment)}}"
+                        method="POST"
+                        onsubmit="return confirm('sei sicuro di voler eliminare l\'appartamento?')">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger">Cancella</button>
+                        </form>
 
                         </div>
 
