@@ -53,7 +53,14 @@ class ApartmentController extends Controller
         $data['longitude'] = $coordinates['longitude'];
 
         $data['image_original_name'] = $request->file('image')->getClientOriginalName();
-        $data['image'] = Storage::put('uploads',$data['image']);
+
+        $destinationPath = public_path().'/images' ;
+
+        $data['image']->move($destinationPath, $data['image_original_name']);
+
+        $data['image'] = '/images/'. $data['image_original_name'];
+
+        // $data['image'] = Storage::put('uploads',$data['image']);
 
         $new_apartment = new Apartment();
 
@@ -118,7 +125,13 @@ class ApartmentController extends Controller
             Storage::delete($apartment->image);
             }
             $data['image_original_name'] = $request->file('image')->getClientOriginalName();
-            $data['image'] = Storage::put('uploads',$data['image']);
+
+            $destinationPath = public_path().'/images' ;
+
+            $data['image']->move($destinationPath, $data['image_original_name']);
+
+            $data['image'] = '/images/'. $data['image_original_name'];
+            // $data['image'] = Storage::put('uploads',$data['image']);
         };
 
         $apartment->fill($data);
@@ -142,7 +155,7 @@ class ApartmentController extends Controller
     {
         $apartment->messages()->delete();
         $apartment->delete();
-        return redirect()->route('admin.apartments.index')->with('delete_success', "L'appartamento $apartment->title è stato eliminato con successo!");
+        return redirect()->route('admin.index');
     }
 
     public function sponsoredPush($sponsorId, $apartmentId){
@@ -150,10 +163,6 @@ class ApartmentController extends Controller
         $apartment = Apartment::find($apartmentId);
 
         $apartment->sponsorships()->sync($sponsorId);
-
-        // $apartment = Apartment::with('sponsorships')->find($apartmentId);
-
-        // dump($apartment->sponsorships[0]->created_at->format('Y/m/d H:i:s'));
 
         if($sponsorId == 1){
             $apartment->sponsorships[0]->expired_at = Carbon::now()->addDays(1);
@@ -166,8 +175,6 @@ class ApartmentController extends Controller
         }
 
         $apartment->push();
-
-        // dd($apartment->sponsorships[0]->expired_at->format('Y/m/d H:i:s'));
 
         return Redirect::to('http://127.0.0.1:8000/dettaglio-appartamento/' . $apartment->id);
 
