@@ -119,7 +119,7 @@
 
 <script>
 import ContactsForm from '../elements/ContactsForm.vue';
-import {apiUrlDatabase} from '../../data/apiConfig';
+import {apiUrlDatabase, apiUrlTomTom} from '../../data/apiConfig';
 import StatisticsComp from '../elements/StatisticsComp.vue';
 import ChartComp from '../elements/ChartComp.vue';
 
@@ -130,6 +130,8 @@ import ChartComp from '../elements/ChartComp.vue';
         data(){
             return{
                 apiUrlDatabase,
+                apiUrlTomTom,
+                tomtomKey: 'laZ0bbuHjk1Qf0HdMzIuCx3fPRECKycn',
                 apartment: {
                     id: undefined,
                     title: '',
@@ -144,8 +146,11 @@ import ChartComp from '../elements/ChartComp.vue';
                     userId: '',
                     services: [],
                     sponsorships: [],
-                    lat: '',
-                    lon: '',
+                    position:{
+                        lat: '',
+                        lon: '',
+                        apartmentID: undefined
+                    },
                     messages: []
                 },
                 isMessageClicked: false,
@@ -210,6 +215,8 @@ import ChartComp from '../elements/ChartComp.vue';
 
                         this.getMessages();
 
+                        this.addressSearchApi();
+
                     })
             },
 
@@ -251,6 +258,30 @@ import ChartComp from '../elements/ChartComp.vue';
                 .then((sendedData) => {
                     console.log(this.ip);
                     console.log(sendedData, 'CHIAMATA POST VISUALIZZAZIONE');
+                });
+            },
+
+            addressSearchApi(){
+                axios.get(this.apiUrlTomTom + this.apartment.address + '.json?limit=5&minFuzzyLevel=1&maxFuzzyLevel=2&view=Unified&relatedPois=off&key=' + this.tomtomKey)
+                    .then(res => {
+                        this.apartment.position.lat = res.data.results[0].position.lat;
+                        this.apartment.position.lon = res.data.results[0].position.lon;
+
+                        console.log(this.apartment.position.lat, 'latitudine tomtom');
+                        console.log(this.apartment.position.lon, 'longitudine tomtom');
+
+                        this.apartment.position.apartmentID = this.apartment.id;
+
+                        console.log('ID APPAPAPAPAPA', this.apartment.position.apartmentID);
+
+                        this.sendApartmentPosition();
+                    })
+            },
+
+            sendApartmentPosition(){
+                axios.post(this.apiUrlDatabase + 'send-position', this.apartment.position)
+                .then((sendedData) => {
+                    console.log(sendedData, 'CHIAMATA POST POSIZIONE');
                 });
             },
         },

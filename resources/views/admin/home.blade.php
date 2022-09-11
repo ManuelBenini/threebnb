@@ -35,6 +35,7 @@
 
         <div class="col-9 col-md-9">
 
+            <h1 class="app-list">I tuoi appartamenti</h1>
 
             @foreach ($userApartments as $apartment)
 
@@ -190,7 +191,10 @@
             element.addEventListener('click', function () {
                 modal.classList.remove("hidden")
 
-                appartmentId = element.offsetParent.children[1].children[0].getAttribute('href').slice(24);
+                // appartmentId = element.offsetParent.children[1].children[0].getAttribute('href').slice(24);
+
+                // appartmentId = element.offsetParent.children[1].children[2].children[1].children[0].getAttribute('href').slice(24);
+                appartmentId = element.parentElement.parentElement.parentElement.children[1].children[0].getAttribute('href').slice(24);
 
                 console.log('id appartamento: ', appartmentId);
             });

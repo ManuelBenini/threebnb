@@ -122,6 +122,19 @@ class PageController extends Controller
         return response()->json($formData);
     }
 
+    public function sendPosition(Request $request){
+        $positionData = $request;
+
+        $apartment = Apartment::find($request->apartmentID);
+
+        $apartment->latitude = $positionData->lat;
+        $apartment->longitude = $positionData->lon;
+
+        $apartment->push();
+
+        return response()->json($apartment);
+    }
+
     public function getMessages($apartmentId){
         $messages = Message::where('apartment_id', $apartmentId)->get();
 

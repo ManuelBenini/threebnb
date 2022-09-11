@@ -41,4 +41,6 @@ Route::namespace('Api')
     Route::post('/send-message', 'PageController@sendMessage');
 
     Route::post('/add-view', 'PageController@addView');
+
+    Route::post('/send-position', 'PageController@sendPosition');
 });
