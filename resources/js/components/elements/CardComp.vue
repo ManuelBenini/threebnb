@@ -4,12 +4,12 @@
         <div class="cdd-card">
             <div class="cdd-container">
                 <div class="bg-image">
-                    <img :src="apartment.image" alt="">
+                    <img :src="`${apartment.image}`" alt="">
                 </div>
 
                 <div class="p-2">
                     <div class="post-data">
-                        <h2>Nome: {{ apartment.title }}</h2>
+                        <h2>{{ apartment.title }}</h2>
                     </div>
 
                     <div class="post-data" v-if="!homepage">
@@ -42,6 +42,12 @@
 <script>
     export default {
         name: 'CardComp',
+
+        data(){
+            return{
+                publicPath: process.env.BASE_URL
+            }
+        },
 
         props:{
             apartment:{
