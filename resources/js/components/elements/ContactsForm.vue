@@ -75,15 +75,14 @@ export default {
 
             axios.post(this.apiUrlDatabase + 'send-message', this.form)
                  .then((res) => {
-                    //  console.log(res);
+                    console.log(res, 'MESSAGGIO INVIATO CON SUCCESSO');
+
+                    this.form.email = '';
+                    this.form.text = '';
+                    this.form.policy = '';
                  });
 
-            this.form = {
-                email: '',
-                text: '',
-                policy: 0,
-                appId: 0
-            }
+
         }
   },
 
