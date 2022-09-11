@@ -79,7 +79,7 @@ class PageController extends Controller
     public function sponsoredApartments(){
         $apartments = Apartment::with('sponsorships')
             ->has('sponsorships')
-            ->paginate(4);
+            ->paginate(5);
 
         return response()->json($apartments);
     }
