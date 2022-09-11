@@ -38,7 +38,7 @@ ul {
 }
 
 .border-sponsorship {
-    border: 4px solid #E6D223;
+    border: 4px solid #E7624A;
     padding: 0px;
 }
 
@@ -124,6 +124,19 @@ ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.sponsor-label {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-weight: bold;
+    font-size: 13px;
+    color: #E7624A;
+    background-color: #FFFFFF;
+    padding: 3px 5px;
+    border-radius: 10px;
+    z-index: 999;
 }
 
 // EDIT, VIEW, DELETE, SPONSOR BUTTON
