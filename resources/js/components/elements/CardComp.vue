@@ -1,18 +1,43 @@
 <template>
     <router-link
         :to="{name: 'apartment', params:{id: apartment.id}}">
-        <div class="card">
-            <div class="bg-image">
-                <img :src="apartment.image" alt="">
+        <div class="cdd-card">
+            <div class="cdd-container">
+                <div class="bg-image">
+                    <img :src="apartment.image" alt="">
+                </div>
+
+                <div class="p-2">
+                    <div class="post-data">
+                        <h2>{{ apartment.title }}</h2>
+                    </div>
+
+                    <!-- <div class="post-data">
+                        <p>{{ apartment.address }}</p>
+                    </div> -->
+
+                    <div class="post-data">
+                        <p><span>Stanze: </span>{{ apartment.rooms }}</p>
+                    </div>
+
+                    <div class="post-data">
+                        <p><span>Letti: </span>{{ apartment.beds }}</p>
+                    </div>
+
+                    <div >
+                        Servizi:
+                        <span v-for="(service, index) in apartment.services" :key="index" class="post-data">
+                            <span v-if="index == 0" > {{service.name}} </span>
+                            <span v-else >, {{service.name}}</span>
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="post-data">
-                <h2>{{ apartment.title }}</h2>
-            </div>
 
-            <div>
-                <p>{{ services }}</p>
-            </div>
+
+
+
 
             <!-- <div class="post-data" v-if="sponsored">
                 <p>Distanza: {{sponsordistance}}Km</p>
@@ -47,15 +72,19 @@
 
 <style lang="scss" scoped>
 
-    .card {
+    .cdd-card {
         display: flex;
         flex-direction: column;
         width: 280px;
-        height: 250px;
+        height: 380px;
         margin: 10px;
         border-radius: 10px;
         box-shadow: 1px 1px 12px -5px #5b5a5a;
         cursor: pointer;
+
+        // .cdd-container{
+        //     height: 100px;
+        // }
 
         .bg-image {
             height: 150px;
@@ -69,7 +98,7 @@
         }
 
         .post-data {
-            padding: 20px;
+            // padding: 20px;
 
             h2 {
                 margin-bottom: 10px;
