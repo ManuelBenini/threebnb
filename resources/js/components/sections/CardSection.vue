@@ -14,6 +14,7 @@
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="true"
+                :homepage="true"
                 />
 
             </div>
@@ -29,6 +30,7 @@
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="true"
+                :homepage="false"
                 />
 
                 <div class="message">
@@ -50,6 +52,7 @@
                 :key="`apartment${index}`"
                 :apartment="apartment"
                 :sponsored="false"
+                :homepage="false"
                 />
 
                 <div class="message">

@@ -7,6 +7,7 @@ use App\Message;
 use App\View;
 use Illuminate\Http\Request;
 use DateTime;
+use stdClass;
 
 class PageController extends Controller
 {
@@ -39,13 +40,13 @@ class PageController extends Controller
         if($sponsored){
             $apartments = Apartment::with(['services', 'sponsorships'])
             ->has('sponsorships')
-            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]]);
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
         }
 
         // Se il parametro "sponsored" è falso (0), stampo tutti gli appartamenti
         else{
             $apartments = Apartment::with(['services', 'sponsorships'])
-            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]]);
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]])->get();
         }
 
         // Se il parametro "servicesList" è uguale a 0, non filtro gli appartamenti per servizi
@@ -61,13 +62,39 @@ class PageController extends Controller
 
         // Dichiaro un array che verrà riempito dagli appartamenti che rispettano la condizione "distanza"
         $nearbyApartments = [];
-        foreach ($apartments->get() as $apartment) {
+        $apartmentDistances = [];
+
+        foreach ($apartments as $apartment) {
 
             $distanceBetween = $this->getDistance($apartment->latitude, $apartment->longitude, $lat2, $lon2);
             if ($distanceBetween <= $distance) {
-                $nearbyApartments[] = $apartment;
+
+                $distances = new stdClass();
+                $distances->distance = $distanceBetween;
+                $distances->id = $apartment->id;
+
+                $apartmentDistances[] = $distances;
             }
         }
+
+        usort($apartmentDistances, function($a, $b) {return $a->distance - $b->distance;});
+
+        foreach ($apartmentDistances as $value) {
+            if(!empty($apartments[$value->id - 1])){
+
+                // $apartmentDistance = new stdClass();
+                // $apartmentDistance->apartment = $apartments[$value->id - 1];
+                // $apartmentDistance->distance = $value->distance;
+
+
+                $apartments[$value->id - 1]["distance"] = $value->distance;
+
+                // $nearbyApartments[] = $apartments[$value->id - 1];
+                $nearbyApartments[] = $apartments[$value->id - 1];
+
+            }
+        }
+
 
         // Per inserire l'impaginazione, richiamare il metodo paginate(array) presente in questo file
         // $data = $this->paginate($nearbyApartments);
