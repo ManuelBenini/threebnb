@@ -13,12 +13,15 @@ class ApartmentServiceSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 50; $i++) { 
-            $apartment = Apartment::inRandomOrder()->first();
-            $service = Service::inRandomOrder()->first()->id;
 
-            if(!$apartment->services->contains($service)){
-                $apartment->services()->attach($service);
+        $apartments = config('apartments');
+
+        foreach ($apartments as $defaultApartment) {
+
+            $apartment = Apartment::find($defaultApartment['id']);
+
+            for ($i=0; $i < count($defaultApartment['services']); $i++) {
+                $apartment->services()->attach($defaultApartment['services'][$i]);
             }
         }
     }
