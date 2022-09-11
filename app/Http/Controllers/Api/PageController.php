@@ -118,6 +118,8 @@ class PageController extends Controller
         $new_message->text = $formData->text;
         $new_message->email = $formData->email;
         $new_message->save();
+
+        return response()->json($formData);
     }
 
     public function getMessages($apartmentId){

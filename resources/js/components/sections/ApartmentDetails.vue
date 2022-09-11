@@ -1,93 +1,113 @@
 <template>
-    <div class="container mt-3">
 
-        <div v-if="apartment.userId == apartment.loggedUserId" class="back-to-profile">
+    <div>
+        <div v-if="apartment.userId == apartment.loggedUserId" class="back-to-profile d-flex justify-content-between position-relative">
             <a class="back-to-app" href="/admin/">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span>Torna al profilo</span>
             </a>
+
+            <div class="back-to-app" role="button">
+                <i class="fa-solid fa-message"></i>
+                <span @click="isMessageClicked = true">Messaggi</span>
+
+            </div>
+
+            <div class="position-absolute dropdown-msg px-3 pt-1" v-if="isMessageClicked" @mouseleave="isMessageClicked = false">
+
+                <div v-for="(message,index) in apartment.messages.reverse()" :key="`message${index}`">
+                    <q>{{message.text}}</q>
+                    <h6 class="text-right pt-2">{{message.email}}</h6>
+                    <hr>
+                </div>
+
+            </div>
+
         </div>
 
-        <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
+        <div class="container mt-3">
 
-        <div class="app-image">
-            <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
-            <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
-        </div>
+            <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
 
-        <div>
-            <div class="row mt-5 mb-5">
-                <!--Colonna host e proprietà-->
-                <div id="szdettagli" class="col-md-6 p-3">
+            <div class="app-image">
+                <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
+                <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
+            </div>
 
-                    <div class="row ">
-                        <!-- <div class="col-md-2">
-                            <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Mario Rossi">
-                        </div> -->
+            <div>
+                <div class="row mt-5 mb-5">
+                    <!--Colonna host e proprietà-->
+                    <div id="szdettagli" class="col-md-6 p-3">
 
-                        <div class="col-md-9 d-flex align-self-center">
-                            <h3>Host: {{apartment.user}}</h3>
+                        <div class="row ">
+                            <!-- <div class="col-md-2">
+                                <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Mario Rossi">
+                            </div> -->
+
+                            <div class="col-md-9 d-flex align-self-center">
+                                <h3>Host: {{apartment.user}}</h3>
+                            </div>
                         </div>
+
+                        <div class="apartment-details">
+
+                            <h4 class="my-4">Dettaglio Appartamento </h4>
+                            <ul>
+                                <li>
+                                    <strong>Indirizzo: </strong>
+                                    <span>{{apartment.address}}</span>
+                                </li>
+                                <li>
+                                    <strong>Bagni: </strong>
+                                    <span>{{apartment.bathrooms}}</span>
+                                </li>
+                                <li>
+                                    <strong>Letti: </strong>
+                                    <span>{{apartment.beds}}</span>
+                                </li>
+                                <li>
+                                    <strong>Stanze: </strong>
+                                    <span>{{apartment.rooms}}</span>
+                                </li>
+                                <li>
+                                    <strong>M²: </strong>
+                                    <span>{{apartment.sqm}}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                        <div id="service" class="pt-2">
+                            <br><h4>Servizi offerti </h4>
+                            <ul>
+                                <li
+                                v-for="(service, index) in this.apartment.services"
+                                :key="index">
+                                    {{service.name}}
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
 
-                    <div class="apartment-details">
-
-                        <h4 class="my-4">Dettaglio Appartamento </h4>
-                        <ul>
-                            <li>
-                                <strong>Indirizzo: </strong>
-                                <span>{{apartment.address}}</span>
-                            </li>
-                            <li>
-                                <strong>Bagni: </strong>
-                                <span>{{apartment.bathrooms}}</span>
-                            </li>
-                            <li>
-                                <strong>Letti: </strong>
-                                <span>{{apartment.beds}}</span>
-                            </li>
-                            <li>
-                                <strong>Stanze: </strong>
-                                <span>{{apartment.rooms}}</span>
-                            </li>
-                            <li>
-                                <strong>M²: </strong>
-                                <span>{{apartment.sqm}}</span>
-                            </li>
-                        </ul>
-                    </div>
-
-
-
-                    <div id="service" class="pt-2">
-                        <br><h4>Servizi offerti </h4>
-                        <ul>
-                            <li
-                            v-for="(service, index) in this.apartment.services"
-                            :key="index">
-                                {{service.name}}
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <!--Colonna form-->
-                <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
-                />
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-12 my-4 d-flex justify-content-center">
-                    <StatisticsComp :viewsArray="[allViews ,
-                    apartmentViews]"
+                    <!--Colonna form-->
+                    <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
                     />
-                </div>
-            </div>
 
-        </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-12 my-4 d-flex justify-content-center">
+                        <StatisticsComp :viewsArray="[allViews , apartmentViews]"
+                        />
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
 
 
     </div>
@@ -121,8 +141,10 @@ import ChartComp from '../elements/ChartComp.vue';
                     services: [],
                     sponsorships: [],
                     lat: '',
-                    lon: ''
+                    lon: '',
+                    messages: []
                 },
+                isMessageClicked: false,
                 ip: {
                     clientIp: '',
                     apartmentId: 0,
@@ -137,9 +159,8 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.get(this.apiUrlDatabase + 'apartment-details/' + this.$route.params.id)
                     .then(res => {
                         this.apartment.id = res.data.id;
-                        this.ip.apartmentId = res.data.id;
 
-                        // console.log(this.apartment.id, 'id appartamento');
+                        this.ip.apartmentId = res.data.id;
 
                         this.apartment.title = res.data.title;
 
@@ -165,21 +186,25 @@ import ChartComp from '../elements/ChartComp.vue';
 
                         this.apartment.loggedUserId = window.Id;
 
-                        // console.log(this.apartment.userId, 'Id Proprietario Appartamento');
-
-                        // console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
-
                         this.apartment.lat = res.data.latitude;
 
                         this.apartment.lon = res.data.longitude;
 
-                        // console.log('appartamento: ', res.data);
+                        // console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
 
-                        this.getApartmentViews();
+                        // console.log(this.apartment.userId, 'Id Proprietario Appartamento');
+
+                        // console.log(this.apartment.id, 'id appartamento');
+
+                        // console.log('appartamento: ', res.data);
 
                         this.getClientIp();
 
+                        this.getApartmentViews();
+
                         this.getAllViews();
+
+                        this.getMessages();
 
                     })
             },
@@ -190,6 +215,14 @@ import ChartComp from '../elements/ChartComp.vue';
                     this.ip.clientIp = res.data.ip;
                     console.log(this.ip.clientIp);
                     this.sendClientIp();
+                });
+            },
+
+            getMessages(){
+                axios.get(this.apiUrlDatabase + 'see-messages/' + this.apartment.id)
+                .then( res => {
+                    this.apartment.messages = res.data;
+                    console.log(this.apartment.messages, 'messaggi appartamento');
                 });
             },
 
@@ -300,8 +333,17 @@ import ChartComp from '../elements/ChartComp.vue';
         margin-left: 25px;
     }
 
-    .col-12 {
-
+    .dropdown-msg{
+        width: 300px;
+        background-color: rgb(224, 224, 224);
+        color: black;
+        top: 30px;
+        right: 0;
+        z-index: 99999;
+        border-radius: 10px;
+        h6{
+            color: $colore-primario;
+        }
     }
 
     @media screen and (max-width: 767px){
