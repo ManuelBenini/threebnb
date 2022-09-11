@@ -13,6 +13,7 @@
 
     <div class="row d-flex flex-wrap">
 
+        <h1 class="app-list">I tuoi appartamenti</h1>
         <div class="profile col-8 col-md-7 col-lg-3 py-3">
             <div class="user-image my-3">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
@@ -56,6 +57,7 @@
 
                         <ul>
                             <li>
+                                {{-- bottone sponsorizzazione --}}
                                 <button class="btn sponsor-button buttonSponsor">Sponsorizza</button>
                             </li>
                         </ul>
