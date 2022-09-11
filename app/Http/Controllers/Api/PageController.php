@@ -77,7 +77,7 @@ class PageController extends Controller
     }
 
     public function sponsoredApartments(){
-        $apartments = Apartment::with('sponsorships')
+        $apartments = Apartment::with(['sponsorships', 'services'])
             ->has('sponsorships')
             ->paginate(5);
 
