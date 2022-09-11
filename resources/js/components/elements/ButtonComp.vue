@@ -41,12 +41,11 @@
 
     .arancione{
         background-color: $colore-primario;
-        transition: 0.5s;
+        transition: 0.8s;
     }
 
     .arancione:hover {
-        font-size: 24px;
-        padding: 5.5px 33px;
+        background-color: #FF4700;
     }
 
     .rosso{
