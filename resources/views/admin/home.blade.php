@@ -15,10 +15,6 @@
 
         <h1 class="app-list">I tuoi appartamenti</h1>
         <div class="profile col-8 col-md-7 col-lg-3 py-3">
-            <div class="user-image my-3">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Unknown-person.gif" alt="">
-            </div>
-
             <ul>
                 <li><h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4></li>
                 <li><p>Data di nascita: {{ Auth::user()->date_of_birth }}</p></li>
@@ -35,11 +31,9 @@
 
         <div class="col-9 col-md-9">
 
-            <h1 class="app-list">I tuoi appartamenti</h1>
-
             @foreach ($userApartments as $apartment)
 
-                <div class="app text-center py-2 mx-3" v-for="(apartment,  index) in apartmentsList" :key="`apartment${index}`">
+                <div class="app text-center py-2 mx-3">
 
                     <h4>{{$apartment->title}}</h4>
 
