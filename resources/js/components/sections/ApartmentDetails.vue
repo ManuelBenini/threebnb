@@ -34,7 +34,7 @@
             <h2 class="text-center mt-4 mb-3">{{apartment.title}}</h2>
 
             <div class="app-image">
-                <img :src="`../storage/${apartment.image}`" :alt="apartment.title" class="rounded">
+                <img :src="`${apartment.image}`" :alt="apartment.title" class="rounded">
                 <span class="sponsor-label" v-if="apartment.sponsorships.length > 0">Sponsorizzato</span>
             </div>
 
