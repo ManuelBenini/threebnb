@@ -27,7 +27,7 @@
                             </div>
                             <div class="distance">
                                 <label class="text-center" for="distance">Distanza: {{filters.radius}}km</label>
-                                <input type="range" min="1" max="50" v-model="filters.radius" class="slider input-km" id="myRange">
+                                <input type="range" min="1" max="50" v-model="filters.radius" class="slider input-km" role="button" id="myRange">
                             </div>
                         </form>
                     </div>
