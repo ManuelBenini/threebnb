@@ -15,6 +15,10 @@
 
             <div class="position-absolute dropdown-msg px-3 pt-1" v-if="isMessageClicked" @mouseleave="isMessageClicked = false">
 
+                <div v-if="apartment.messages.length == 0">
+                    <h6 class="pt-2">Nessun messaggio.</h6>
+                </div>
+
                 <div v-for="(message,index) in apartment.messages.reverse()" :key="`message${index}`">
                     <q>{{message.text}}</q>
                     <h6 class="text-right pt-2">{{message.email}}</h6>

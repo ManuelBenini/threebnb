@@ -42,9 +42,10 @@
 
         <div v-if="!sponsored">
 
-            <div class="card-section" v-if="apartments.length !== 0">
+            <div class="card-section" >
 
                 <CardComp
+                v-if="apartments.length !== 0"
                 v-for="(apartment,index) in apartments"
                 :key="`apartment${index}`"
                 :apartment="apartment"
