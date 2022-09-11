@@ -268,7 +268,7 @@ import ChartComp from '../elements/ChartComp.vue';
 
     img {
         background-color: red;
-        height: 100%;
+        height: 600px;
         width: 100%;
     }
 
