@@ -205,12 +205,12 @@ export default {
             }
 
             .previous{
-                top: 105px;
+                top: 160px;
                 right: -40px;
             }
 
             .next{
-                top: 105px;
+                top: 160px;
                 right: 25px;
             }
 
