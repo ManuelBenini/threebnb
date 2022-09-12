@@ -128,17 +128,25 @@ ul {
     justify-content: space-between;
 }
 
-.sponsor-label {
+.label{
     position: absolute;
     top: 15px;
     right: 20px;
     font-weight: bold;
     font-size: 13px;
-    color: #E7624A;
-    background-color: #FFFFFF;
     padding: 3px 5px;
     border-radius: 10px;
     z-index: 999;
+}
+
+.label.sponsor-label {
+    color: #E7624A;
+    background-color: #FFFFFF;
+}
+
+.label.visible-label {
+    color: #E7624A;
+    background-color: #FFFFFF;
 }
 
 // EDIT, VIEW, DELETE, SPONSOR BUTTON

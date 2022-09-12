@@ -195,7 +195,7 @@ import ChartComp from '../elements/ChartComp.vue';
 
                         this.apartment.lon = res.data.longitude;
 
-                        document.title = this.apartment.title;
+                        document.title = this.apartment.title, '| ThreeBnB';
 
                         this.getClientIp();
 
