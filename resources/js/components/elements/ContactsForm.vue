@@ -11,7 +11,7 @@
             v-model="form.email"
             aria-describedby="emailHelp"
             placeholder="Inserisci la email"
-            @click="formSubmitted = false"
+            @click="formSubmitted = false; formError = false"
           />
       </div>
 
@@ -22,7 +22,7 @@
             class="form-control"
             id="teto"
             rows="4"
-            @click="formSubmitted = false"
+            @click="formSubmitted = false; formError = false"
           >
           </textarea>
       </div>
@@ -43,6 +43,7 @@
     </form>
 
     <p v-if="formSubmitted" class="text-success mt-3">Messaggio inviato con successo!</p>
+    <p v-if="formError" class="text-danger mt-3">L'email è già in uso, riprovare</p>
 
   </div>
 </template>
@@ -56,6 +57,7 @@ export default {
     return{
         apiUrlDatabase,
         formSubmitted: false,
+        formError: false,
         form:{
             email: '',
             text: '',
@@ -71,7 +73,6 @@ export default {
 
   methods:{
         submitForm(){
-            this.formSubmitted = true;
 
             axios.post(this.apiUrlDatabase + 'send-message', this.form)
                  .then((res) => {
@@ -80,6 +81,16 @@ export default {
                     this.form.email = '';
                     this.form.text = '';
                     this.form.policy = '';
+
+                    this.formSubmitted = true;
+                 })
+                 .catch((error) => {
+                    if(error.response){
+
+                        if(error.response.status == 500){
+                            this.formError = true;
+                        }
+                    }
                  });
 
 
