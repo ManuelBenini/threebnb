@@ -81,14 +81,16 @@ class PageController extends Controller
 
         usort($apartmentDistances, function($a, $b) {return $a->distance - $b->distance;});
 
+
+
         for ($i=0; $i < count($apartmentDistances); $i++) {
             if(!empty($apartmentDistances)){
 
-                $apartmentArray = $apartments->get()[$i];
+                $apartment = Apartment::with(['services', 'sponsorships'])->find($apartmentDistances[$i]->id);
 
-                $apartmentArray["distance"] = $apartmentDistances[$i]->distance;
+                $apartment->distance = $apartmentDistances[$i]->distance;
 
-                $nearbyApartments[] = $apartmentArray;
+                $nearbyApartments[] = $apartment;
 
             }
         }
@@ -124,15 +126,31 @@ class PageController extends Controller
         return response()->json(count($apartments));
     }
 
-    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
-        $earth_radius = 6371;
-        $dLat = deg2rad($latitude2 - $latitude1);
-        $dLon = deg2rad($longitude2 - $longitude1);
-        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
-        $c = 2 * asin(sqrt($a));
-        $d = $earth_radius * $c;
-        return $d;
-    }
+    // public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+    //     $earth_radius = 6371;
+    //     $dLat = deg2rad($latitude2 - $latitude1);
+    //     $dLon = deg2rad($longitude2 - $longitude1);
+    //     $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+    //     $c = 2 * asin(sqrt($a));
+    //     $d = $earth_radius * $c;
+    //     return $d;
+    // }
+
+    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2)
+      {
+        $earthRadius = 6371;
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitude1);
+        $lonFrom = deg2rad($longitude1);
+        $latTo = deg2rad($latitude2);
+        $lonTo = deg2rad($longitude2);
+
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
+
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+        return $angle * $earthRadius;
+      }
 
     public function sendMessage(Request $request){
         $formData = $request;
