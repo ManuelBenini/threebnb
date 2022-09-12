@@ -41,22 +41,15 @@
             <div>
                 <div class="row mt-5 mb-5">
                     <!--Colonna host e proprietà-->
-                    <div id="szdettagli" class="col-md-6 p-3">
-
-                        <div class="row ">
-                            <!-- <div class="col-md-2">
-                                <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Mario Rossi">
-                            </div> -->
-
-                            <div class="col-md-9 d-flex align-self-center">
-                                <h3>Host: {{apartment.user}}</h3>
-                            </div>
-                        </div>
+                    <div id="szdettagli" class="col-md-6">
 
                         <div class="apartment-details">
 
-                            <h4 class="my-4">Dettaglio Appartamento </h4>
+                            <h4 class="mb-4">Dettaglio Appartamento </h4>
                             <ul>
+                                <li>
+                                    <h5>Host: {{apartment.user}}</h5>
+                                </li>
                                 <li>
                                     <strong>Indirizzo: </strong>
                                     <span>{{apartment.address}}</span>
@@ -99,15 +92,18 @@
                     <ContactsForm :apartmentid="apartment.id" v-if="apartment.userId != apartment.loggedUserId"
                     />
 
+                    <StatisticsComp :viewsArray="[allViews , apartmentViews]" v-if="apartment.userId == apartment.loggedUserId"
+                    />
+
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
 
                     <div class="col-12 my-4 d-flex justify-content-center">
-                        <StatisticsComp :viewsArray="[allViews , apartmentViews]"
+                        <StatisticsComp :viewsArray="[allViews , apartmentViews]" v-if="apartment.userId == apartment.loggedUserId"
                         />
                     </div>
-                </div>
+                </div> -->
 
             </div>
     </div>
@@ -199,13 +195,7 @@ import ChartComp from '../elements/ChartComp.vue';
 
                         this.apartment.lon = res.data.longitude;
 
-                        // console.log(this.apartment.loggedUserId, 'Id Utente Loggato');
-
-                        // console.log(this.apartment.userId, 'Id Proprietario Appartamento');
-
-                        // console.log(this.apartment.id, 'id appartamento');
-
-                        // console.log('appartamento: ', res.data);
+                        document.title = this.apartment.title;
 
                         this.getClientIp();
 
@@ -224,7 +214,7 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.get('https://api.ipify.org?format=json')
                 .then( res => {
                     this.ip.clientIp = res.data.ip;
-                    console.log(this.ip.clientIp);
+                    console.log('IP visitatore:', this.ip.clientIp);
                     this.sendClientIp();
                 });
             },
@@ -233,7 +223,7 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.get(this.apiUrlDatabase + 'see-messages/' + this.apartment.id)
                 .then( res => {
                     this.apartment.messages = res.data;
-                    console.log(this.apartment.messages, 'messaggi appartamento');
+                    console.log('messaggi dell\'appartamento:', this.apartment.messages, );
                 });
             },
 
@@ -241,7 +231,7 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.get(this.apiUrlDatabase + 'get-all-views')
                 .then( res => {
                     this.allViews = res.data.length;
-                    console.log(this.allViews, 'Visualizzazioni di ogni appartamento');
+                    console.log('Visualizzazioni di tutti gli appartamenti', this.allViews, );
                 });
             },
 
@@ -249,7 +239,7 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.get(this.apiUrlDatabase + 'get-apartment-views/' + this.apartment.id)
                 .then( res => {
                     this.apartmentViews = res.data.length;
-                    console.log(this.apartmentViews, 'Visualizzazioni dell\'appartamento');
+                    console.log('Visualizzazioni dell\'appartamento:', this.apartmentViews, );
                 });
             },
 
@@ -257,7 +247,7 @@ import ChartComp from '../elements/ChartComp.vue';
                 axios.post(this.apiUrlDatabase + 'add-view', this.ip)
                 .then((sendedData) => {
                     console.log(this.ip);
-                    console.log(sendedData, 'CHIAMATA POST VISUALIZZAZIONE');
+                    console.log(sendedData, 'Aggiunta visualizzazione');
                 });
             },
 
@@ -281,16 +271,13 @@ import ChartComp from '../elements/ChartComp.vue';
             sendApartmentPosition(){
                 axios.post(this.apiUrlDatabase + 'send-position', this.apartment.position)
                 .then((sendedData) => {
-                    console.log(sendedData, 'CHIAMATA POST POSIZIONE');
+                    console.log(sendedData, 'Aggiunta posizione ad appartamento');
                 });
             },
         },
 
         mounted(){
             this.apiRequest();
-
-            // si potrebbe impostare il nome dell'appartamento in modo dinamico
-            document.title = "Dettagli Appartamento | ThreeBnB"
         }
 }
 </script>
@@ -352,10 +339,6 @@ import ChartComp from '../elements/ChartComp.vue';
 
     #host {
         display: inline-block;
-    }
-
-    .apartment-details {
-        margin-top: 20px;
     }
 
     .apartment-details li {

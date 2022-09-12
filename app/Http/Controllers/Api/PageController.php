@@ -40,13 +40,13 @@ class PageController extends Controller
         if($sponsored){
             $apartments = Apartment::with(['services', 'sponsorships'])
             ->has('sponsorships')
-            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]]);
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds], ['visible', 1]]);
         }
 
         // Se il parametro "sponsored" è falso (0), stampo tutti gli appartamenti
         else{
             $apartments = Apartment::with(['services', 'sponsorships'])
-            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds]]);
+            ->where([['rooms', '>=', $rooms], ['beds', '>=', $beds], ['visible', 1]]);
         }
 
         // Se il parametro "servicesList" è uguale a 0, non filtro gli appartamenti per servizi
