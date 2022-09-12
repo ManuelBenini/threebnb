@@ -39,12 +39,14 @@
 
                     <div class="app-image position-relative col-12 {{ count($apartment->sponsorships) == 1 ? 'border-sponsorship' : '' }} ">
                         @if (count($apartment->sponsorships) == 1)
-                            <span class="sponsor-label">Sponsorizzato</span>
+                            <span class="label sponsor-label">Sponsorizzato</span>
+                        @endif
+                        @if ($apartment->visible == 0)
+                            <span class="label visible-label">Non visibile</span>
                         @endif
                         <a id="bottone" href="/dettaglio-appartamento/{{$apartment->id}}">
                             <img src="{{File::exists('storage/'. $apartment->image) ? asset('storage/' . $apartment->image) : $apartment->image}}" alt="">
                         </a>
-                        {{-- <span>Sponsorizzatp</span> --}}
                     </div>
 
                     <div class="buttons-apartment">
