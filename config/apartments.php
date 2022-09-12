@@ -15,7 +15,7 @@ return $apartments = [
 		"image" => '/images/Palermo.jpg',
 		"image_original_name" => 'Palermo.jpg',
 		"visible" => true,
-        "services" => [1,2,3,4,5,6],
+        "services" => [1,2,3,4,5,6,7,8,9,10],
         "sponsorships" => 1,
         "messages-text" =>
         [
@@ -538,8 +538,8 @@ return $apartments = [
 		"bathrooms" => 1,
 		"sqm" => 100,
 		"address" => "Via Guglielmo Oberdan, 6, 35122 Padova PD",
-		"latitude" => 37.51639,
-		"longitude" => 15.10534,
+		"latitude" => 45.40749,
+		"longitude" => 11.8767,
 		"image" => '/images/Padova.jpg',
 		"image_original_name" => 'Padova.jpg',
 		"visible" => true,
@@ -587,4 +587,33 @@ return $apartments = [
             'sonoilmasterbackend@gmail.com',
         ]
     ],
+    [
+        "user_id" => 1,
+        "id" =>21,
+		"title" => "Appartamento Roccapalumba",
+		"rooms" => 8,
+		"beds" => 3,
+		"bathrooms" => 2,
+		"sqm" => 100,
+		"address" => "Via Case Vecchie, 2, 90020 Roccapalumba PA",
+		"latitude" => 37.79831,
+		"longitude" => 13.63413,
+		"image" => '/images/Roccapalumba.jpg',
+		"image_original_name" => 'Roccapalumba.jpg',
+		"visible" => true,
+        "services" => [1,4,5,2],
+        "sponsorships" => 0,
+        "messages-text" =>
+        [
+            'Ciao, mi serviva un alloggio per impegni lavorativi. Dovrei soggiornare 3 notti. È disponibile?',
+            'Quanto costa?',
+            'Quanto dista il centro a piedi?'
+        ],
+        "messages-email" =>
+        [
+            'giruir@gmail.com',
+            'ghiro@gmail.com',
+            'polkipiski@gmail.com',
+        ]
+    ]
 ];

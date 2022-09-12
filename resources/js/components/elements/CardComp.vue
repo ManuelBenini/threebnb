@@ -43,12 +43,6 @@
     export default {
         name: 'CardComp',
 
-        data(){
-            return{
-                publicPath: process.env.BASE_URL
-            }
-        },
-
         props:{
             apartment:{
                 type: Object,
@@ -78,7 +72,7 @@
         display: flex;
         flex-direction: column;
         width: 280px;
-        height: 380px;
+        min-height: 405px;
         margin: 10px;
         border-radius: 10px;
         box-shadow: 1px 1px 12px -5px #5b5a5a;
